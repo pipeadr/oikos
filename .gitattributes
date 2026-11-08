@@ -1,0 +1,27 @@
+# Finales de línea: LF en el repo y en el disco (igual que en Hostinger)
+* text=auto eol=lf
+
+# Texto
+*.php   text eol=lf
+*.css   text eol=lf
+*.js    text eol=lf
+*.json  text eol=lf
+*.md    text eol=lf
+*.html  text eol=lf
+*.svg   text eol=lf
+
+# Binarios
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.webp  binary
+*.avif  binary
+*.ico   binary
+*.woff  binary
+*.woff2 binary
+*.ttf   binary
+*.otf   binary
+*.eot   binary
+*.pdf   binary
+*.zip   binary
