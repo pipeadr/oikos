@@ -1,0 +1,371 @@
+/**
+ * Oikos — Footer.
+ *
+ * .oikos-newsletter     banda verde (gradiente): logo, lema, formulario
+ * .oikos-footer__main   bloque café: CTA, redes, columnas de enlaces
+ * .oikos-footer__legal  franja legal
+ *
+ * Breakpoints: desktop ≥ 1024 · tablet 768–1023 · móvil < 768
+ * (en móvil todo alineado a la izquierda).
+ */
+
+.oikos-footer {
+	color: var(--color-content-inverse);
+}
+
+.oikos-footer a {
+	color: var(--color-content-inverse);
+}
+
+/* Foco visible sobre verde y café. */
+.oikos-footer :focus-visible,
+.oikos-footer .oikos-btn:focus-visible {
+	outline: 2px solid var(--color-content-inverse);
+	outline-offset: 3px;
+	box-shadow: none;
+}
+
+/* ==========================================================================
+   Banda newsletter
+   ========================================================================== */
+
+.oikos-newsletter {
+	padding-block: var(--space-section);
+	background: var(--color-interactive-primary) var(--gradient-brand);
+}
+
+.oikos-newsletter__inner {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+	align-items: center;
+	gap: var(--spacing-6) var(--spacing-8);
+}
+
+.oikos-logo--inverse {
+	--logo-height: clamp(2.5rem, 2.1216rem + 1.6145vw, 3.5rem); /* 40 → 56 */
+
+	color: var(--color-content-inverse);
+	font-size: var(--text-heading-size);
+}
+
+.oikos-footer .oikos-logo--inverse:hover {
+	color: var(--color-content-inverse);
+	opacity: 0.85;
+}
+
+.oikos-logo--inverse img {
+	max-width: 14rem;
+}
+
+.oikos-newsletter__tagline {
+	max-width: 16ch;
+	margin-top: var(--spacing-2);
+	font-family: var(--font-heading);
+	font-size: var(--text-heading-size);
+	font-weight: 500;
+	line-height: 1.25;
+	letter-spacing: -0.015em;
+	text-wrap: balance;
+}
+
+.oikos-newsletter__title {
+	font-family: var(--font-body);
+	font-size: var(--text-card-size);
+	font-weight: 600;
+	line-height: 1.25;
+	letter-spacing: 0;
+}
+
+.oikos-newsletter__text {
+	margin-top: var(--spacing-1);
+	font-size: var(--text-body-size);
+	line-height: 1.5;
+}
+
+.oikos-newsletter__form {
+	margin-top: var(--spacing-3);
+}
+
+.oikos-newsletter__row {
+	display: flex;
+	gap: var(--spacing-1);
+}
+
+.oikos-newsletter__input {
+	flex: 1 1 auto;
+	min-width: 0;
+	min-height: 3.375rem; /* 54, igual que el botón */
+	padding: 0 var(--spacing-2);
+	border: 1px solid color-mix(in srgb, var(--color-content-inverse) 60%, transparent);
+	border-radius: var(--radius-md);
+	background-color: color-mix(in srgb, var(--color-content-inverse) 10%, transparent);
+	color: var(--color-content-inverse);
+	font-size: var(--text-body-size);
+}
+
+.oikos-newsletter__input::placeholder {
+	color: color-mix(in srgb, var(--color-content-inverse) 85%, transparent);
+	opacity: 1;
+}
+
+.oikos-newsletter__input:focus-visible {
+	border-color: var(--color-content-inverse);
+}
+
+.oikos-newsletter__submit {
+	flex: none;
+}
+
+.oikos-newsletter__status {
+	margin-top: var(--spacing-1);
+	font-size: var(--text-body-size);
+	font-weight: 500;
+}
+
+.oikos-newsletter__status:empty {
+	display: none;
+}
+
+/* ==========================================================================
+   Bloque café
+   ========================================================================== */
+
+.oikos-footer__main {
+	padding-block: var(--space-section);
+	background-color: var(--color-interactive-secondary);
+}
+
+.oikos-footer__grid {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) auto;
+	grid-template-areas:
+		"cta    cols"
+		"social cols";
+	align-items: start;
+	gap: var(--spacing-4) var(--spacing-8);
+}
+
+.oikos-footer__cta {
+	grid-area: cta;
+}
+
+.oikos-footer__cta-title {
+	max-width: 13ch;
+	margin-bottom: var(--spacing-3);
+	color: var(--color-content-inverse);
+	font-family: var(--font-heading);
+	font-size: var(--text-heading-size);
+	font-weight: 500;
+	line-height: 1.25;
+	letter-spacing: -0.015em;
+}
+
+/* Redes: cuadro crema de 32 px con ícono café, área táctil de 44 px. */
+.oikos-social {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--spacing-2);
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.oikos-footer__social {
+	grid-area: social;
+	margin-inline-start: calc((2.75rem - 2rem) / -2); /* alinea el cuadro visible (32) con el texto */
+}
+
+.oikos-social__link {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 2.75rem;
+	height: 2.75rem;
+	border-radius: var(--radius-md);
+}
+
+.oikos-social__icon {
+	width: 2rem;
+	height: 2rem;
+	padding: 0.3125rem;
+	border-radius: 0.5rem;
+	background-color: var(--color-content-inverse);
+	color: var(--color-interactive-secondary);
+	transition: transform var(--transition-fast);
+}
+
+.oikos-social__link:hover .oikos-social__icon {
+	transform: translateY(-2px);
+}
+
+/* Columnas */
+.oikos-footer__cols {
+	grid-area: cols;
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, max-content));
+	gap: var(--spacing-4) var(--spacing-3);
+}
+
+.oikos-footer__col {
+	max-width: 11rem;
+}
+
+.oikos-footer__col-title {
+	margin-bottom: var(--spacing-2);
+	color: var(--color-content-inverse);
+	font-family: var(--font-body);
+	font-size: var(--text-small-size);
+	font-weight: 600;
+	line-height: 1.4;
+	letter-spacing: 0;
+}
+
+.oikos-footer__links {
+	display: flex;
+	flex-direction: column;
+	gap: var(--spacing-1);
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	font-size: var(--text-small-size);
+	line-height: 1.4;
+}
+
+.oikos-footer__links a {
+	text-decoration: none;
+	overflow-wrap: anywhere; /* correos largos */
+}
+
+.oikos-footer__links a:hover {
+	text-decoration: underline;
+	text-decoration-thickness: 1px;
+}
+
+.oikos-footer__address {
+	font-style: normal;
+}
+
+/* ==========================================================================
+   Franja legal
+   ========================================================================== */
+
+.oikos-footer__legal {
+	padding-block: var(--spacing-3);
+	background-color: var(--color-text-secondary);
+	font-size: var(--text-small-size);
+	line-height: 1.4;
+}
+
+.oikos-footer__legal-inner {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--spacing-2) var(--spacing-4);
+}
+
+.oikos-footer__legal-links {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--spacing-1) var(--spacing-3);
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.oikos-footer__legal-links a {
+	text-decoration: none;
+}
+
+.oikos-footer__legal-links a:hover {
+	text-decoration: underline;
+}
+
+.oikos-footer__copyright {
+	margin-inline-start: auto;
+	font-weight: 600;
+}
+
+/* ==========================================================================
+   Tablet y móvil (< 1024): enlaces con área táctil de 44 px
+   ========================================================================== */
+
+@media (max-width: 63.9375rem) {
+	.oikos-newsletter__inner {
+		grid-template-columns: minmax(0, 1fr);
+		gap: var(--spacing-5);
+	}
+
+	.oikos-footer__grid {
+		grid-template-columns: minmax(0, 1fr);
+		grid-template-areas:
+			"cta"
+			"cols"
+			"social";
+		gap: var(--spacing-5);
+	}
+
+	.oikos-footer__cols {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: var(--spacing-4) var(--spacing-3);
+	}
+
+	.oikos-footer__col {
+		max-width: none;
+	}
+
+	.oikos-footer__col-title {
+		margin-bottom: var(--spacing-1);
+	}
+
+	.oikos-footer__links {
+		gap: 0;
+		font-size: var(--text-body-size);
+	}
+
+	.oikos-footer__links a,
+	.oikos-footer__legal-links a {
+		display: inline-flex;
+		align-items: center;
+		min-height: 2.75rem;
+	}
+
+	.oikos-footer__address-text {
+		padding-block: var(--spacing-1);
+	}
+}
+
+/* ==========================================================================
+   Móvil (< 768): todo apilado, alineado a la izquierda
+   ========================================================================== */
+
+@media (max-width: 47.9375rem) {
+	.oikos-newsletter__row {
+		flex-direction: column;
+	}
+
+	.oikos-newsletter__submit {
+		width: 100%;
+	}
+
+	.oikos-footer__cols {
+		grid-template-columns: minmax(0, 1fr);
+		gap: var(--spacing-3);
+	}
+
+	.oikos-footer__legal-inner {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: var(--spacing-1);
+	}
+
+	.oikos-footer__legal-links {
+		flex-direction: column;
+		gap: 0;
+	}
+
+	.oikos-footer__copyright {
+		margin-inline-start: 0;
+		padding-top: var(--spacing-1);
+	}
+}
