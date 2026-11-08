@@ -25,7 +25,7 @@ function oikos_enqueue_assets() {
 	);
 
 	// Componentes globales (pequeños y presentes en casi todas las páginas).
-	foreach ( array( 'button', 'card' ) as $oikos_component ) {
+	foreach ( array( 'button', 'card', 'header', 'footer' ) as $oikos_component ) {
 		wp_enqueue_style(
 			'oikos-' . $oikos_component,
 			oikos_asset_uri( 'css/' . $oikos_component . '.css' ),
@@ -39,6 +39,18 @@ function oikos_enqueue_assets() {
 		oikos_asset_uri( 'js/main.js' ),
 		array(),
 		oikos_asset_version( 'js/main.js' ),
+		array(
+			'strategy'  => 'defer',
+			'in_footer' => true,
+		)
+	);
+
+	// Header: submenú, menú móvil y sticky (presente en todas las páginas).
+	wp_enqueue_script(
+		'oikos-header',
+		oikos_asset_uri( 'js/header.js' ),
+		array(),
+		oikos_asset_version( 'js/header.js' ),
 		array(
 			'strategy'  => 'defer',
 			'in_footer' => true,

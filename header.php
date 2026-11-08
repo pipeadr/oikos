@@ -18,31 +18,6 @@ defined( 'ABSPATH' ) || exit;
 
 <a class="oikos-skip-link" href="#main"><?php esc_html_e( 'Saltar al contenido', 'oikos' ); ?></a>
 
-<header class="oikos-header">
-	<div class="oikos-header__brand">
-		<?php if ( has_custom_logo() ) : ?>
-			<?php the_custom_logo(); ?>
-		<?php else : ?>
-			<a class="oikos-header__site-name" href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
-				<?php bloginfo( 'name' ); ?>
-			</a>
-		<?php endif; ?>
-	</div>
-
-	<?php if ( has_nav_menu( 'primary' ) ) : ?>
-		<nav class="oikos-header__nav" aria-label="<?php esc_attr_e( 'Menú principal', 'oikos' ); ?>">
-			<?php
-			wp_nav_menu(
-				array(
-					'theme_location' => 'primary',
-					'container'      => false,
-					'menu_class'     => 'oikos-header__menu',
-					'fallback_cb'    => false,
-				)
-			);
-			?>
-		</nav>
-	<?php endif; ?>
-</header>
+<?php get_template_part( 'template-parts/layout/site-header' ); ?>
 
 <main id="main" class="oikos-main">
