@@ -50,22 +50,62 @@ oikos/
 ```
 
 ## Design tokens
-### Colores (roles por confirmar contra Figma)
-| Variable | Hex | Uso observado |
+Definidos en `assets/css/base.css`. Los nombres siguen los tokens del Figma: `grupo/rol` → `--grupo-rol` (ej. `color/text/primary` → `--color-text-primary`). **Nunca usar hex, px de espaciado o tamaños de fuente sueltos en un componente: siempre los tokens.** Para revisarlos: página privada **"Guía de estilos"** (plantilla `templates/style-guide.php`; solo editores, `noindex`). En cada entorno hay que crearla a mano como página Privada con esa plantilla.
+
+### Colores
+| Token Figma | Variable CSS | Valor |
 |---|---|---|
-| `--oikos-green` | #2D5545 | Primario: botones, CTA, header |
-| `--oikos-brown` | #8E5325 | Footer, botones secundarios, tarjeta "pareja" |
-| `--oikos-sage` | #80957D | Gradientes verdes, tags |
-| `--oikos-sand` | #D1A980 | Tarjetas beige de temas, tags |
-| `--oikos-brown-dark` | #4B3A2F | Overlays de tarjetas de equipo |
-| `--oikos-caramel` | #A87A53 | Acentos |
-| `--oikos-text` | #212121 | Texto principal |
-| `--oikos-cream` | #FBF5E9 | Fondos crema, nav, tarjetas |
+| color/text/primary | `--color-text-primary` | #212121 |
+| color/text/secondary | `--color-text-secondary` | #4B3A2F |
+| color/interactive/primary | `--color-interactive-primary` | #2D5545 |
+| color/interactive/secondary | `--color-interactive-secondary` | #8E5325 |
+| color/content/inverse | `--color-content-inverse` | #FBF5E9 |
+| color/surface/base | `--color-surface-base` | #FBF5E9 |
+| color/border/default | `--color-border-default` | #212121 al 16 % |
+| *(por confirmar)* fondo de página | `--color-surface-page` | #FFFFFF |
+| marca, sin rol | `--color-brand-sage` · `--color-brand-sand` · `--color-brand-caramel` | #80957D · #D1A980 · #A87A53 |
 
 ### Tipografía
-- **Bricolage Grotesque** → títulos. **Figtree** → textos y UI.
-- Auto-hospedadas en woff2, `font-display: swap`, precargar solo los pesos usados en el primer pantallazo.
-- Escala fluida con `clamp()` (definir en `base.css` a partir del diseño; no hay escala oficial en Figma).
+- **Bricolage Grotesque** (`--font-heading`, solo peso 500, con eje de tamaño óptico `opsz`) y **Figtree** (`--font-body`, variable 400–600). Auto-hospedadas en `assets/fonts` (woff2, subset latin, licencias OFL incluidas), `font-display: swap`, ambas precargadas (`oikos_preload_fonts()` en `inc/enqueue.php`).
+- Estilos como **clases independientes del nivel de encabezado** (un `h2` puede usar `.oikos-text-display`). Sin clase, `h1` = Display, `h2` = Heading, `h3–h6` = Card.
+
+| Estilo Figma | Clase | Fuente | Tamaño móvil → desktop | Line-height | Tracking |
+|---|---|---|---|---|---|
+| Display | `.oikos-text-display` | Bricolage 500 | 38 → 64 | 110 % | -2 % |
+| Heading | `.oikos-text-heading` | Bricolage 500 | 26 → 32 | 125 % | -1.5 % |
+| Body | `.oikos-text-body` | Figtree 400 | 16 | 150 % | 0 |
+| Button | `.oikos-text-button` | Figtree 500 | 16 | 140 % | 2 % |
+| Card *(deducido)* | `.oikos-text-card` | Figtree 600 | 18 → 20 | 125 % | 0 |
+| Eyebrow *(deducido)* | `.oikos-text-eyebrow` | Figtree 500 | 14 | 140 % | 0 |
+| Nav *(deducido)* | `.oikos-text-nav` | Figtree 500 | 14 | 140 % | 0 |
+
+Modificadores de color: `.oikos-text-secondary`, `.oikos-text-inverse`.
+
+### Espaciado, radios y layout
+- Escala de 8 px: `spacing/N` → `--spacing-N` (`--spacing-1` = 8 … `--spacing-10` = 80).
+- Radios: `--radius-md` = 12 px (botones, *deducido*), `--radius-lg` = 16 px (tarjetas).
+- Contenedor: `.oikos-container` → ancho máximo `--container-max` (1110 px) con `--container-padding` a cada lado. En 1366 deja 128 px por lado, como el Figma.
+- Sección: `.oikos-section` → `padding-block: var(--space-section)`.
+
+### Componentes base
+- **Botón** (`assets/css/button.css`): `.oikos-btn` + `--primary` (fondo interactive/primary), `--secondary` (interactive/secondary), `--light` (surface/base, texto text/primary; no usar sobre fondo crema porque no se ve). Alto 54 px, padding spacing/2 × spacing/3, `--radius-md`, estilo Button. Hover oscurece, active oscurece más y baja 1 px, focus-visible con doble anillo.
+- **Tarjeta** (`assets/css/card.css`): `.oikos-card` → surface/base, `--card-padding`, gap spacing/2, `--radius-lg`, borde 1 px border/default.
+
+### Responsive
+No hay diseño móvil ni tablet. **El valor del Figma es el máximo (desktop, frame de 1366); el mínimo es para 375.** Entre ambos se interpola en línea recta con `clamp()`. Los componentes usan estos tokens y no definen sus propios valores por breakpoint.
+- Anchos de referencia y de revisión: **375 · 768 · 1024 · 1366** (y 1440). Breakpoint para cambios de layout en componentes: `max-width: 47.9375rem` (< 768) para móvil y `64rem` (1024) para laptop.
+
+| Token | Móvil (375) | Desktop (1366+) |
+|---|---|---|
+| `--container-padding` | 20 | 80 |
+| `--space-section` | 48 | 80 |
+| `--card-padding` | 20 | 24 |
+| Display / Heading / Card | 38 / 26 / 18 | 64 / 32 / 20 |
+| Body / Button / Eyebrow / Nav | fijos: 16 / 16 / 14 / 14 (el texto de lectura nunca baja de 16) | |
+
+- **Botones en móvil:** mantienen 54 px de alto (más que los 44 px táctiles mínimos). **No van a ancho completo por defecto**, porque en el diseño son cortos y alineados a la izquierda, y en tarjetas o junto a otros elementos el ancho completo rompe la composición. El CTA principal de una sección (hero, bandas CTA) usa `.oikos-btn--block-mobile` (100 % por debajo de 768 px).
+- Cualquier elemento interactivo pequeño (píldoras del menú, íconos) debe medir mínimo 44 × 44 px en móvil.
+- Nada puede desbordar horizontalmente en 375 px.
 
 ### Estética general
 Bordes redondeados generosos, tarjetas crema sobre fondos crema/blanco, gradientes verde→sage en bandas destacadas, ilustraciones de líneas orgánicas como decoración (SVG, `aria-hidden`).
@@ -150,6 +190,7 @@ Contraste AA, foco visible, navegación por teclado (menú móvil, acordeones, c
 - [ ] **Agendamiento:** lógica completa por definir (disponibilidad, profesional, modalidad, conexión con Google Calendar, confirmación, pagos). Diseño: calendario mensual con días disponibles, duración 1 hora, selector de zona horaria, lista de horas por día.
 - [ ] Plataforma del newsletter (Mailchimp, Brevo…).
 - [ ] Confirmar roles exactos de los colores y colores secundarios faltantes.
+- [ ] Confirmar contra Figma los valores deducidos de capturas: `radius/md` (12), estilos Card / Eyebrow / Nav y el fondo de página blanco como token.
 - [ ] Testimonios reales (con autorización de los pacientes).
 - [ ] ¿Atención presencial también en Bogotá o solo Medellín? (afecta SEO local y schema).
 - [ ] ¿Páginas individuales por profesional? (recomendado para E-E-A-T en temas de salud).
