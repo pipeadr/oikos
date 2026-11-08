@@ -1,0 +1,86 @@
+/**
+ * Oikos — Componente Button (tamaño Medium).
+ *
+ * <a class="oikos-btn oikos-btn--primary">…</a>
+ * Variantes: --primary, --secondary, --light.
+ * Modificador: --block-mobile (ancho completo por debajo de 768 px; solo
+ * para el CTA principal de una sección).
+ */
+
+.oikos-btn {
+	--btn-bg: var(--color-interactive-primary);
+	--btn-color: var(--color-content-inverse);
+	--btn-mix: #000;
+
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: var(--spacing-1);
+	min-height: 3.375rem; /* 54 */
+	padding: var(--spacing-2) var(--spacing-3);
+	border: 0;
+	border-radius: var(--radius-md);
+	background-color: var(--btn-bg);
+	color: var(--btn-color);
+	font-family: var(--font-body);
+	font-size: var(--text-button-size);
+	font-weight: 500;
+	line-height: 1.4;
+	letter-spacing: 0.02em;
+	text-align: center;
+	text-decoration: none;
+	cursor: pointer;
+	transition:
+		background-color var(--transition-fast),
+		transform var(--transition-fast),
+		box-shadow var(--transition-fast);
+}
+
+.oikos-btn:hover {
+	background-color: color-mix(in srgb, var(--btn-bg) 85%, var(--btn-mix));
+	color: var(--btn-color);
+}
+
+.oikos-btn:active {
+	background-color: color-mix(in srgb, var(--btn-bg) 75%, var(--btn-mix));
+	transform: translateY(1px);
+}
+
+/* Doble anillo: visible sobre foto, crema, blanco y fondos oscuros. */
+.oikos-btn:focus-visible {
+	outline: 0;
+	box-shadow:
+		0 0 0 2px var(--color-surface-base),
+		0 0 0 4px var(--color-interactive-primary);
+}
+
+.oikos-btn--primary {
+	--btn-bg: var(--color-interactive-primary);
+	--btn-color: var(--color-content-inverse);
+}
+
+.oikos-btn--secondary {
+	--btn-bg: var(--color-interactive-secondary);
+	--btn-color: var(--color-content-inverse);
+}
+
+.oikos-btn--light {
+	--btn-bg: var(--color-surface-base);
+	--btn-color: var(--color-text-primary);
+	--btn-mix: var(--color-text-primary);
+}
+
+.oikos-btn--light:hover {
+	background-color: color-mix(in srgb, var(--btn-bg) 92%, var(--btn-mix));
+}
+
+.oikos-btn--light:active {
+	background-color: color-mix(in srgb, var(--btn-bg) 86%, var(--btn-mix));
+}
+
+@media (max-width: 47.9375rem) { /* < 768 */
+	.oikos-btn--block-mobile {
+		display: flex;
+		width: 100%;
+	}
+}
