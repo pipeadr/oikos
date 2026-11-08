@@ -47,10 +47,26 @@ function oikos_setup() {
 			'footer-acompanamientos' => __( 'Footer — Acompañamientos', 'oikos' ),
 			'footer-contenido'       => __( 'Footer — Contenido', 'oikos' ),
 			'footer-oikos'           => __( 'Footer — Oikos', 'oikos' ),
+			'footer-legal'           => __( 'Footer — Legal', 'oikos' ),
 		)
 	);
 }
 add_action( 'after_setup_theme', 'oikos_setup' );
+
+/**
+ * Clase de body para plantillas con hero a sangre (el header flota encima).
+ *
+ * @param string[] $classes Clases del body.
+ * @return string[]
+ */
+function oikos_body_classes( $classes ) {
+	if ( oikos_has_hero() ) {
+		$classes[] = 'oikos-has-hero';
+	}
+
+	return $classes;
+}
+add_filter( 'body_class', 'oikos_body_classes' );
 
 /**
  * Limpia etiquetas innecesarias de wp_head.

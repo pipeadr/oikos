@@ -85,3 +85,111 @@ function oikos_asset_version( $path ) {
 
 	return file_exists( $file ) ? (string) filemtime( $file ) : null;
 }
+
+/**
+ * Enlace tel: a partir del teléfono de "Oikos — Global".
+ *
+ * @param string $phone Teléfono tal como se muestra (ej. '+57 300 123 4567').
+ * @return string URL tel: o '' si no hay dígitos.
+ */
+function oikos_phone_href( $phone ) {
+	$phone  = trim( (string) $phone );
+	$digits = preg_replace( '/\D+/', '', $phone );
+
+	if ( '' === $digits ) {
+		return '';
+	}
+
+	return 'tel:' . ( 0 === strpos( $phone, '+' ) ? '+' : '' ) . $digits;
+}
+
+/**
+ * URL de WhatsApp (wa.me) con el número y mensaje de "Oikos — Global".
+ *
+ * @return string URL o '' si no hay número.
+ */
+function oikos_whatsapp_url() {
+	$number = preg_replace( '/\D+/', '', (string) oikos_option( 'oikos_global_whatsapp' ) );
+
+	if ( '' === $number ) {
+		return '';
+	}
+
+	$url     = 'https://wa.me/' . $number;
+	$message = trim( (string) oikos_option( 'oikos_global_whatsapp_mensaje' ) );
+
+	if ( '' !== $message ) {
+		$url .= '?text=' . rawurlencode( $message );
+	}
+
+	return $url;
+}
+
+/**
+ * Nombre de la marca (copyright y alt de respaldo de los logos).
+ *
+ * @return string
+ */
+function oikos_brand_name() {
+	return (string) oikos_option( 'oikos_global_marca_nombre', get_bloginfo( 'name' ) );
+}
+
+/**
+ * ¿La plantilla actual empieza con un hero a sangre bajo el header?
+ *
+ * Las plantillas con hero lo activan con:
+ * add_filter( 'oikos_has_hero', '__return_true' );
+ *
+ * @return bool
+ */
+function oikos_has_hero() {
+	return (bool) apply_filters( 'oikos_has_hero', false );
+}
+
+/**
+ * Markup <img> de un adjunto pensado para logos (SVG o PNG).
+ *
+ * No usa wp_get_attachment_image() porque en SVG imprime width/height 0 o 1
+ * y el logo desaparece o se deforma. Aquí width/height solo se imprimen si
+ * los metadatos son reales (PNG, evita CLS); en SVG el tamaño lo da el CSS.
+ *
+ * @param int   $attachment_id ID del adjunto.
+ * @param array $attr          Atributos extra (class, loading, fetchpriority…).
+ * @return string '' si el adjunto no existe.
+ */
+function oikos_logo_img( $attachment_id, $attr = array() ) {
+	$attachment_id = absint( $attachment_id );
+	$src           = $attachment_id ? wp_get_attachment_image_url( $attachment_id, 'full' ) : '';
+
+	if ( ! $src ) {
+		return '';
+	}
+
+	$alt = trim( (string) get_post_meta( $attachment_id, '_wp_attachment_image_alt', true ) );
+
+	$attr = array_merge(
+		array(
+			'src'      => $src,
+			'alt'      => '' !== $alt ? $alt : oikos_brand_name(),
+			'decoding' => 'async',
+		),
+		$attr
+	);
+
+	$meta = wp_get_attachment_metadata( $attachment_id );
+
+	if ( is_array( $meta ) && ! empty( $meta['width'] ) && ! empty( $meta['height'] ) && $meta['width'] > 1 && $meta['height'] > 1 ) {
+		$attr['width']  = (int) $meta['width'];
+		$attr['height'] = (int) $meta['height'];
+	}
+
+	$html = '<img';
+	foreach ( $attr as $name => $value ) {
+		if ( '' === $value || null === $value || false === $value ) {
+			continue;
+		}
+		$html .= sprintf( ' %s="%s"', esc_attr( $name ), 'src' === $name ? esc_url( $value ) : esc_attr( $value ) );
+	}
+
+	return $html . '>';
+}
