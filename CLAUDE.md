@@ -184,6 +184,7 @@ Contraste AA, foco visible, navegación por teclado (menú móvil, acordeones, c
 - Al crear campos ACF, crearlos de forma que queden en `acf-json` y nombrarlos `oikos_<seccion>_<campo>`.
 - **Verificar en el navegador** cada sección contra el diseño en los 4 anchos antes de darla por terminada.
 - Commits pequeños y descriptivos en español, en la rama `feature/` correspondiente.
+- Después de cada merge de una rama `feature/` a `develop`, borrar esa rama local (`git branch -d`) sin preguntar.
 - No instalar plugins ni dependencias nuevas sin preguntar.
 
 ## Pendientes
