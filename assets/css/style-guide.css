@@ -135,10 +135,15 @@
 }
 
 .oikos-sg__surface--dark {
-	background: linear-gradient(135deg, var(--color-interactive-primary), var(--color-brand-sage));
+	background: var(--gradient-brand);
 }
 
-.oikos-sg__surface--dark .oikos-sg__meta {
+.oikos-sg__surface--brown {
+	background-color: var(--color-interactive-secondary);
+}
+
+.oikos-sg__surface--dark .oikos-sg__meta,
+.oikos-sg__surface--brown .oikos-sg__meta {
 	color: var(--color-content-inverse);
 }
 

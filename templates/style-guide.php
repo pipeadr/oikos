@@ -45,6 +45,10 @@ $oikos_sg_colors = array(
 		'--color-brand-sand'    => 'arena',
 		'--color-brand-caramel' => 'caramelo',
 	),
+	__( 'Derivados (contraste AA con texto crema)', 'oikos' ) => array(
+		'--color-brand-caramel-strong' => __( 'caramelo oscurecido · botón --tonal', 'oikos' ),
+		'--gradient-brand'             => __( 'gradiente de bandas · verde → mezcla 50 % sage', 'oikos' ),
+	),
 );
 
 $oikos_sg_text_styles = array(
@@ -61,12 +65,14 @@ $oikos_sg_buttons = array(
 	'oikos-btn--primary'   => __( 'Agenda tu cita', 'oikos' ),
 	'oikos-btn--secondary' => __( 'Conoce el método', 'oikos' ),
 	'oikos-btn--light'     => __( 'Ver servicio', 'oikos' ),
+	'oikos-btn--tonal'     => __( 'Agenda tu cita ahora', 'oikos' ),
 );
 
 $oikos_sg_surfaces = array(
 	'page'  => __( 'Sobre blanco', 'oikos' ),
 	'cream' => __( 'Sobre crema', 'oikos' ),
 	'dark'  => __( 'Sobre banda verde', 'oikos' ),
+	'brown' => __( 'Sobre bloque café (footer) · --tonal es para este fondo', 'oikos' ),
 );
 
 get_header();
@@ -179,6 +185,10 @@ get_header();
 				</div>
 			</div>
 		<?php endforeach; ?>
+		<div class="oikos-sg__surface oikos-sg__surface--page">
+			<p class="oikos-sg__meta"><code>.oikos-btn--compact</code> · <?php esc_html_e( '44 px de alto (CTA del header)', 'oikos' ); ?></p>
+			<a class="oikos-btn oikos-btn--primary oikos-btn--compact" href="#sg-buttons"><?php esc_html_e( 'Agenda tu cita', 'oikos' ); ?></a>
+		</div>
 		<div class="oikos-sg__surface oikos-sg__surface--page">
 			<p class="oikos-sg__meta"><code>.oikos-btn--block-mobile</code> · <?php esc_html_e( 'ancho completo por debajo de 768 px', 'oikos' ); ?></p>
 			<a class="oikos-btn oikos-btn--primary oikos-btn--block-mobile" href="#sg-buttons"><?php esc_html_e( 'Agenda tu cita', 'oikos' ); ?></a>

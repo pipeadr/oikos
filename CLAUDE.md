@@ -64,6 +64,10 @@ Definidos en `assets/css/base.css`. Los nombres siguen los tokens del Figma: `gr
 | color/border/default | `--color-border-default` | #212121 al 16 % |
 | *(por confirmar)* fondo de página | `--color-surface-page` | #FFFFFF |
 | marca, sin rol | `--color-brand-sage` · `--color-brand-sand` · `--color-brand-caramel` | #80957D · #D1A980 · #A87A53 |
+| derivado (AA con texto crema) | `--color-brand-caramel-strong` | #926641 (4.61:1) |
+| gradiente de bandas | `--gradient-brand` | interactive/primary → mezcla 50 % con sage (#567561, 4.7:1). Sage puro con texto crema da 2.97:1: no usarlo bajo texto |
+
+Otros tokens: `--shadow-float` (barras y desplegables flotantes), `--z-header`, `--header-top`, `--header-bar-height`, `--header-offset` (espacio que ocupa el header fijo; `main` lo usa como padding superior).
 
 ### Tipografía
 - **Bricolage Grotesque** (`--font-heading`, solo peso 500, con eje de tamaño óptico `opsz`) y **Figtree** (`--font-body`, variable 400–600). Auto-hospedadas en `assets/fonts` (woff2, subset latin, licencias OFL incluidas), `font-display: swap`, ambas precargadas (`oikos_preload_fonts()` en `inc/enqueue.php`).
@@ -89,7 +93,17 @@ Modificadores de color: `.oikos-text-secondary`, `.oikos-text-inverse`.
 
 ### Componentes base
 - **Botón** (`assets/css/button.css`): `.oikos-btn` + `--primary` (fondo interactive/primary), `--secondary` (interactive/secondary), `--light` (surface/base, texto text/primary; no usar sobre fondo crema porque no se ve). Alto 54 px, padding spacing/2 × spacing/3, `--radius-md`, estilo Button. Hover oscurece, active oscurece más y baja 1 px, focus-visible con doble anillo.
+- Variantes extra: `--tonal` (caramelo oscurecido con borde crema, **solo sobre el café** interactive/secondary) y `--compact` (44 px de alto, CTA del header).
 - **Tarjeta** (`assets/css/card.css`): `.oikos-card` → surface/base, `--card-padding`, gap spacing/2, `--radius-lg`, borde 1 px border/default.
+
+### Header y footer
+- Header fijo (`template-parts/layout/site-header.php`, `header.css`, `header.js`): se esconde al bajar y aparece al subir. Desktop ≥ 1024 con píldoras; < 1024 hamburguesa con panel dentro de la barra; < 360 el CTA pasa al panel.
+- Plantillas con hero a sangre: `add_filter( 'oikos_has_hero', '__return_true' );` → body `oikos-has-hero` y `main` sin padding superior (el header flota sobre la foto).
+- Menú principal: walker `Oikos_Primary_Nav_Walker` (`inc/nav.php`). Un ítem con hijos se vuelve `<button>` (su URL no se usa); el primer hijo debe ser la página general.
+- Columnas del footer: el título es el **nombre del menú** asignado. Ubicaciones: `primary`, `footer-acompanamientos`, `footer-contenido`, `footer-oikos`, `footer-legal`.
+- Logos: `template-parts/components/logo.php` + `oikos_logo_img()`. Acepta SVG sin width/height (el alto lo da el CSS); alt de la biblioteca o, si falta, `oikos_global_marca_nombre`.
+- Íconos: `oikos_the_icon( 'nombre' )` con SVG de `assets/img/icons/`.
+- Newsletter sin plataforma: si `oikos_global_newsletter_action` está vacío, el formulario no se envía y muestra el mensaje pendiente. Para conectar: ese campo o los filtros `oikos_newsletter_form_action` / `oikos_newsletter_email_name` y la acción `oikos_newsletter_form_fields`.
 
 ### Responsive
 No hay diseño móvil ni tablet. **El valor del Figma es el máximo (desktop, frame de 1366); el mínimo es para 375.** Entre ambos se interpola en línea recta con `clamp()`. Los componentes usan estos tokens y no definen sus propios valores por breakpoint.
