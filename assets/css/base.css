@@ -1,6 +1,365 @@
 /**
  * Oikos — base.css
  *
- * Tokens (custom properties), reset y tipografía base.
- * Se completa en la tarea "tokens y tipografía".
+ * 1. Fuentes
+ * 2. Tokens (custom properties)
+ * 3. Reset
+ * 4. Base (elementos HTML)
+ * 5. Estilos de texto
+ * 6. Layout
+ * 7. Utilidades de accesibilidad
+ *
+ * Valores fluidos: interpolación lineal entre 375 px (móvil) y 1366 px
+ * (frame desktop del Figma). El valor de Figma es siempre el máximo.
  */
+
+/* ==========================================================================
+   1. Fuentes (auto-hospedadas, subset latin, variables)
+   ========================================================================== */
+
+@font-face {
+	font-family: "Bricolage Grotesque";
+	font-style: normal;
+	font-weight: 500;
+	font-display: swap;
+	src: url("../fonts/bricolage-grotesque-500-opsz.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Figtree";
+	font-style: normal;
+	font-weight: 400 600;
+	font-display: swap;
+	src: url("../fonts/figtree-400-600.woff2") format("woff2");
+}
+
+/* ==========================================================================
+   2. Tokens
+   ========================================================================== */
+
+:root {
+	/* Color — roles del Figma (color/<grupo>/<rol> → --color-<grupo>-<rol>) */
+	--color-text-primary: #212121;
+	--color-text-secondary: #4b3a2f;
+	--color-interactive-primary: #2d5545;
+	--color-interactive-secondary: #8e5325;
+	--color-content-inverse: #fbf5e9;
+	--color-surface-base: #fbf5e9;
+	--color-surface-page: #ffffff; /* Por confirmar como token en Figma. */
+	--color-border-default: rgb(33 33 33 / 0.16);
+
+	/* Color — marca, sin rol confirmado */
+	--color-brand-sage: #80957d;
+	--color-brand-sand: #d1a980;
+	--color-brand-caramel: #a87a53;
+
+	/* Fuentes */
+	--font-fallback: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+	--font-heading: "Bricolage Grotesque", var(--font-fallback);
+	--font-body: "Figtree", var(--font-fallback);
+
+	/* Espaciado — escala de 8 px (spacing/N → --spacing-N) */
+	--spacing-1: 0.5rem;   /*  8 */
+	--spacing-2: 1rem;     /* 16 */
+	--spacing-3: 1.5rem;   /* 24 */
+	--spacing-4: 2rem;     /* 32 */
+	--spacing-5: 2.5rem;   /* 40 */
+	--spacing-6: 3rem;     /* 48 */
+	--spacing-7: 3.5rem;   /* 56 */
+	--spacing-8: 4rem;     /* 64 */
+	--spacing-9: 4.5rem;   /* 72 */
+	--spacing-10: 5rem;    /* 80 */
+
+	/* Radios */
+	--radius-md: 0.75rem;  /* 12 — botones (deducido de capturas) */
+	--radius-lg: 1rem;     /* 16 — tarjetas */
+
+	/* Espaciado fluido semántico (móvil → desktop) */
+	--container-padding: clamp(1.25rem, -0.169rem + 6.0545vw, 5rem);  /* 20 → 80 */
+	--space-section: clamp(3rem, 2.2432rem + 3.2291vw, 5rem);         /* 48 → 80 */
+	--card-padding: clamp(1.25rem, 1.1554rem + 0.4036vw, 1.5rem);     /* 20 → 24 */
+
+	/* Layout */
+	--container-max: 69.375rem; /* 1110 */
+
+	/* Tipografía fluida */
+	--text-display-size: clamp(2.375rem, 1.76rem + 2.6236vw, 4rem);    /* 38 → 64 */
+	--text-heading-size: clamp(1.625rem, 1.4831rem + 0.6054vw, 2rem); /* 26 → 32 */
+	--text-card-size: clamp(1.125rem, 1.0777rem + 0.2018vw, 1.25rem); /* 18 → 20 */
+	--text-body-size: 1rem;     /* 16 fijo */
+	--text-button-size: 1rem;   /* 16 fijo */
+	--text-small-size: 0.875rem; /* 14 fijo — eyebrow y menú */
+
+	/* Movimiento */
+	--transition-fast: 150ms ease;
+}
+
+/* ==========================================================================
+   3. Reset
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+* {
+	margin: 0;
+}
+
+html {
+	-webkit-text-size-adjust: 100%;
+	text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	html {
+		scroll-behavior: smooth;
+	}
+}
+
+body {
+	min-height: 100vh;
+	min-height: 100dvh;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+	display: block;
+	max-width: 100%;
+}
+
+img,
+video {
+	height: auto;
+}
+
+input,
+button,
+textarea,
+select {
+	font: inherit;
+	color: inherit;
+}
+
+button {
+	cursor: pointer;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+li,
+figcaption {
+	overflow-wrap: break-word;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	text-wrap: balance;
+}
+
+p {
+	text-wrap: pretty;
+}
+
+:target {
+	scroll-margin-block: var(--spacing-10);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
+}
+
+/* ==========================================================================
+   4. Base
+   ========================================================================== */
+
+body {
+	font-family: var(--font-body);
+	font-size: var(--text-body-size);
+	font-weight: 400;
+	line-height: 1.5;
+	color: var(--color-text-primary);
+	background-color: var(--color-surface-page);
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	font-optical-sizing: auto;
+}
+
+/* Valores por defecto de encabezados (contenido del editor).
+   :where() deja la especificidad en 0 para que las clases de texto ganen. */
+:where(h1, h2, h3, h4, h5, h6) {
+	font-family: var(--font-heading);
+	font-weight: 500;
+}
+
+:where(h1) {
+	font-size: var(--text-display-size);
+	line-height: 1.1;
+	letter-spacing: -0.02em;
+}
+
+:where(h2) {
+	font-size: var(--text-heading-size);
+	line-height: 1.25;
+	letter-spacing: -0.015em;
+}
+
+:where(h3, h4, h5, h6) {
+	font-family: var(--font-body);
+	font-size: var(--text-card-size);
+	font-weight: 600;
+	line-height: 1.25;
+}
+
+:where(a) {
+	color: var(--color-interactive-primary);
+	text-underline-offset: 0.15em;
+}
+
+:where(a:hover) {
+	text-decoration-thickness: 2px;
+}
+
+:focus-visible {
+	outline: 2px solid var(--color-interactive-primary);
+	outline-offset: 3px;
+}
+
+::selection {
+	background-color: var(--color-brand-sand);
+	color: var(--color-text-primary);
+}
+
+/* ==========================================================================
+   5. Estilos de texto (independientes del nivel de encabezado)
+   ========================================================================== */
+
+.oikos-text-display {
+	font-family: var(--font-heading);
+	font-size: var(--text-display-size);
+	font-weight: 500;
+	line-height: 1.1;
+	letter-spacing: -0.02em;
+}
+
+.oikos-text-heading {
+	font-family: var(--font-heading);
+	font-size: var(--text-heading-size);
+	font-weight: 500;
+	line-height: 1.25;
+	letter-spacing: -0.015em;
+}
+
+.oikos-text-body {
+	font-family: var(--font-body);
+	font-size: var(--text-body-size);
+	font-weight: 400;
+	line-height: 1.5;
+	letter-spacing: 0;
+}
+
+.oikos-text-button {
+	font-family: var(--font-body);
+	font-size: var(--text-button-size);
+	font-weight: 500;
+	line-height: 1.4;
+	letter-spacing: 0.02em;
+}
+
+.oikos-text-card {
+	font-family: var(--font-body);
+	font-size: var(--text-card-size);
+	font-weight: 600;
+	line-height: 1.25;
+	letter-spacing: 0;
+}
+
+.oikos-text-eyebrow {
+	font-family: var(--font-body);
+	font-size: var(--text-small-size);
+	font-weight: 500;
+	line-height: 1.4;
+	letter-spacing: 0;
+}
+
+.oikos-text-nav {
+	font-family: var(--font-body);
+	font-size: var(--text-small-size);
+	font-weight: 500;
+	line-height: 1.4;
+	letter-spacing: 0;
+}
+
+.oikos-text-secondary {
+	color: var(--color-text-secondary);
+}
+
+.oikos-text-inverse {
+	color: var(--color-content-inverse);
+}
+
+/* ==========================================================================
+   6. Layout
+   ========================================================================== */
+
+.oikos-container {
+	width: min(var(--container-max), 100% - 2 * var(--container-padding));
+	margin-inline: auto;
+}
+
+.oikos-section {
+	padding-block: var(--space-section);
+}
+
+/* ==========================================================================
+   7. Accesibilidad
+   ========================================================================== */
+
+.screen-reader-text {
+	position: absolute !important;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
+}
+
+.oikos-skip-link {
+	position: absolute;
+	top: var(--spacing-1);
+	left: var(--spacing-1);
+	z-index: 1000;
+	padding: var(--spacing-1) var(--spacing-2);
+	background-color: var(--color-interactive-primary);
+	color: var(--color-content-inverse);
+	border-radius: var(--radius-md);
+	transform: translateY(-200%);
+}
+
+.oikos-skip-link:focus {
+	transform: none;
+}
