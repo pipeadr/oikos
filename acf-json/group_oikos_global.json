@@ -1,0 +1,64 @@
+{
+    "key": "group_oikos_global",
+    "title": "Oikos — Global",
+    "fields": [
+        {
+            "key": "field_oikos_global_tab_analitica",
+            "label": "Analítica",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_oikos_global_gtm_id",
+            "label": "ID del contenedor de Google Tag Manager",
+            "name": "oikos_global_gtm_id",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Formato GTM-XXXXXXX. Si se deja vacío, el sitio no carga Google Tag Manager.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": 20,
+            "allow_in_bindings": 0,
+            "placeholder": "GTM-XXXXXXX",
+            "prepend": "",
+            "append": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "oikos-global"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Ajustes globales del sitio Oikos.",
+    "show_in_rest": 0,
+    "modified": 1794168000
+}

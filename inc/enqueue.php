@@ -35,6 +35,20 @@ function oikos_enqueue_assets() {
 		)
 	);
 
+	// Eventos al dataLayer: solo si GTM está configurado y CF7 está activo.
+	if ( '' !== oikos_gtm_id() && defined( 'WPCF7_VERSION' ) ) {
+		wp_enqueue_script(
+			'oikos-analytics',
+			oikos_asset_uri( 'js/analytics.js' ),
+			array(),
+			oikos_asset_version( 'js/analytics.js' ),
+			array(
+				'strategy'  => 'defer',
+				'in_footer' => true,
+			)
+		);
+	}
+
 	oikos_enqueue_template_assets();
 }
 add_action( 'wp_enqueue_scripts', 'oikos_enqueue_assets' );

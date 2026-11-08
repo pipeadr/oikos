@@ -131,8 +131,12 @@ Las 3 páginas de terapia (pareja, individual, familiar) usan **la misma plantil
 ## Accesibilidad
 Contraste AA, foco visible, navegación por teclado (menú móvil, acordeones, carruseles, trivia, agendador), `prefers-reduced-motion` respetado.
 
-## Analítica (dataLayer para GTM)
-Empujar eventos en: clic en "Agenda tu cita" (con ubicación), clic en WhatsApp, envío exitoso de cada CF7 (con id del formulario), suscripción al newsletter, pasos del agendamiento.
+## Analítica (GTM)
+- Contenedor: **GTM-P6B7XQZW**. El ID se guarda en "Oikos — Global"; el tema imprime el snippet oficial (en `<head>` y `wp_body_open`) solo si el campo tiene valor.
+- **Los eventos se configuran en GTM**, no en el tema. El tema solo da puntos de enganche estables:
+  - Atributos `data-track="<accion>"` y `data-track-location="<seccion>"` en todo CTA relevante (Agenda tu cita, WhatsApp, Pide tu cita, teléfono, correo, suscripción, enlaces a servicios). Los nombres no cambian aunque cambie el diseño.
+  - **Excepciones que sí empujan al `dataLayer`** desde el tema, porque GTM no las detecta solo: envío exitoso de CF7 (`wpcf7mailsent`, con id y nombre del formulario) y los pasos del agendamiento.
+- En GTM, las etiquetas de GA4 se disparan solo con el hostname de producción; en pre-producción se valida con el modo Vista previa.
 
 ## Forma de trabajo con Claude
 - **Primero plan, después código.** Para cada componente o página, proponer el plan (archivos, campos ACF, markup) y esperar aprobación.
@@ -150,3 +154,10 @@ Empujar eventos en: clic en "Agenda tu cita" (con ubicación), clic en WhatsApp,
 - [ ] ¿Atención presencial también en Bogotá o solo Medellín? (afecta SEO local y schema).
 - [ ] ¿Páginas individuales por profesional? (recomendado para E-E-A-T en temas de salud).
 - [ ] Acceso a Figma vía MCP (asiento Dev) o seguir con capturas.
+
+## Checklist salida a producción
+- [ ] Desmarcar "Disuadir a los motores de búsqueda" (Ajustes → Lectura).
+- [ ] Quitar la contraseña del sitio.
+- [ ] Revisar en Yoast que ninguna página importante esté en noindex.
+- [ ] Enviar el sitemap a Search Console.
+- [ ] Confirmar en GTM que la condición de hostname apunta al dominio final y publicar.

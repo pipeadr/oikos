@@ -57,3 +57,25 @@ function oikos_acf_options_pages() {
 	);
 }
 add_action( 'acf/init', 'oikos_acf_options_pages' );
+
+/**
+ * Valida el formato del ID de Google Tag Manager al guardar.
+ *
+ * @param bool|string $valid Resultado de validación previo.
+ * @param mixed       $value Valor enviado.
+ * @return bool|string
+ */
+function oikos_acf_validate_gtm_id( $valid, $value ) {
+	if ( true !== $valid ) {
+		return $valid;
+	}
+
+	$value = strtoupper( trim( (string) $value ) );
+
+	if ( '' !== $value && ! preg_match( OIKOS_GTM_ID_PATTERN, $value ) ) {
+		return __( 'El ID debe tener el formato GTM-XXXXXXX.', 'oikos' );
+	}
+
+	return $valid;
+}
+add_filter( 'acf/validate_value/name=oikos_global_gtm_id', 'oikos_acf_validate_gtm_id', 10, 2 );
