@@ -1,0 +1,175 @@
+/**
+ * Oikos — Guía de estilos (solo plantilla templates/style-guide.php).
+ */
+
+.oikos-sg__intro {
+	display: grid;
+	gap: var(--spacing-2);
+	padding-block: var(--space-section) 0;
+}
+
+.oikos-sg__viewport {
+	font-size: var(--text-small-size);
+	font-weight: 600;
+	color: var(--color-interactive-primary);
+}
+
+.oikos-sg__viewport.is-overflowing {
+	color: #b00020;
+}
+
+.oikos-sg h2.oikos-text-heading {
+	margin-block-end: var(--spacing-4);
+}
+
+.oikos-sg__subtitle {
+	margin-block: var(--spacing-4) var(--spacing-2);
+}
+
+.oikos-sg__band {
+	background-color: var(--color-surface-base);
+}
+
+.oikos-sg__meta {
+	font-size: var(--text-small-size);
+	color: var(--color-text-secondary);
+}
+
+.oikos-sg code {
+	font-size: var(--text-small-size);
+	overflow-wrap: anywhere;
+}
+
+/* Colores */
+.oikos-sg__swatches {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(min(100%, 12rem), 1fr));
+	gap: var(--spacing-3);
+	padding: 0;
+	list-style: none;
+}
+
+.oikos-sg__swatch {
+	display: grid;
+	gap: 0.25rem;
+}
+
+.oikos-sg__swatch-color {
+	height: 5rem;
+	margin-block-end: var(--spacing-1);
+	border: 1px solid var(--color-border-default);
+	border-radius: var(--radius-md);
+}
+
+/* Tipografía */
+.oikos-sg__type-row {
+	display: grid;
+	gap: var(--spacing-1);
+	padding-block: var(--spacing-3);
+	border-block-end: 1px solid var(--color-border-default);
+}
+
+.oikos-sg__type-row > :last-child {
+	max-width: 46rem;
+}
+
+/* Espaciado y radios */
+.oikos-sg__spacing,
+.oikos-sg__radii {
+	display: grid;
+	gap: var(--spacing-2);
+	padding: 0;
+	list-style: none;
+}
+
+.oikos-sg__spacing li {
+	display: grid;
+	grid-template-columns: minmax(0, 11rem) minmax(0, 1fr);
+	align-items: center;
+	gap: var(--spacing-1) var(--spacing-2);
+}
+
+.oikos-sg__spacing .oikos-sg__meta {
+	grid-column: 2;
+}
+
+.oikos-sg__bar {
+	display: block;
+	height: var(--spacing-2);
+	background-color: var(--color-brand-sage);
+	border-radius: 2px;
+}
+
+.oikos-sg__radii {
+	grid-template-columns: repeat(auto-fill, minmax(min(100%, 12rem), 1fr));
+}
+
+.oikos-sg__radii li {
+	display: grid;
+	gap: 0.25rem;
+}
+
+.oikos-sg__radius {
+	width: 6rem;
+	height: 6rem;
+	margin-block-end: var(--spacing-1);
+	background-color: var(--color-interactive-primary);
+}
+
+/* Botones */
+.oikos-sg__surface {
+	display: grid;
+	justify-items: start;
+	gap: var(--spacing-2);
+	margin-block-end: var(--spacing-3);
+	padding: var(--card-padding);
+	border-radius: var(--radius-lg);
+}
+
+.oikos-sg__surface--page {
+	border: 1px solid var(--color-border-default);
+}
+
+.oikos-sg__surface--cream {
+	background-color: var(--color-surface-base);
+}
+
+.oikos-sg__surface--dark {
+	background: linear-gradient(135deg, var(--color-interactive-primary), var(--color-brand-sage));
+}
+
+.oikos-sg__surface--dark .oikos-sg__meta {
+	color: var(--color-content-inverse);
+}
+
+.oikos-sg__buttons {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--spacing-2);
+}
+
+/* Tarjetas */
+.oikos-sg__cards {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+	gap: var(--spacing-3);
+	margin-block-end: var(--spacing-3);
+}
+
+.oikos-sg__cards .oikos-card {
+	align-items: flex-start;
+}
+
+.oikos-sg__cards .oikos-card .oikos-text-card {
+	text-align: left;
+}
+
+/* Contenedor */
+.oikos-sg__container-demo {
+	display: grid;
+	gap: 0.25rem;
+	padding: var(--spacing-3);
+	background: repeating-linear-gradient(45deg, var(--color-surface-base) 0 10px, transparent 10px 20px);
+	border: 1px dashed var(--color-interactive-primary);
+	border-radius: var(--radius-md);
+}
