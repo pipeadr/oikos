@@ -79,3 +79,25 @@ function oikos_acf_validate_gtm_id( $valid, $value ) {
 	return $valid;
 }
 add_filter( 'acf/validate_value/name=oikos_global_gtm_id', 'oikos_acf_validate_gtm_id', 10, 2 );
+
+/**
+ * Valida que el número de WhatsApp tenga solo dígitos (con indicativo).
+ *
+ * @param bool|string $valid Resultado de validación previo.
+ * @param mixed       $value Valor enviado.
+ * @return bool|string
+ */
+function oikos_acf_validate_whatsapp( $valid, $value ) {
+	if ( true !== $valid ) {
+		return $valid;
+	}
+
+	$value = trim( (string) $value );
+
+	if ( '' !== $value && ! preg_match( '/^\d{8,15}$/', $value ) ) {
+		return __( 'Escribe solo dígitos con el indicativo del país, sin + ni espacios (ej.: 573001234567).', 'oikos' );
+	}
+
+	return $valid;
+}
+add_filter( 'acf/validate_value/name=oikos_global_whatsapp', 'oikos_acf_validate_whatsapp', 10, 2 );

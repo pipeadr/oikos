@@ -3,6 +3,570 @@
     "title": "Oikos — Global",
     "fields": [
         {
+            "key": "field_oikos_global_tab_marca",
+            "label": "Marca",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_oikos_global_marca_nombre",
+            "label": "Nombre de la marca",
+            "name": "oikos_global_marca_nombre",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Se usa en el copyright del footer y como texto alternativo de respaldo de los logos.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Oikos Psicología",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_oikos_global_logo_oscuro",
+            "label": "Logo para fondos oscuros",
+            "name": "oikos_global_logo_oscuro",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "Versión clara del logo para el footer (fondo verde y café). SVG o PNG. El SVG debe traer viewBox; su tamaño lo controla el tema. El texto alternativo se toma de la biblioteca de medios (si está vacío se usa el nombre de la marca). Si no hay logo, se muestra el nombre del sitio.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "id",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "svg,png",
+            "allow_in_bindings": 0,
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_oikos_global_tab_contacto",
+            "label": "Contacto",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_oikos_global_telefono",
+            "label": "Teléfono",
+            "name": "oikos_global_telefono",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Como se muestra en el sitio. El enlace tel: se arma solo con los dígitos.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "+57 300 123 4567",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_oikos_global_whatsapp",
+            "label": "WhatsApp (número)",
+            "name": "oikos_global_whatsapp",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Solo dígitos con indicativo de país, sin + ni espacios. Ej.: 573001234567.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": 15,
+            "allow_in_bindings": 0,
+            "placeholder": "573001234567",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_oikos_global_whatsapp_mensaje",
+            "label": "Mensaje inicial de WhatsApp",
+            "name": "oikos_global_whatsapp_mensaje",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Texto que aparece prellenado al abrir el chat. Opcional.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "rows": 2,
+            "placeholder": "",
+            "new_lines": "br"
+        },
+        {
+            "key": "field_oikos_global_correo",
+            "label": "Correo",
+            "name": "oikos_global_correo",
+            "aria-label": "",
+            "type": "email",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_oikos_global_direccion",
+            "label": "Dirección",
+            "name": "oikos_global_direccion",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Cada línea se muestra en un renglón.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "rows": 3,
+            "placeholder": "",
+            "new_lines": "br"
+        },
+        {
+            "key": "field_oikos_global_contacto_titulo",
+            "label": "Título de la columna Contacto (footer)",
+            "name": "oikos_global_contacto_titulo",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Contacto",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_oikos_global_tab_redes",
+            "label": "Redes",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_oikos_global_redes",
+            "label": "Redes sociales",
+            "name": "oikos_global_redes",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "Se muestran en este orden en el footer. Para WhatsApp puedes dejar la URL vacía: se usa el número de la pestaña Contacto.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "table",
+            "pagination": 0,
+            "min": 0,
+            "max": 0,
+            "collapsed": "",
+            "button_label": "Agregar red",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_oikos_global_redes_red",
+                    "label": "Red",
+                    "name": "red",
+                    "aria-label": "",
+                    "type": "select",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "30",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "whatsapp": "WhatsApp",
+                        "instagram": "Instagram",
+                        "facebook": "Facebook",
+                        "x": "X (Twitter)",
+                        "tiktok": "TikTok",
+                        "youtube": "YouTube",
+                        "linkedin": "LinkedIn"
+                    },
+                    "default_value": "instagram",
+                    "return_format": "value",
+                    "multiple": 0,
+                    "allow_null": 0,
+                    "allow_in_bindings": 0,
+                    "ui": 0,
+                    "ajax": 0,
+                    "placeholder": "",
+                    "create_options": 0,
+                    "save_options": 0,
+                    "parent_repeater": "field_oikos_global_redes"
+                },
+                {
+                    "key": "field_oikos_global_redes_url",
+                    "label": "URL",
+                    "name": "url",
+                    "aria-label": "",
+                    "type": "url",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "70",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "allow_in_bindings": 0,
+                    "placeholder": "https://",
+                    "parent_repeater": "field_oikos_global_redes"
+                }
+            ]
+        },
+        {
+            "key": "field_oikos_global_tab_cta",
+            "label": "CTA Agenda tu cita",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_oikos_global_cta_texto",
+            "label": "Texto del botón (header)",
+            "name": "oikos_global_cta_texto",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Agenda tu cita",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_oikos_global_cta_enlace",
+            "label": "Enlace del botón",
+            "name": "oikos_global_cta_enlace",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "Página o URL a la que llevan todos los botones \"Agenda tu cita\".",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "allow_in_bindings": 0
+        },
+        {
+            "key": "field_oikos_global_cta_footer_titulo",
+            "label": "Título del CTA del footer",
+            "name": "oikos_global_cta_footer_titulo",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "¿Todo listo para agendar tu cita?",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_oikos_global_cta_footer_boton",
+            "label": "Texto del botón del footer",
+            "name": "oikos_global_cta_footer_boton",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Agenda tu cita ahora",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_oikos_global_tab_footer",
+            "label": "Footer y newsletter",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_oikos_global_footer_lema",
+            "label": "Lema",
+            "name": "oikos_global_footer_lema",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Sana la raíz, transforma el vínculo",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_oikos_global_newsletter_titulo",
+            "label": "Título del newsletter",
+            "name": "oikos_global_newsletter_titulo",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Recibe ideas para tus relaciones",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_oikos_global_newsletter_texto",
+            "label": "Texto del newsletter",
+            "name": "oikos_global_newsletter_texto",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Contenido práctico sobre pareja, familia y bienestar emocional, directo a tu correo.",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "rows": 2,
+            "placeholder": "",
+            "new_lines": "br"
+        },
+        {
+            "key": "field_oikos_global_newsletter_placeholder",
+            "label": "Placeholder del campo de correo",
+            "name": "oikos_global_newsletter_placeholder",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Tu correo electrónico",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_oikos_global_newsletter_boton",
+            "label": "Texto del botón",
+            "name": "oikos_global_newsletter_boton",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Suscribirme",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_oikos_global_newsletter_action",
+            "label": "URL de envío del formulario",
+            "name": "oikos_global_newsletter_action",
+            "aria-label": "",
+            "type": "url",
+            "instructions": "Dirección (action) del formulario que da la plataforma de newsletter. Mientras esté vacía, el formulario no se envía y muestra el mensaje de abajo.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "allow_in_bindings": 0,
+            "placeholder": "https://"
+        },
+        {
+            "key": "field_oikos_global_newsletter_mensaje_pendiente",
+            "label": "Mensaje mientras no hay plataforma",
+            "name": "oikos_global_newsletter_mensaje_pendiente",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Muy pronto podrás suscribirte. ¡Gracias por tu interés!",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
             "key": "field_oikos_global_tab_analitica",
             "label": "Analítica",
             "name": "",
@@ -60,5 +624,5 @@
     "active": true,
     "description": "Ajustes globales del sitio Oikos.",
     "show_in_rest": 0,
-    "modified": 1794168000
+    "modified": 1794181420
 }
