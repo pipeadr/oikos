@@ -52,6 +52,20 @@
 	--color-brand-sage: #80957d;
 	--color-brand-sand: #d1a980;
 	--color-brand-caramel: #a87a53;
+	/* Caramelo oscurecido para texto crema encima (4.61:1, AA). */
+	--color-brand-caramel-strong: #926641;
+
+	/* Gradiente de bandas destacadas: verde → sage. Termina en la mezcla
+	   50 % verde / 50 % sage (#567561, 4.7:1 con texto crema) para que el
+	   texto inverse cumpla AA en todo el recorrido; sage puro daría 2.97:1. */
+	--gradient-brand: linear-gradient(
+		120deg,
+		var(--color-interactive-primary) 0%,
+		color-mix(in srgb, var(--color-interactive-primary) 50%, var(--color-brand-sage)) 100%
+	);
+
+	/* Sombras */
+	--shadow-float: 0 0.5rem 1.5rem rgb(33 33 33 / 0.12), 0 0.0625rem 0.125rem rgb(33 33 33 / 0.08);
 
 	/* Fuentes */
 	--font-fallback: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
@@ -82,6 +96,13 @@
 	/* Layout */
 	--container-max: 69.375rem; /* 1110 */
 
+	/* Header flotante (fijo). --header-offset = espacio que ocupa sobre el
+	   contenido; las páginas sin hero lo dejan como padding superior. */
+	--z-header: 100;
+	--header-top: clamp(0.75rem, 0.2771rem + 2.0182vw, 2rem);           /* 12 → 32 */
+	--header-bar-height: clamp(4rem, 3.7162rem + 1.2109vw, 4.75rem);    /* 64 → 76 */
+	--header-offset: calc(var(--header-top) + var(--header-bar-height) + var(--spacing-3));
+
 	/* Tipografía fluida */
 	--text-display-size: clamp(2.375rem, 1.76rem + 2.6236vw, 4rem);    /* 38 → 64 */
 	--text-heading-size: clamp(1.625rem, 1.4831rem + 0.6054vw, 2rem); /* 26 → 32 */
@@ -111,6 +132,7 @@
 html {
 	-webkit-text-size-adjust: 100%;
 	text-size-adjust: 100%;
+	scroll-padding-top: var(--header-offset); /* anclas no quedan bajo el header fijo */
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -175,9 +197,6 @@ p {
 	text-wrap: pretty;
 }
 
-:target {
-	scroll-margin-block: var(--spacing-10);
-}
 
 @media (prefers-reduced-motion: reduce) {
 	*,

@@ -2,9 +2,11 @@
  * Oikos — Componente Button (tamaño Medium).
  *
  * <a class="oikos-btn oikos-btn--primary">…</a>
- * Variantes: --primary, --secondary, --light.
- * Modificador: --block-mobile (ancho completo por debajo de 768 px; solo
- * para el CTA principal de una sección).
+ * Variantes: --primary, --secondary, --light, --tonal.
+ * Modificadores:
+ * - --compact: 44 px de alto (CTA del header; sigue siendo táctil).
+ * - --block-mobile: ancho completo por debajo de 768 px; solo para el CTA
+ *   principal de una sección.
  */
 
 .oikos-btn {
@@ -76,6 +78,27 @@
 
 .oikos-btn--light:active {
 	background-color: color-mix(in srgb, var(--btn-bg) 86%, var(--btn-mix));
+}
+
+/* Sobre fondos café (interactive/secondary): caramelo oscurecido para
+   que el texto crema cumpla AA, con borde crema que lo separa del fondo. */
+.oikos-btn--tonal {
+	--btn-bg: var(--color-brand-caramel-strong);
+	--btn-color: var(--color-content-inverse);
+
+	box-shadow: inset 0 0 0 1px rgb(251 245 233 / 0.24);
+}
+
+.oikos-btn--tonal:focus-visible {
+	box-shadow:
+		0 0 0 2px var(--color-interactive-secondary),
+		0 0 0 4px var(--color-content-inverse);
+}
+
+.oikos-btn--compact {
+	min-height: 2.75rem; /* 44 */
+	padding-block: var(--spacing-1);
+	padding-inline: var(--spacing-2);
 }
 
 @media (max-width: 47.9375rem) { /* < 768 */
