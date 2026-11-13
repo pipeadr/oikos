@@ -23,7 +23,10 @@ $oikos_hero_link = oikos_link_or_cta( oikos_field( 'oikos_home_hero_boton', $oik
 $oikos_hero_cards = array();
 foreach ( (array) oikos_field( 'oikos_home_hero_tarjetas', $oikos_front_id, array() ) as $oikos_row ) {
 	if ( ! empty( $oikos_row['texto'] ) ) {
-		$oikos_hero_cards[] = (string) $oikos_row['texto'];
+		$oikos_hero_cards[] = array(
+			'text'        => (string) $oikos_row['texto'],
+			'description' => isset( $oikos_row['descripcion'] ) ? (string) $oikos_row['descripcion'] : '',
+		);
 	}
 }
 
@@ -78,9 +81,10 @@ foreach ( (array) oikos_field( 'oikos_home_acompanamiento_tarjetas', $oikos_fron
 
 	$oikos_text            = isset( $oikos_row['texto'] ) ? trim( (string) $oikos_row['texto'] ) : '';
 	$oikos_service_cards[] = array(
-		'url'   => get_permalink( $oikos_page_id ),
-		'text'  => '' !== $oikos_text ? $oikos_text : get_the_title( $oikos_page_id ),
-		'color' => isset( $oikos_row['color'] ) ? (string) $oikos_row['color'] : 'arena',
+		'url'         => get_permalink( $oikos_page_id ),
+		'text'        => '' !== $oikos_text ? $oikos_text : get_the_title( $oikos_page_id ),
+		'color'       => isset( $oikos_row['color'] ) ? (string) $oikos_row['color'] : 'arena',
+		'description' => isset( $oikos_row['descripcion'] ) ? (string) $oikos_row['descripcion'] : '',
 	);
 }
 
