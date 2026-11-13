@@ -1,0 +1,112 @@
+/**
+ * Oikos — Sección foto + texto.
+ *
+ * .oikos-media-text                  sección (con .oikos-section)
+ *   __inner                          grid: foto | texto
+ *     __media > __img                foto cuadrada con radius/lg
+ *     __content                      eyebrow + título, texto y botón
+ *
+ * Modificadores: --image-left | --image-right, --bg-white | --bg-cream,
+ * --no-image (solo texto).
+ *
+ * En el HTML la foto siempre va primero; "derecha" se resuelve con el grid,
+ * así en móvil la foto queda arriba en ambos casos.
+ *
+ * Medidas del diseño (1366): columnas 1:1 (~523 px), 64 px entre foto y
+ * texto, texto centrado verticalmente respecto a la foto.
+ */
+
+.oikos-media-text--bg-white {
+	background-color: var(--color-surface-page);
+}
+
+.oikos-media-text--bg-cream {
+	background-color: var(--color-surface-base);
+}
+
+.oikos-media-text__inner {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-template-areas: "media content";
+	align-items: center;
+	gap: var(--spacing-8); /* 64 */
+}
+
+.oikos-media-text--image-right .oikos-media-text__inner {
+	grid-template-areas: "content media";
+}
+
+.oikos-media-text--no-image .oikos-media-text__inner {
+	grid-template-columns: minmax(0, 1fr);
+	grid-template-areas: "content";
+}
+
+/* Foto */
+.oikos-media-text__media {
+	grid-area: media;
+	min-width: 0;
+}
+
+.oikos-media-text__img {
+	width: 100%;
+	height: auto;
+	aspect-ratio: 1;
+	object-fit: cover;
+	border-radius: var(--radius-lg);
+}
+
+/* Texto */
+.oikos-media-text__content {
+	grid-area: content;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: var(--spacing-3); /* 24 */
+	min-width: 0;
+}
+
+.oikos-media-text__heading {
+	display: flex;
+	flex-direction: column;
+	gap: var(--spacing-2); /* 16 entre eyebrow y título */
+}
+
+.oikos-media-text__text {
+	display: flex;
+	flex-direction: column;
+	gap: var(--spacing-2);
+}
+
+/* ==========================================================================
+   Tablet (768–1023): mismas dos columnas, foto más angosta
+   ========================================================================== */
+
+@media (max-width: 63.9375rem) {
+	.oikos-media-text__inner {
+		grid-template-columns: 2fr 3fr;
+		gap: var(--spacing-5); /* 40 */
+	}
+
+	.oikos-media-text--image-right .oikos-media-text__inner {
+		grid-template-columns: 3fr 2fr;
+	}
+}
+
+/* ==========================================================================
+   Móvil (< 768): foto arriba a ancho completo, texto debajo
+   ========================================================================== */
+
+@media (max-width: 47.9375rem) {
+	.oikos-media-text__inner,
+	.oikos-media-text--image-right .oikos-media-text__inner {
+		grid-template-columns: minmax(0, 1fr);
+		grid-template-areas:
+			"media"
+			"content";
+		gap: var(--spacing-4); /* 32 */
+	}
+
+	.oikos-media-text__content {
+		align-items: stretch; /* botón --block-mobile a ancho completo */
+	}
+}

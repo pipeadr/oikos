@@ -41,6 +41,11 @@ function oikos_setup() {
 		)
 	);
 
+	// Fotos cuadradas (sección foto + texto). Recorte exacto: así el srcset solo
+	// ofrece archivos cuadrados y el navegador elige por el ancho real.
+	add_image_size( 'oikos-square', 1100, 1100, true );    // 2× de la columna desktop (~523).
+	add_image_size( 'oikos-square-sm', 640, 640, true );   // tablet y móvil.
+
 	register_nav_menus(
 		array(
 			'primary'                => __( 'Menú principal', 'oikos' ),

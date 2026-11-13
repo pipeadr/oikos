@@ -60,4 +60,23 @@ get_header();
 
 get_template_part( 'template-parts/sections/hero-cover', null, $oikos_hero );
 
+// El método (foto + texto).
+get_template_part(
+	'template-parts/sections/media-text',
+	null,
+	array(
+		'image_id'       => (int) oikos_field( 'oikos_home_metodo_imagen', $oikos_front_id, 0 ),
+		'image_position' => (string) oikos_field( 'oikos_home_metodo_posicion_imagen', $oikos_front_id, 'left' ),
+		'background'     => (string) oikos_field( 'oikos_home_metodo_fondo', $oikos_front_id, 'white' ),
+		'eyebrow'        => (string) oikos_field( 'oikos_home_metodo_eyebrow', $oikos_front_id ),
+		'title'          => (string) oikos_field( 'oikos_home_metodo_titulo', $oikos_front_id ),
+		'heading_level'  => 2,
+		'text'           => (string) oikos_field( 'oikos_home_metodo_texto', $oikos_front_id ),
+		'link'           => (array) oikos_field( 'oikos_home_metodo_boton', $oikos_front_id, array() ),
+		'button_variant' => (string) oikos_field( 'oikos_home_metodo_boton_variante', $oikos_front_id, 'secondary' ),
+		'track'          => 'conoce-metodo',
+		'track_location' => 'home-metodo',
+	)
+);
+
 get_footer();
