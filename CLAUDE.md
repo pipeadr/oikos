@@ -97,7 +97,8 @@ Modificadores de color: `.oikos-text-secondary`, `.oikos-text-inverse`.
 - **Tarjeta** (`assets/css/card.css`): `.oikos-card` → surface/base, `--card-padding`, gap spacing/2, `--radius-lg`, borde 1 px border/default.
 
 ### Header y footer
-- Header fijo (`template-parts/layout/site-header.php`, `header.css`, `header.js`): se esconde al bajar y aparece al subir. Desktop ≥ 1024 con píldoras; < 1024 hamburguesa con panel dentro de la barra; < 360 el CTA pasa al panel.
+- Header fijo y **siempre visible** (`template-parts/layout/site-header.php`, `header.css`, `header.js`). Arriba del todo la barra es plana (sobre el hero sin borde; en páginas internas con borde border/default); al dejar el inicio recibe `.is-scrolled` y lleva `--shadow-float` (lo detecta un `IntersectionObserver` sobre un centinela, sin listener de scroll). Desktop ≥ 1024 con píldoras; < 1024 hamburguesa con panel dentro de la barra; < 360 el CTA pasa al panel. En pantallas bajas (`max-height: 500px`, teléfono horizontal) se reducen `--header-top` y `--header-bar-height`.
+- Compensación del header fijo: `main` lleva `padding-top: var(--header-offset)` (salvo con hero) y `html` lleva `scroll-padding-top: var(--header-offset)` (más la barra de administración de WP). Se usa `scroll-padding-top` y **no** `scroll-margin-top` porque además evita que el foco de teclado quede bajo la barra (WCAG 2.4.11). No combinar los dos: se suman.
 - Plantillas con hero a sangre: `add_filter( 'oikos_has_hero', '__return_true' );` → body `oikos-has-hero` y `main` sin padding superior (el header flota sobre la foto).
 - Menú principal: walker `Oikos_Primary_Nav_Walker` (`inc/nav.php`). Un ítem con hijos se vuelve `<button>` (su URL no se usa); el primer hijo debe ser la página general.
 - Columnas del footer: el título es el **nombre del menú** asignado. Ubicaciones: `primary`, `footer-acompanamientos`, `footer-contenido`, `footer-oikos`, `footer-legal`.
