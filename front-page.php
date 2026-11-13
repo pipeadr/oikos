@@ -18,19 +18,7 @@ if ( ! is_page() ) {
 $oikos_front_id = get_queried_object_id();
 
 // Botón del hero: el del campo o, si está vacío, el CTA global "Agenda tu cita".
-$oikos_hero_link = oikos_field( 'oikos_home_hero_boton', $oikos_front_id, array() );
-$oikos_hero_link = is_array( $oikos_hero_link ) ? $oikos_hero_link : array();
-
-if ( empty( $oikos_hero_link['url'] ) ) {
-	$oikos_cta       = oikos_cta();
-	$oikos_hero_link = array(
-		'url'    => $oikos_cta['url'],
-		'title'  => $oikos_cta['text'],
-		'target' => $oikos_cta['target'],
-	);
-} elseif ( empty( $oikos_hero_link['title'] ) ) {
-	$oikos_hero_link['title'] = oikos_cta()['text'];
-}
+$oikos_hero_link = oikos_link_or_cta( oikos_field( 'oikos_home_hero_boton', $oikos_front_id, array() ) );
 
 $oikos_hero_cards = array();
 foreach ( (array) oikos_field( 'oikos_home_hero_tarjetas', $oikos_front_id, array() ) as $oikos_row ) {
