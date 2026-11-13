@@ -67,7 +67,7 @@ Definidos en `assets/css/base.css`. Los nombres siguen los tokens del Figma: `gr
 | derivado (AA con texto crema) | `--color-brand-caramel-strong` | #926641 (4.61:1) |
 | gradiente de bandas | `--gradient-brand` | interactive/primary → mezcla 50 % con sage (#567561, 4.7:1). Sage puro con texto crema da 2.97:1: no usarlo bajo texto |
 
-Otros tokens: `--shadow-float` (barras y desplegables flotantes), `--z-header`, `--header-top`, `--header-bar-height`, `--header-offset` (espacio que ocupa el header fijo; `main` lo usa como padding superior).
+Otros tokens: `--shadow-float` (barras y desplegables flotantes), `--shadow-lift` y `--transition-lift` (tarjetas que se elevan al hover), `--z-header`, `--header-top`, `--header-bar-height`, `--header-offset` (espacio que ocupa el header fijo; `main` lo usa como padding superior).
 
 ### Tipografía
 - **Bricolage Grotesque** (`--font-heading`, solo peso 500, con eje de tamaño óptico `opsz`) y **Figtree** (`--font-body`, variable 400–600). Auto-hospedadas en `assets/fonts` (woff2, subset latin, licencias OFL incluidas), `font-display: swap`, ambas precargadas (`oikos_preload_fonts()` en `inc/enqueue.php`).
@@ -80,6 +80,7 @@ Otros tokens: `--shadow-float` (barras y desplegables flotantes), `--z-header`, 
 | Body | `.oikos-text-body` | Figtree 400 | 16 | 150 % | 0 |
 | Button | `.oikos-text-button` | Figtree 500 | 16 | 140 % | 2 % |
 | Card *(deducido)* | `.oikos-text-card` | Figtree 600 | 18 → 20 | 125 % | 0 |
+| Step *(deducido)* | `.oikos-text-step` | Bricolage 500 | 28 → 48 | 110 % | -2 % |
 | Eyebrow *(deducido)* | `.oikos-text-eyebrow` | Figtree 500 | 14 | 140 % | 0 |
 | Nav *(deducido)* | `.oikos-text-nav` | Figtree 500 | 14 | 140 % | 0 |
 
@@ -103,7 +104,8 @@ Modificadores de color: `.oikos-text-secondary`, `.oikos-text-inverse`.
 - Menú principal: walker `Oikos_Primary_Nav_Walker` (`inc/nav.php`). Un ítem con hijos se vuelve `<button>` (su URL no se usa); el primer hijo debe ser la página general.
 - Columnas del footer: el título es el **nombre del menú** asignado. Ubicaciones: `primary`, `footer-acompanamientos`, `footer-contenido`, `footer-oikos`, `footer-legal`.
 - Logos: `template-parts/components/logo.php` + `oikos_logo_img()`. Acepta SVG sin width/height (el alto lo da el CSS); alt de la biblioteca o, si falta, `oikos_global_marca_nombre`.
-- Íconos: `oikos_the_icon( 'nombre' )` con SVG de `assets/img/icons/`.
+- Íconos: `oikos_the_icon( 'nombre' )` con SVG de `assets/img/icons/`. Ilustraciones decorativas: `oikos_the_decor( 'decor-lineas', 'clase' )` (SVG en línea de `assets/img/`, `aria-hidden`, tamaño por CSS).
+- Botones que caen al CTA global si el campo está vacío: `oikos_link_or_cta( $link )`.
 - Newsletter sin plataforma: si `oikos_global_newsletter_action` está vacío, el formulario no se envía y muestra el mensaje pendiente. Para conectar: ese campo o los filtros `oikos_newsletter_form_action` / `oikos_newsletter_email_name` y la acción `oikos_newsletter_form_fields`.
 
 ### Responsive
@@ -153,7 +155,7 @@ Las 3 páginas de terapia (pareja, individual, familiar) usan **la misma plantil
 - **Header** (nav flotante crema con píldoras + CTA) y **footer** (banda newsletter verde + bloque café con CTA, menús, contacto, redes). Menús administrables desde Apariencia → Menús.
 - **Hero** en sus variantes (foto a pantalla completa con texto; foto + texto en dos columnas; foto en B/N con texto).
 - **Grilla de tarjetas de temas** (beige, 2×3 o 2×4).
-- **Pasos numerados** ("Cómo funciona"/"Así es una sesión", 3 pasos).
+- **Pasos numerados** ("Cómo funciona"/"Así es una sesión", 3 pasos): `template-parts/sections/steps.php` + `steps.css`. Args `layout` (hoy `split`; nuevas disposiciones = agregar a la lista blanca del PHP y un modificador `--layout-<nombre>`) y `background` (`none` | `cream` | `white`).
 - **Badges** (3 tarjetas, contenido global).
 - **Carrusel de servicios** (Servicios general, Nosotros, Contacto).
 - **Tarjetas de modalidad** (Virtual / Presencial; Nosotros y sidebar del blog).

@@ -18,19 +18,7 @@ if ( ! is_page() ) {
 $oikos_front_id = get_queried_object_id();
 
 // Botón del hero: el del campo o, si está vacío, el CTA global "Agenda tu cita".
-$oikos_hero_link = oikos_field( 'oikos_home_hero_boton', $oikos_front_id, array() );
-$oikos_hero_link = is_array( $oikos_hero_link ) ? $oikos_hero_link : array();
-
-if ( empty( $oikos_hero_link['url'] ) ) {
-	$oikos_cta       = oikos_cta();
-	$oikos_hero_link = array(
-		'url'    => $oikos_cta['url'],
-		'title'  => $oikos_cta['text'],
-		'target' => $oikos_cta['target'],
-	);
-} elseif ( empty( $oikos_hero_link['title'] ) ) {
-	$oikos_hero_link['title'] = oikos_cta()['text'];
-}
+$oikos_hero_link = oikos_link_or_cta( oikos_field( 'oikos_home_hero_boton', $oikos_front_id, array() ) );
 
 $oikos_hero_cards = array();
 foreach ( (array) oikos_field( 'oikos_home_hero_tarjetas', $oikos_front_id, array() ) as $oikos_row ) {
@@ -79,4 +67,66 @@ get_template_part(
 	)
 );
 
+// Acompañamiento: tarjetas que enlazan a la página de cada servicio.
+$oikos_service_cards = array();
+foreach ( (array) oikos_field( 'oikos_home_acompanamiento_tarjetas', $oikos_front_id, array() ) as $oikos_row ) {
+	$oikos_page_id = isset( $oikos_row['pagina'] ) ? absint( $oikos_row['pagina'] ) : 0;
+
+	if ( ! $oikos_page_id || 'publish' !== get_post_status( $oikos_page_id ) ) {
+		continue;
+	}
+
+	$oikos_text            = isset( $oikos_row['texto'] ) ? trim( (string) $oikos_row['texto'] ) : '';
+	$oikos_service_cards[] = array(
+		'url'   => get_permalink( $oikos_page_id ),
+		'text'  => '' !== $oikos_text ? $oikos_text : get_the_title( $oikos_page_id ),
+		'color' => isset( $oikos_row['color'] ) ? (string) $oikos_row['color'] : 'arena',
+	);
+}
+
+// Pasos.
+$oikos_steps = array();
+foreach ( (array) oikos_field( 'oikos_home_pasos_lista', $oikos_front_id, array() ) as $oikos_row ) {
+	$oikos_steps[] = array(
+		'title' => isset( $oikos_row['titulo'] ) ? (string) $oikos_row['titulo'] : '',
+		'text'  => isset( $oikos_row['texto'] ) ? (string) $oikos_row['texto'] : '',
+	);
+}
+?>
+<div class="oikos-home-journey">
+	<?php oikos_the_decor( 'decor-lineas', 'oikos-home-journey__decor' ); ?>
+
+	<?php
+	get_template_part(
+		'template-parts/sections/service-cards',
+		null,
+		array(
+			'title'          => (string) oikos_field( 'oikos_home_acompanamiento_titulo', $oikos_front_id ),
+			'subtitle'       => (string) oikos_field( 'oikos_home_acompanamiento_subtitulo', $oikos_front_id ),
+			'heading_level'  => 2,
+			'cards'          => $oikos_service_cards,
+			'link'           => (array) oikos_field( 'oikos_home_acompanamiento_boton', $oikos_front_id, array() ),
+			'track_location' => 'home-acompanamiento',
+		)
+	);
+
+	get_template_part(
+		'template-parts/sections/steps',
+		null,
+		array(
+			'layout'         => 'split',
+			'background'     => 'none', // El fondo lo da .oikos-home-journey.
+			'eyebrow'        => (string) oikos_field( 'oikos_home_pasos_eyebrow', $oikos_front_id ),
+			'title'          => (string) oikos_field( 'oikos_home_pasos_titulo', $oikos_front_id ),
+			'heading_level'  => 2,
+			'steps'          => $oikos_steps,
+			'link'           => oikos_link_or_cta( oikos_field( 'oikos_home_pasos_boton', $oikos_front_id, array() ) ),
+			'button_variant' => 'primary',
+			'track'          => 'agenda-cita',
+			'track_location' => 'home-pasos',
+		)
+	);
+	?>
+</div>
+<?php
 get_footer();

@@ -71,6 +71,34 @@ function oikos_the_cta_button( $args = array() ) {
 }
 
 /**
+ * Normaliza un campo de enlace ACF y, si no tiene URL, usa el CTA global.
+ *
+ * - Enlace con URL: se devuelve tal cual; si le falta el texto, toma el del CTA.
+ * - Enlace vacío: se devuelve el CTA global "Agenda tu cita".
+ *
+ * @param mixed $link Valor de un campo link de ACF (array url/title/target).
+ * @return array{url:string,title:string,target:string} url = '' si tampoco hay CTA.
+ */
+function oikos_link_or_cta( $link ) {
+	$link = is_array( $link ) ? $link : array();
+	$cta  = oikos_cta();
+
+	if ( empty( $link['url'] ) ) {
+		return array(
+			'url'    => $cta['url'],
+			'title'  => $cta['text'],
+			'target' => $cta['target'],
+		);
+	}
+
+	return array(
+		'url'    => (string) $link['url'],
+		'title'  => ! empty( $link['title'] ) ? (string) $link['title'] : $cta['text'],
+		'target' => ! empty( $link['target'] ) ? (string) $link['target'] : '',
+	);
+}
+
+/**
  * Walker del menú principal.
  *
  * - Cada ítem: <li class="oikos-nav__item"> con <a class="oikos-nav__link">.

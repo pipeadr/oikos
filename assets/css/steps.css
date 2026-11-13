@@ -1,0 +1,163 @@
+/**
+ * Oikos — Sección de pasos numerados.
+ *
+ * .oikos-steps                       sección (con .oikos-section)
+ *   __inner                          grid según la disposición
+ *     __intro                        eyebrow + título
+ *     __body                         lista + botón
+ *       __list > __item              <ol>: número | título (+ texto)
+ *         __number                   "01" visual (aria-hidden; el <ol> numera)
+ *         __title                    estilo Step (.oikos-text-step)
+ *         __text                     Body
+ *
+ * Disposiciones: --layout-split (intro a la izquierda, pasos a la derecha).
+ * Las nuevas se agregan como --layout-<nombre> sin tocar la base.
+ * Fondos: --bg-none (hereda el del contenedor), --bg-cream, --bg-white.
+ *
+ * Todo el texto va en text/primary: sobre fondos sage (degradado del inicio)
+ * text/secondary no llega a AA.
+ */
+
+/* ==========================================================================
+   Base (común a todas las disposiciones)
+   ========================================================================== */
+
+.oikos-steps {
+	color: var(--color-text-primary);
+}
+
+.oikos-steps--bg-cream {
+	background-color: var(--color-surface-base);
+}
+
+.oikos-steps--bg-white {
+	background-color: var(--color-surface-page);
+}
+
+.oikos-steps__intro {
+	display: flex;
+	flex-direction: column;
+	gap: var(--spacing-2); /* 16 */
+	min-width: 0;
+}
+
+.oikos-steps__body {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: var(--spacing-6); /* 48 */
+	min-width: 0;
+}
+
+.oikos-steps__list {
+	display: flex;
+	flex-direction: column;
+	gap: var(--spacing-6); /* 48 */
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.oikos-steps__item {
+	display: grid;
+	grid-template-columns: var(--spacing-5) minmax(0, 1fr); /* 40 | resto */
+	grid-template-areas:
+		"number title"
+		".      text";
+	column-gap: var(--spacing-2);
+	row-gap: var(--spacing-2);
+	align-items: start;
+}
+
+.oikos-steps__number {
+	grid-area: number;
+	/* Centrado con la primera línea del título (line-height 1.1). */
+	padding-top: calc((var(--text-step-size) * 1.1 - var(--text-small-size) * 1.4) / 2);
+	font-variant-numeric: tabular-nums;
+}
+
+.oikos-steps__title {
+	grid-area: title;
+	max-width: 16ch;
+	text-wrap: balance;
+}
+
+.oikos-steps__text {
+	grid-area: text;
+	max-width: 36rem;
+}
+
+/* ==========================================================================
+   Disposición: split (desktop ≥ 1024)
+   ========================================================================== */
+
+.oikos-steps--layout-split .oikos-steps__inner {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+	gap: var(--spacing-5); /* 40 */
+	align-items: start;
+}
+
+.oikos-steps--layout-split .oikos-steps__heading {
+	max-width: 22ch; /* "Empezar es más simple / de lo que crees" en 2 líneas */
+}
+
+.oikos-steps--layout-split .oikos-steps__cta {
+	/* El botón se alinea con los títulos, no con los números. */
+	margin-left: calc(var(--spacing-5) + var(--spacing-2));
+}
+
+/* ==========================================================================
+   Tablet y móvil (< 1024): intro arriba, pasos debajo
+   ========================================================================== */
+
+@media (max-width: 63.9375rem) {
+	.oikos-steps--layout-split .oikos-steps__inner {
+		grid-template-columns: minmax(0, 1fr);
+		gap: var(--spacing-6); /* 48 */
+	}
+
+	.oikos-steps--layout-split .oikos-steps__heading {
+		max-width: 20ch;
+	}
+}
+
+/* ==========================================================================
+   Móvil (< 768): número sobre el título, botón a ancho completo
+   ========================================================================== */
+
+@media (max-width: 47.9375rem) {
+	.oikos-steps__body {
+		align-items: stretch; /* botón --block-mobile a ancho completo */
+		gap: var(--spacing-5); /* 40 */
+	}
+
+	.oikos-steps__list {
+		gap: var(--spacing-5); /* 40 */
+	}
+
+	.oikos-steps__item {
+		grid-template-columns: minmax(0, 1fr);
+		grid-template-areas:
+			"number"
+			"title"
+			"text";
+		row-gap: var(--spacing-1); /* 8 */
+	}
+
+	.oikos-steps__number {
+		padding-top: 0;
+	}
+
+	.oikos-steps__title {
+		max-width: none;
+	}
+
+	.oikos-steps__text {
+		margin-top: var(--spacing-1); /* 16 entre título y texto */
+	}
+
+	.oikos-steps--layout-split .oikos-steps__cta {
+		margin-left: 0;
+	}
+}

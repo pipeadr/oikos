@@ -1,0 +1,167 @@
+/**
+ * Oikos — Tarjetas de acompañamiento.
+ *
+ * .oikos-service-cards               sección (con .oikos-section)
+ *   __inner                          columna centrada: encabezado, lista, botón
+ *     __header > __title, __subtitle
+ *     __list > __item                3 columnas
+ *       .oikos-service-card          enlace = tarjeta completa
+ *         __title                    estilo Card, centrado
+ *
+ * Colores: --arena (texto text/primary), --cafe y --verde (texto inverse).
+ * Cada tarjeta está inclinada (--card-tilt por posición); al hover o foco se
+ * endereza y se eleva. Con prefers-reduced-motion cambia sin animación ni
+ * desplazamiento.
+ *
+ * Medidas del diseño (1366): tarjetas cuadradas (~343 px) con 40 px entre
+ * ellas, 48 px del encabezado a las tarjetas y de las tarjetas al botón.
+ */
+
+.oikos-service-cards__inner {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--spacing-6); /* 48 */
+}
+
+.oikos-service-cards__header {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--spacing-1); /* 8 */
+	text-align: center;
+}
+
+/* Lista */
+.oikos-service-cards__list {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: var(--spacing-5); /* 40 */
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+/* Inclinación por posición (medida sobre la captura). */
+.oikos-service-cards__item {
+	--card-tilt: -3deg;
+	display: flex;
+	min-width: 0;
+}
+
+.oikos-service-cards__item:nth-child(3n + 2) {
+	--card-tilt: 2.5deg;
+}
+
+.oikos-service-cards__item:nth-child(3n) {
+	--card-tilt: -2deg;
+}
+
+/* Tarjeta */
+.oikos-service-card {
+	--card-bg: var(--color-brand-sand);
+	--card-color: var(--color-text-primary);
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	aspect-ratio: 1;
+	padding: var(--card-padding);
+	border-radius: var(--radius-lg);
+	background-color: var(--card-bg);
+	color: var(--card-color);
+	text-align: center;
+	text-decoration: none;
+	rotate: var(--card-tilt);
+	transition:
+		rotate var(--transition-lift),
+		translate var(--transition-lift),
+		box-shadow var(--transition-lift);
+}
+
+.oikos-service-card--cafe {
+	--card-bg: var(--color-interactive-secondary);
+	--card-color: var(--color-content-inverse);
+}
+
+.oikos-service-card--verde {
+	--card-bg: var(--color-interactive-primary);
+	--card-color: var(--color-content-inverse);
+}
+
+.oikos-service-card__title {
+	max-width: 10ch;
+	color: inherit;
+	text-wrap: balance;
+}
+
+.oikos-service-card:hover,
+.oikos-service-card:focus-visible {
+	rotate: 0deg;
+	translate: 0 calc(-1 * var(--spacing-1));
+	box-shadow: var(--shadow-lift);
+}
+
+/* Foco: doble anillo (oscuro + crema) que se ve sobre los tres colores. */
+.oikos-service-card:focus-visible {
+	outline: 3px solid var(--color-text-primary);
+	outline-offset: 3px;
+	box-shadow: var(--shadow-lift), 0 0 0 3px var(--color-content-inverse);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.oikos-service-card {
+		transition: none;
+	}
+
+	.oikos-service-card:hover,
+	.oikos-service-card:focus-visible {
+		translate: none;
+	}
+}
+
+/* ==========================================================================
+   Tablet (768–1023): 3 en fila, más pequeñas
+   ========================================================================== */
+
+@media (max-width: 63.9375rem) {
+	.oikos-service-cards__list {
+		gap: var(--spacing-3); /* 24 */
+	}
+}
+
+/* ==========================================================================
+   Móvil (< 768): una columna, tarjetas rectangulares, inclinación sutil
+   alternada
+   ========================================================================== */
+
+@media (max-width: 47.9375rem) {
+	.oikos-service-cards__inner {
+		align-items: stretch; /* botón --block-mobile a ancho completo */
+		gap: var(--spacing-5); /* 40 */
+	}
+
+	.oikos-service-cards__list {
+		grid-template-columns: minmax(0, 1fr);
+		gap: var(--spacing-3); /* 24 */
+	}
+
+	/* Misma especificidad que los :nth-child de desktop para reemplazarlos. */
+	.oikos-service-cards__item:nth-child(odd) {
+		--card-tilt: -1.5deg;
+	}
+
+	.oikos-service-cards__item:nth-child(even) {
+		--card-tilt: 1.5deg;
+	}
+
+	.oikos-service-card {
+		aspect-ratio: 2 / 1;
+	}
+
+	.oikos-service-card__title {
+		max-width: none;
+	}
+}
