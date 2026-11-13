@@ -115,6 +115,14 @@
 	--transition-fast: 150ms ease;
 }
 
+/* Pantallas bajas (teléfono horizontal): menos aire sobre el header fijo. */
+@media (max-height: 31.25rem) {
+	:root {
+		--header-top: var(--spacing-1);
+		--header-bar-height: 4rem; /* mínimo: botones de 44 px + padding */
+	}
+}
+
 /* ==========================================================================
    3. Reset
    ========================================================================== */
@@ -132,7 +140,18 @@
 html {
 	-webkit-text-size-adjust: 100%;
 	text-size-adjust: 100%;
-	scroll-padding-top: var(--header-offset); /* anclas no quedan bajo el header fijo */
+	scroll-padding-top: var(--header-offset); /* anclas y foco de teclado no quedan bajo el header fijo */
+}
+
+/* Con la barra de administración de WP (solo usuarios logueados). */
+html:has(body.admin-bar) {
+	scroll-padding-top: calc(var(--header-offset) + 2rem);
+}
+
+@media (max-width: 48.875rem) { /* 782 */
+	html:has(body.admin-bar) {
+		scroll-padding-top: calc(var(--header-offset) + 2.875rem);
+	}
 }
 
 @media (prefers-reduced-motion: no-preference) {
