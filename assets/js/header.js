@@ -6,8 +6,9 @@
  * 2. Menú móvil (< 1024): aria-expanded, Esc, clic fuera (backdrop), foco
  *    atrapado en la barra, scroll del fondo bloqueado, cierre al pasar a
  *    desktop.
- * 3. Sticky: se esconde al bajar y reaparece al subir. La animación la
- *    desactiva el CSS con prefers-reduced-motion.
+ * 3. Fijo y siempre visible: al dejar el inicio de la página agrega
+ *    .is-scrolled (sombra). Se detecta con un IntersectionObserver sobre un
+ *    centinela de 1 px, sin trabajo en cada evento de scroll.
  */
 ( () => {
 	const header = document.querySelector( '[data-oikos-header]' );
@@ -102,7 +103,6 @@
 
 	const openMenu = () => {
 		header.classList.add( 'is-open' );
-		header.classList.remove( 'is-hidden' );
 		menuToggle.setAttribute( 'aria-expanded', 'true' );
 		setMenuLabel( true );
 		root.classList.add( 'oikos-menu-open' );
@@ -211,45 +211,17 @@
 	} );
 
 	/* ----------------------------------------------------------------------
-	   3. Sticky: esconder al bajar, mostrar al subir
+	   3. Sombra al hacer scroll
 	   ---------------------------------------------------------------------- */
 
-	const DELTA = 8;
-	let lastY = window.scrollY;
-	let ticking = false;
+	if ( 'IntersectionObserver' in window ) {
+		const sentinel = document.createElement( 'div' );
+		sentinel.className = 'oikos-header-sentinel';
+		sentinel.setAttribute( 'aria-hidden', 'true' );
+		document.body.prepend( sentinel );
 
-	const mustStayVisible = () =>
-		isMenuOpen() || Boolean( openSubmenu() ) || header.contains( document.activeElement );
-
-	const updateSticky = () => {
-		const y = Math.max( window.scrollY, 0 );
-		const threshold = header.offsetHeight + header.offsetTop;
-
-		if ( mustStayVisible() || y <= threshold ) {
-			header.classList.remove( 'is-hidden' );
-		} else if ( y > lastY + DELTA ) {
-			header.classList.add( 'is-hidden' );
-		} else if ( y < lastY - DELTA ) {
-			header.classList.remove( 'is-hidden' );
-		}
-
-		if ( Math.abs( y - lastY ) > DELTA || y <= threshold ) {
-			lastY = y;
-		}
-		ticking = false;
-	};
-
-	window.addEventListener(
-		'scroll',
-		() => {
-			if ( ! ticking ) {
-				ticking = true;
-				window.requestAnimationFrame( updateSticky );
-			}
-		},
-		{ passive: true }
-	);
-
-	// Si el foco de teclado entra al header escondido, se muestra.
-	header.addEventListener( 'focusin', () => header.classList.remove( 'is-hidden' ) );
+		new IntersectionObserver( ( [ entry ] ) => {
+			header.classList.toggle( 'is-scrolled', ! entry.isIntersecting );
+		} ).observe( sentinel );
+	}
 } )();

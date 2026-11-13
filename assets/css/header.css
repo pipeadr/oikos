@@ -1,14 +1,18 @@
 /**
  * Oikos — Header flotante.
  *
- * .oikos-header            fijo arriba (header.js agrega .is-hidden al bajar)
+ * .oikos-header            fijo arriba y siempre visible
  *   .oikos-header__bar     barra crema redondeada
  *     __brand              logo
  *     __panel              menú (en línea ≥ 1024; panel desplegable < 1024)
  *     __actions            CTA + botón hamburguesa
  *
  * Estados (header.js): .is-enhanced (JS listo), .is-open (panel abierto),
- * .is-hidden (escondido por scroll).
+ * .is-scrolled (la página dejó el inicio: la barra lleva sombra).
+ *
+ * Arriba del todo la barra es plana, como en el diseño: sobre el hero no
+ * lleva borde ni sombra; en páginas internas lleva un borde sutil para que
+ * el crema no se pierda sobre el fondo blanco.
  */
 
 /* ==========================================================================
@@ -20,16 +24,11 @@
 	inset-inline: 0;
 	top: var(--header-top);
 	z-index: var(--z-header);
-	transition: transform 250ms ease;
 	pointer-events: none; /* los márgenes laterales no tapan clics */
 }
 
 .oikos-header .oikos-container {
 	pointer-events: auto;
-}
-
-.oikos-header.is-hidden {
-	transform: translateY(calc(-100% - var(--header-top) - var(--spacing-1)));
 }
 
 /* Barra de administración de WordPress (solo usuarios logueados). */
@@ -64,8 +63,31 @@
 	padding-block: var(--spacing-1);
 	padding-inline: var(--spacing-3) var(--spacing-2);
 	border-radius: var(--radius-lg);
+	border: 1px solid transparent;
 	background-color: var(--color-surface-base);
+	transition:
+		box-shadow var(--transition-fast),
+		border-color var(--transition-fast);
+}
+
+body:not(.oikos-has-hero) .oikos-header__bar {
+	border-color: var(--color-border-default);
+}
+
+.oikos-header.is-scrolled .oikos-header__bar,
+.oikos-header.is-open .oikos-header__bar {
+	border-color: transparent;
 	box-shadow: var(--shadow-float);
+}
+
+/* Centinela que header.js observa para saber si la página dejó el inicio. */
+.oikos-header-sentinel {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 1px;
+	height: 1px;
+	pointer-events: none;
 }
 
 .oikos-header__brand,
