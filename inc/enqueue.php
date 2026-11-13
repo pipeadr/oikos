@@ -95,6 +95,10 @@ add_action( 'wp_enqueue_scripts', 'oikos_enqueue_assets' );
  */
 function oikos_template_assets() {
 	return array(
+		'oikos-hero'        => array(
+			'condition' => static fn() => is_front_page() && is_page(),
+			'css'       => 'css/hero.css',
+		),
 		'oikos-style-guide' => array(
 			'condition' => static fn() => is_page_template( 'templates/style-guide.php' ),
 			'css'       => 'css/style-guide.css',
