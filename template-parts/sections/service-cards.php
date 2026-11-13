@@ -9,8 +9,9 @@
  * - title          (string) Título (obligatorio junto con al menos una tarjeta).
  * - subtitle       (string) Texto corto bajo el título. Opcional.
  * - heading_level  (int)    2–4. Los títulos de tarjeta van un nivel más abajo.
- * - cards          (array)  Lista de array{url:string,text:string,color:string};
- *                           color: 'arena' | 'cafe' | 'verde'.
+ * - cards          (array)  Lista de array{url:string,text:string,color:string,description?:string};
+ *                           color: 'arena' | 'cafe' | 'verde'. Con descripción, la
+ *                           tarjeta la revela al hover/foco (siempre está en el HTML).
  * - link           (array)  url, title, target del botón. Opcional.
  * - track_location (string) data-track-location de tarjetas y botón.
  *
@@ -40,9 +41,10 @@ foreach ( (array) $oikos_args['cards'] as $oikos_card ) {
 	}
 
 	$oikos_cards[] = array(
-		'url'   => (string) $oikos_card['url'],
-		'text'  => (string) $oikos_card['text'],
-		'color' => isset( $oikos_card['color'] ) && in_array( $oikos_card['color'], array( 'arena', 'cafe', 'verde' ), true ) ? $oikos_card['color'] : 'arena',
+		'url'         => (string) $oikos_card['url'],
+		'text'        => (string) $oikos_card['text'],
+		'color'       => isset( $oikos_card['color'] ) && in_array( $oikos_card['color'], array( 'arena', 'cafe', 'verde' ), true ) ? $oikos_card['color'] : 'arena',
+		'description' => isset( $oikos_card['description'] ) ? trim( (string) $oikos_card['description'] ) : '',
 	);
 }
 
@@ -76,7 +78,7 @@ $oikos_location = (string) $oikos_args['track_location'];
 			<?php foreach ( $oikos_cards as $oikos_card ) : ?>
 				<li class="oikos-service-cards__item">
 					<a
-						class="<?php echo esc_attr( 'oikos-service-card oikos-service-card--' . $oikos_card['color'] ); ?>"
+						class="<?php echo esc_attr( 'oikos-service-card oikos-service-card--' . $oikos_card['color'] . ( '' !== $oikos_card['description'] ? ' oikos-service-card--reveal' : '' ) ); ?>"
 						href="<?php echo esc_url( $oikos_card['url'] ); ?>"
 						data-track="servicio-card"
 						data-track-location="<?php echo esc_attr( $oikos_location ); ?>"
@@ -88,6 +90,9 @@ $oikos_location = (string) $oikos_args['track_location'];
 							esc_html( $oikos_card['text'] )
 						);
 						?>
+						<?php if ( '' !== $oikos_card['description'] ) : ?>
+							<p class="oikos-service-card__desc"><?php echo esc_html( $oikos_card['description'] ); ?></p>
+						<?php endif; ?>
 					</a>
 				</li>
 			<?php endforeach; ?>
