@@ -46,13 +46,22 @@
 	object-position: var(--hero-focus);
 }
 
-/* Degradado crema detrás del texto (solo < 1024, ver abajo). */
+/* Degradado crema detrás del texto.
+   Desktop: lateral y muy suave, solo como protección si cambian la foto;
+   sobre la pared clara de la foto del diseño apenas se nota.
+   < 1024: vertical y más marcado (ver abajo). */
 .oikos-hero--has-media::before {
 	content: "";
 	position: absolute;
 	inset: 0;
 	z-index: -1;
 	pointer-events: none;
+	background-image: linear-gradient(
+		to right,
+		color-mix(in srgb, var(--color-surface-base) 35%, transparent) 0%,
+		color-mix(in srgb, var(--color-surface-base) 22%, transparent) 35%,
+		color-mix(in srgb, var(--color-surface-base) 0%, transparent) 60%
+	);
 }
 
 /* ==========================================================================
