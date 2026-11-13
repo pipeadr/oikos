@@ -218,6 +218,28 @@
                     "prepend": "",
                     "append": "",
                     "parent_repeater": "field_oikos_home_hero_tarjetas"
+                },
+                {
+                    "key": "field_oikos_home_hero_tarjetas_descripcion",
+                    "label": "Descripción",
+                    "name": "descripcion",
+                    "aria-label": "",
+                    "type": "textarea",
+                    "instructions": "Opcional. Se muestra en lugar del texto al pasar el mouse o enfocar la tarjeta (en celulares, debajo del texto). Máximo ~90 caracteres para que quepa en la tarjeta. Si se deja vacía, la tarjeta no cambia.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": 110,
+                    "allow_in_bindings": 0,
+                    "rows": 3,
+                    "placeholder": "",
+                    "new_lines": "",
+                    "parent_repeater": "field_oikos_home_hero_tarjetas"
                 }
             ]
         },
@@ -576,6 +598,28 @@
                     "allow_in_bindings": 0,
                     "layout": "horizontal",
                     "parent_repeater": "field_oikos_home_acompanamiento_tarjetas"
+                },
+                {
+                    "key": "field_oikos_home_acompanamiento_tarjetas_descripcion",
+                    "label": "Descripción",
+                    "name": "descripcion",
+                    "aria-label": "",
+                    "type": "textarea",
+                    "instructions": "Opcional. Se muestra en lugar del texto al pasar el mouse o enfocar la tarjeta (en celulares, debajo del texto). Máximo ~180 caracteres. Si se deja vacía, la tarjeta no cambia.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": 220,
+                    "allow_in_bindings": 0,
+                    "rows": 3,
+                    "placeholder": "",
+                    "new_lines": "",
+                    "parent_repeater": "field_oikos_home_acompanamiento_tarjetas"
                 }
             ]
         },
@@ -762,5 +806,5 @@
     "active": true,
     "description": "Contenido de la página de inicio.",
     "show_in_rest": 0,
-    "modified": 1794534347
+    "modified": 1794540194
 }
