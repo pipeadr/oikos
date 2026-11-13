@@ -95,16 +95,29 @@ add_action( 'wp_enqueue_scripts', 'oikos_enqueue_assets' );
  */
 function oikos_template_assets() {
 	return array(
-		'oikos-hero'        => array(
+		'oikos-hero'          => array(
 			'condition' => static fn() => is_front_page() && is_page(),
 			'css'       => 'css/hero.css',
 		),
 		// Foto + texto: se agregan aquí Nosotros, Servicios y El método al construirlas.
-		'oikos-media-text'  => array(
+		'oikos-media-text'    => array(
 			'condition' => static fn() => is_front_page() && is_page(),
 			'css'       => 'css/media-text.css',
 		),
-		'oikos-style-guide' => array(
+		// Pasos: se agregan aquí Servicios y la plantilla Servicio al construirlas.
+		'oikos-steps'         => array(
+			'condition' => static fn() => is_front_page() && is_page(),
+			'css'       => 'css/steps.css',
+		),
+		'oikos-service-cards' => array(
+			'condition' => static fn() => is_front_page() && is_page(),
+			'css'       => 'css/service-cards.css',
+		),
+		'oikos-home'          => array(
+			'condition' => static fn() => is_front_page() && is_page(),
+			'css'       => 'css/home.css',
+		),
+		'oikos-style-guide'   => array(
 			'condition' => static fn() => is_page_template( 'templates/style-guide.php' ),
 			'css'       => 'css/style-guide.css',
 			'js'        => 'js/style-guide.js',

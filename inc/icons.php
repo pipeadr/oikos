@@ -144,6 +144,8 @@ function oikos_the_decor( $name, $class = '' ) {
 
 	$allowed['svg']['preserveaspectratio'] = true;
 	$allowed['path']['opacity']            = true;
+	$allowed['path']['fill-opacity']       = true;
+	$allowed['path']['stroke-opacity']     = true;
 	$allowed['path']['fill-rule']          = true;
 	$allowed['path']['clip-rule']          = true;
 

@@ -1,0 +1,53 @@
+/**
+ * Oikos — Piezas propias del inicio.
+ *
+ * .oikos-home-journey                envoltorio de "Acompañamiento" + "Pasos"
+ *   __decor                          líneas orgánicas (SVG en línea, aria-hidden)
+ *
+ * Fondo continuo: crema arriba; la sección de pasos lleva el degradado
+ * crema → sage. Empieza exactamente en crema, así la unión no se nota y no
+ * depende del alto de cada sección (que cambia mucho en móvil).
+ * Sobre sage solo va texto text/primary (~5:1).
+ *
+ * Capas: fondo de las secciones < líneas < contenido. Las secciones no se
+ * posicionan; las líneas (z 0) y los contenedores (z 1) sí.
+ */
+
+.oikos-home-journey {
+	position: relative;
+	isolation: isolate;
+	overflow: clip; /* las líneas nunca provocan scroll horizontal */
+	background-color: var(--color-surface-base);
+}
+
+.oikos-home-journey .oikos-steps {
+	background-image: linear-gradient(
+		to bottom,
+		var(--color-surface-base) 0%,
+		var(--color-brand-sage) 100%
+	);
+}
+
+.oikos-home-journey .oikos-container {
+	position: relative;
+	z-index: 1;
+}
+
+.oikos-home-journey__decor {
+	position: absolute;
+	z-index: 0;
+	bottom: 0;
+	left: 0;
+	width: clamp(18rem, 55vw, 45rem);
+	height: auto;
+	aspect-ratio: 725 / 708;
+	overflow: visible; /* los trazos salen del viewBox; el envoltorio los recorta */
+	pointer-events: none;
+}
+
+/* Móvil: más pequeñas y pegadas al fondo, lejos de los títulos. */
+@media (max-width: 47.9375rem) {
+	.oikos-home-journey__decor {
+		width: min(85vw, 20rem);
+	}
+}
