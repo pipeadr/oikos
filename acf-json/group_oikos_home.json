@@ -1,0 +1,246 @@
+{
+    "key": "group_oikos_home",
+    "title": "Inicio",
+    "fields": [
+        {
+            "key": "field_oikos_home_tab_hero",
+            "label": "Hero",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_oikos_home_hero_imagen",
+            "label": "Imagen de fondo",
+            "name": "oikos_home_hero_imagen",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "Foto horizontal de al menos 2400 px de ancho. Es la imagen principal de la página (la primera que se carga). El texto alternativo se edita en la biblioteca de medios.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "id",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "jpg,jpeg,png,webp,avif",
+            "allow_in_bindings": 0,
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_oikos_home_hero_imagen_movil",
+            "label": "Imagen para móvil (opcional)",
+            "name": "oikos_home_hero_imagen_movil",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "Foto vertical para pantallas de menos de 768 px. Si se deja vacía, se usa la imagen de fondo recortada según el punto focal.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "id",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "jpg,jpeg,png,webp,avif",
+            "allow_in_bindings": 0,
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_oikos_home_hero_foco_x",
+            "label": "Punto focal horizontal",
+            "name": "oikos_home_hero_foco_x",
+            "aria-label": "",
+            "type": "range",
+            "instructions": "Qué parte de la foto se conserva al recortarla: 0 % = izquierda, 100 % = derecha.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": 50,
+            "min": 0,
+            "max": 100,
+            "step": 5,
+            "prepend": "",
+            "append": "%",
+            "allow_in_bindings": 0
+        },
+        {
+            "key": "field_oikos_home_hero_foco_y",
+            "label": "Punto focal vertical",
+            "name": "oikos_home_hero_foco_y",
+            "aria-label": "",
+            "type": "range",
+            "instructions": "0 % = arriba, 100 % = abajo.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": 50,
+            "min": 0,
+            "max": 100,
+            "step": 5,
+            "prepend": "",
+            "append": "%",
+            "allow_in_bindings": 0
+        },
+        {
+            "key": "field_oikos_home_hero_titulo",
+            "label": "Título",
+            "name": "oikos_home_hero_titulo",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Título principal de la página (H1). Si se deja vacío, se usa el título de la página.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Terapia psicológica para cuidar de ti y de tus relaciones.",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "rows": 2,
+            "placeholder": "",
+            "new_lines": ""
+        },
+        {
+            "key": "field_oikos_home_hero_texto",
+            "label": "Texto",
+            "name": "oikos_home_hero_texto",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "rows": 4,
+            "placeholder": "",
+            "new_lines": "br"
+        },
+        {
+            "key": "field_oikos_home_hero_boton",
+            "label": "Botón",
+            "name": "oikos_home_hero_boton",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "Texto y enlace del botón. Si se deja vacío, se usa el botón \"Agenda tu cita\" de Oikos — Global.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "allow_in_bindings": 0
+        },
+        {
+            "key": "field_oikos_home_hero_tarjetas",
+            "label": "Tarjetas",
+            "name": "oikos_home_hero_tarjetas",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "Hasta 3 datos cortos que se muestran sobre la foto (ej.: \"Presencial y virtual\").",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "table",
+            "pagination": 0,
+            "min": 0,
+            "max": 3,
+            "collapsed": "",
+            "button_label": "Agregar tarjeta",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_oikos_home_hero_tarjetas_texto",
+                    "label": "Texto",
+                    "name": "texto",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": 40,
+                    "allow_in_bindings": 0,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_oikos_home_hero_tarjetas"
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "page_type",
+                "operator": "==",
+                "value": "front_page"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "acf_after_title",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": [
+        "the_content"
+    ],
+    "active": true,
+    "description": "Contenido de la página de inicio.",
+    "show_in_rest": 0,
+    "modified": 1794531599
+}
