@@ -1,0 +1,163 @@
+/**
+ * Oikos — Hero con foto a pantalla completa (variante "cover").
+ *
+ * .oikos-hero--cover            sección (foto de fondo + texto + tarjetas)
+ *   .oikos-hero__media          <picture> con la foto LCP (<img> real, no background)
+ *   .oikos-hero__inner          contenedor: texto arriba, tarjetas abajo
+ *     __content                 H1 + párrafo + CTA
+ *     __cards                   hasta 3 .oikos-card
+ *
+ * Modificadores (los pone la plantilla):
+ * - --has-media:  hay foto (sin ella, fondo crema).
+ * - --has-mobile: hay foto vertical para < 768; esa no usa el punto focal.
+ *
+ * --hero-focus (inline): punto focal editable → object-position.
+ *
+ * Desktop: fiel al frame 1366×1024. < 1024: la foto se recorta con el
+ * punto focal y un degradado crema suave protege la lectura del texto.
+ */
+
+.oikos-hero {
+	--hero-focus: 50% 50%;
+
+	position: relative;
+	isolation: isolate;
+	display: grid;
+	min-height: min(100svh, 64rem); /* 1024, como el frame; nunca corta el contenido */
+	overflow: hidden;
+	background-color: var(--color-surface-base);
+}
+
+/* ==========================================================================
+   Foto
+   ========================================================================== */
+
+.oikos-hero__media,
+.oikos-hero__media img {
+	position: absolute;
+	inset: 0;
+	z-index: -2;
+	width: 100%;
+	height: 100%;
+}
+
+.oikos-hero__media img {
+	object-fit: cover;
+	object-position: var(--hero-focus);
+}
+
+/* Degradado crema detrás del texto (solo < 1024, ver abajo). */
+.oikos-hero--has-media::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	pointer-events: none;
+}
+
+/* ==========================================================================
+   Contenido
+   ========================================================================== */
+
+.oikos-hero__inner {
+	display: grid;
+	align-content: space-between;
+	gap: var(--space-section); /* 80 = spacing/10 en desktop */
+	padding-top: calc(var(--header-top) + var(--header-bar-height) + var(--space-section));
+	padding-bottom: var(--spacing-7);
+}
+
+/* Barra de administración de WordPress: el header baja con ella. */
+.admin-bar .oikos-hero__inner {
+	padding-top: calc(var(--header-top) + var(--header-bar-height) + var(--space-section) + 2rem);
+}
+
+@media (max-width: 48.875rem) { /* 782 */
+	.admin-bar .oikos-hero__inner {
+		padding-top: calc(var(--header-top) + var(--header-bar-height) + var(--space-section) + 2.875rem);
+	}
+}
+
+.oikos-hero__content {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: var(--spacing-3);
+}
+
+.oikos-hero__title {
+	max-inline-size: 36rem; /* 3 líneas como el diseño */
+	color: var(--color-text-primary);
+}
+
+.oikos-hero__text {
+	max-inline-size: 26.25rem; /* 420 */
+}
+
+.oikos-hero__cta {
+	margin-top: var(--spacing-1); /* 24 + 8 = 32 sobre el botón */
+}
+
+/* ==========================================================================
+   Tarjetas
+   ========================================================================== */
+
+.oikos-hero__cards {
+	display: flex;
+	justify-content: center;
+	gap: var(--spacing-3);
+	padding: 0;
+	list-style: none;
+}
+
+.oikos-hero__card {
+	flex: 0 1 15rem;          /* 240; en tablet se reparten el ancho */
+	min-width: 0;
+	min-block-size: 6.75rem;  /* 108 */
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+}
+
+/* ==========================================================================
+   Tablet y móvil (< 1024)
+   ========================================================================== */
+
+@media (max-width: 63.9375rem) {
+	/* Crema translúcido arriba (donde está el texto) que se desvanece hacia
+	   la foto; nunca es un bloque sólido. */
+	.oikos-hero--has-media::before {
+		background-image: linear-gradient(
+			to bottom,
+			color-mix(in srgb, var(--color-surface-base) 88%, transparent) 0%,
+			color-mix(in srgb, var(--color-surface-base) 78%, transparent) 55%,
+			color-mix(in srgb, var(--color-surface-base) 0%, transparent) 88%
+		);
+	}
+}
+
+/* ==========================================================================
+   Móvil (< 768)
+   ========================================================================== */
+
+@media (max-width: 47.9375rem) {
+	.oikos-hero--has-mobile .oikos-hero__media img {
+		object-position: 50% 50%;
+	}
+
+	.oikos-hero__content {
+		align-items: stretch; /* el botón --block-mobile ocupa el ancho */
+	}
+
+	/* Apiladas: los 3 mensajes visibles, sin scroll ni texto partido. */
+	.oikos-hero__cards {
+		flex-direction: column;
+		gap: var(--spacing-1);
+	}
+
+	.oikos-hero__card {
+		flex: none;
+		min-block-size: 0;
+		padding: var(--spacing-2);
+	}
+}

@@ -193,3 +193,58 @@ function oikos_logo_img( $attachment_id, $attr = array() ) {
 
 	return $html . '>';
 }
+
+/**
+ * Markup <picture> de la foto de un hero (imagen LCP).
+ *
+ * - <img> real con srcset/sizes, width/height (sin CLS) y alt de la biblioteca.
+ * - Sin loading="lazy" y con fetchpriority="high": es la imagen LCP.
+ * - Si hay imagen móvil, va en un <source> para < 768 px; el navegador
+ *   descarga solo una de las dos.
+ *
+ * @param int    $image_id        ID de la imagen desktop.
+ * @param int    $image_mobile_id ID de la imagen móvil (0 = sin imagen móvil).
+ * @param string $class           Clase del <picture>.
+ * @return string '' si la imagen desktop no existe.
+ */
+function oikos_hero_picture( $image_id, $image_mobile_id = 0, $class = '' ) {
+	$image_id        = absint( $image_id );
+	$image_mobile_id = absint( $image_mobile_id );
+
+	$img = $image_id ? wp_get_attachment_image(
+		$image_id,
+		'full',
+		false,
+		array(
+			'sizes'         => '100vw',
+			'loading'       => false,
+			'fetchpriority' => 'high',
+			'decoding'      => 'async',
+		)
+	) : '';
+
+	if ( '' === $img ) {
+		return '';
+	}
+
+	$source = '';
+
+	if ( $image_mobile_id ) {
+		$srcset = wp_get_attachment_image_srcset( $image_mobile_id, 'full' );
+		$srcset = $srcset ? $srcset : wp_get_attachment_image_url( $image_mobile_id, 'full' );
+
+		if ( $srcset ) {
+			$source = sprintf(
+				'<source media="(max-width: 47.9375rem)" srcset="%s" sizes="100vw">',
+				esc_attr( $srcset )
+			);
+		}
+	}
+
+	return sprintf(
+		'<picture class="%1$s">%2$s%3$s</picture>',
+		esc_attr( $class ),
+		$source,
+		$img
+	);
+}
