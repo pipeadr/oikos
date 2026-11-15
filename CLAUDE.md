@@ -67,6 +67,7 @@ Definidos en `assets/css/base.css`. Los nombres siguen los tokens del Figma: `gr
 | color/decorative/caramel | `--color-decorative-caramel` | #A87A53 |
 | derivado (AA con texto crema) | `--color-brand-caramel-strong` | #926641 (4.61:1) |
 | gradiente de bandas | `--gradient-brand` | interactive/primary → mezcla 50 % con sage (#567561, 4.7:1). Sage puro con texto crema da 2.97:1: no usarlo bajo texto |
+| derivado (AA con texto crema) | `--color-brand-sage-strong` | #587662 = mezcla 52 % sage / 48 % verde (4.62:1). Etiqueta "Terapia familiar" |
 
 Superficies sobre foto (sección Nosotros): `--color-surface-glass` (vidrio verdoso: mezcla verde/sage al 35 % + `backdrop-filter: blur(16px)`; título text/primary, descripción blanca surface/page), `--color-border-glass` (blanco 20 %) y `--overlay-photo` (velo verde al 30 %). Medido en el render: descripción ≥ 4.8:1, título crema de la sección ≥ 4.3:1, título oscuro de tarjeta 2.6–3.4:1 (excepción, ver Accesibilidad). Oscurecer el vidrio empeora el título; aclararlo rompe la descripción.
 
@@ -85,6 +86,8 @@ Otros tokens: `--shadow-float` (barras y desplegables flotantes), `--shadow-lift
 | Card *(deducido)* | `.oikos-text-card` | Figtree 600 | 18 → 20 | 125 % | 0 |
 | Card hero | `.oikos-text-card-hero` (`--text-card-hero-size`) | Figtree **700** | 20 → 24 | 100 % | 0 |
 | Card service | `.oikos-text-card-service` (`--text-card-service-size`) | Bricolage 500 | 20 → 24 | 133 % | -1 % |
+| Título de entrada *(deducido)* | `.oikos-post-card__title` (`--text-post-title-size`) | Figtree 500 | 18 → 20 | 140 % | 0 |
+| Etiqueta | `.oikos-tag` | Figtree 500 | 14 | 100 % | 0 |
 | Step *(deducido)* | `.oikos-text-step` | Bricolage 500 | 28 → 48 | 110 % | -2 % |
 | Eyebrow *(deducido)* | `.oikos-text-eyebrow` | Figtree 500 | 14 | 140 % | 0 |
 | Nav *(deducido)* | `.oikos-text-nav` | Figtree 500 | 14 | 140 % | 0 |
@@ -93,7 +96,7 @@ Modificadores de color: `.oikos-text-secondary`, `.oikos-text-inverse`.
 
 ### Espaciado, radios y layout
 - Escala de 8 px: `spacing/N` → `--spacing-N` (`--spacing-1` = 8 … `--spacing-10` = 80).
-- Radios: `--radius-xs` = 4 px (indicadores del slider, *deducido*), `--radius-md` = 12 px (botones, *deducido*), `--radius-lg` = 16 px (tarjetas).
+- Radios: `--radius-xs` = 4 px (indicadores del slider, *deducido*), `--radius-md` = 12 px (botones, *deducido*), `--radius-lg` = 16 px (tarjetas), `--radius-full` (píldoras/etiquetas). `--tag-padding-block` = 10 px (alto de etiqueta ≈ 36, *deducido*).
 - Bordes: `--border-width-thick` = 2 px (*deducido*).
 - Contenedor: `.oikos-container` → ancho máximo `--container-max` (1110 px) con `--container-padding` a cada lado. En 1366 deja 128 px por lado, como el Figma.
 - Sección: `.oikos-section` → `padding-block: var(--space-section)`.
@@ -152,8 +155,9 @@ Bordes redondeados generosos, tarjetas crema sobre fondos crema/blanco, gradient
 Las 3 páginas de terapia (pareja, individual, familiar) usan **la misma plantilla** con distinto contenido.
 
 ## Contenido: CPTs, taxonomías y opciones
-- **CPT `equipo`** (psicólogos: Paula, Juan David): foto, nombre, enfoque, bio corta, bio larga. Se usa en servicios, nosotros, páginas de terapia y como **autores del blog** (relación ACF; una entrada puede tener varios autores).
-- **Categorías del blog:** Terapia de pareja, Terapia individual, Terapia familiar (se muestran como tag de color).
+- **CPT `equipo`** (`inc/cpt.php`; psicólogos: Paula, Juan David): nombre = título, foto = imagen destacada, campos `oikos_equipo_enfoque`, `oikos_equipo_bio_corta`, `oikos_equipo_bio_larga`. Se usa en servicios, nosotros, páginas de terapia y como **autores del blog**. **Sin páginas públicas por ahora** (no consultable, fuera del sitemap de Yoast); para activarlas: `add_filter( 'oikos_equipo_public', '__return_true' )` + guardar Enlaces permanentes (URL `/equipo/<slug>/`, y el `Person` del schema gana `url`).
+- **Autores de una entrada:** campo `oikos_entrada_autores` (relación con equipo, varios, en orden). Vacío → autor de WordPress. Helpers en `inc/blog.php`: `oikos_post_authors()`, `oikos_post_team_authors()`.
+- **Categorías del blog:** Terapia de pareja, Terapia individual, Terapia familiar. Color de la etiqueta por categoría: campo `oikos_categoria_color` (`crema` | `arena` | `sage`). Categoría mostrada: la principal de Yoast o la primera, ignorando "Sin categoría" (`oikos_post_category()`).
 - **Página de opciones ACF "Oikos — Global":** contacto (teléfono, WhatsApp, correo, dirección), redes sociales, textos y enlaces del CTA "Agenda tu cita", los 3 badges ("Psicólogos especializados…", "100% confidencial…", "Presencial en Medellín…"), textos del bloque newsletter, banner de auto-pauta del blog (300×600), "¿Tienes dudas? Escríbenos" + WhatsApp.
 - **Testimonios:** repetidor en el Home (solo aparecen ahí). Si se reutilizan en otra página, migrar a CPT.
 - **Preguntas frecuentes:** repetidor por página (cada página tiene sus propias preguntas). Siempre generan schema `FAQPage`.
@@ -170,7 +174,9 @@ Las 3 páginas de terapia (pareja, individual, familiar) usan **la misma plantil
 - **Carrusel de servicios** (Servicios general, Nosotros, Contacto).
 - **Tarjetas de modalidad** (Virtual / Presencial; Nosotros y sidebar del blog).
 - **Tarjetas de equipo** (foto con overlay café y bio).
-- **Bloque de blog** "Ideas para relaciones…" (1 destacado + 2 laterales). En páginas de servicio, priorizar entradas de la categoría correspondiente.
+- **Etiqueta de categoría** (`template-parts/components/tag.php` + `tag.css`): píldora `.oikos-tag--crema` (surface/base + borde border/default, *deducido*) · `--arena` (sand, texto text/primary) · `--sage` (**`--color-brand-sage-strong` con texto crema**: el sage puro del Figma con texto claro no cumple AA). Es texto, no enlace.
+- **Tarjeta de entrada** (`template-parts/components/post-card.php` + `post-card.css`): args `post_id`, `variant` (`featured` imagen 624/283 arriba, 3/2 en móvil · `horizontal` foto cuadrada 112 → 200 a la izquierda), `heading_level`, `track_location`, `image_loading`, `sizes`. **Un solo enlace** (el título, `data-track="blog-card"`) cuyo `::after` cubre la tarjeta; el foco dibuja el anillo alrededor de toda la tarjeta. Imagen `alt=""` (decorativa: el enlace ya nombra el destino). Sin imagen destacada → superficie crema del mismo tamaño. Autores "Paula · Juan David" con el punto `aria-hidden`.
+- **Bloque de blog** "Ideas para relaciones…" (`template-parts/sections/posts-block.php` + `posts-block.css`): 1 destacada + 2 horizontales (columnas 624/454 del Figma desde 1024). Args `title`, `heading_level`, `posts` (manuales), `category` (ID o slug a priorizar: páginas de servicio), `exclude`, `link` (vacío → página de entradas con "Explora el blog"), `track_location`. Selección (`oikos_get_block_posts()`): manuales → categoría → recientes, sin repetir. Con 1 o 2 entradas se adapta (`--count-N`); con 0 no se imprime. **Tablet y móvil:** una columna, la grande arriba y las horizontales apiladas (en 2 columnas el título quedaría en ~130 px junto a la foto). En el Inicio: pestaña "Blog" (`oikos_home_blog_titulo`, `oikos_home_blog_entradas` máx. 3 y se completa con recientes, `oikos_home_blog_boton`).
 - **Acordeón de FAQ** (accesible: `button` + `aria-expanded`; contenido presente en el HTML para SEO).
 - **Testimonios** (carrusel de tarjetas con estrellas).
 - **Trivia "Mitos y verdades"** (Servicios general): interactiva, N preguntas, temporizador, botones Verdad/Mito, contenido por repetidor ACF. JS propio, carga solo en esa plantilla.
@@ -190,6 +196,7 @@ Las 3 páginas de terapia (pareja, individual, familiar) usan **la misma plantil
   - FAQ: `FAQPage` en toda página con preguntas.
   - Servicios: `Service`.
   - **No imprimir JSON-LD suelto que duplique a Yoast.** Yoast ya genera `WebSite`, `WebPage`, `Organization`, `Article`/`BlogPosting`, `BreadcrumbList` y `Person` para autores. El tema agrega o ajusta piezas (`Psychologist`/`LocalBusiness`, `FAQPage`, `Service`, coautores del CPT `equipo`) usando los filtros de la API de schema de Yoast, para que todo quede en un solo grafo conectado.
+  - Autores del equipo (`inc/schema.php`): con `oikos_entrada_autores` lleno, `Article.author` y `WebPage.author` apuntan a un `Person` por miembro (`@id` `/#/schema/person/equipo-{ID}`, con `jobTitle`, `description`, `image` y `worksFor` si el sitio es organización) y Yoast deja de generar el `Person` del usuario de WP. Filtro `oikos_schema_team_person` para agregar `sameAs`.
   - Breadcrumbs: usar `yoast_breadcrumb()` con el markup del diseño.
 - Imágenes: `alt` desde la biblioteca de medios, tamaños registrados + `srcset`, WebP, `loading="lazy"` excepto la imagen LCP (hero), que lleva `fetchpriority="high"`.
 - Mapa de Contacto: no cargar Google Maps en el render inicial (fachada/imagen estática que carga el iframe al interactuar).
