@@ -1,0 +1,195 @@
+/**
+ * Oikos — Componente Slider (CSS scroll-snap + slider.js).
+ *
+ * .oikos-slider                 contenedor (position: relative)
+ *   __track                     contenedor con scroll horizontal y snap
+ *     __slide                   una diapositiva (100 % del ancho)
+ *   __arrow                     flechas opcionales (--prev volteada)
+ *   __dots / __dot              indicadores sobre la foto, abajo y centrados
+ *
+ * Modificadores:
+ * - --portrait: fotos verticales recortadas con object-fit (proporción
+ *   en --slider-ratio). Lleva un degradado oscuro abajo para que los
+ *   indicadores se vean sobre cualquier foto (WCAG 1.4.11).
+ *
+ * Indicadores y flechas van sobre las diapositivas (position: absolute).
+ *
+ * Variables para cada uso (no se declaran aquí: los valores por defecto van
+ * como respaldo en var(), así cualquier sección las define sin pelear
+ * especificidad ni orden de carga):
+ *   --slider-radius (radius/lg) · --slider-ratio (3 / 4)
+ *   --slider-dot-active (caramelo) · --slider-dot-idle (crema)
+ *   --slider-dot-size (8 px) · --slider-dot-active-width (32 px)
+ */
+
+.oikos-slider {
+	position: relative;
+	border-radius: var(--slider-radius, var(--radius-lg));
+}
+
+/* Degradado bajo los indicadores (solo con fotos y más de una diapositiva). */
+.oikos-slider--portrait:has(.oikos-slider__dots)::after {
+	content: "";
+	position: absolute;
+	inset-inline: 0;
+	bottom: 0;
+	height: var(--spacing-10);
+	border-radius: 0 0 var(--slider-radius, var(--radius-lg)) var(--slider-radius, var(--radius-lg));
+	background-image: linear-gradient(to top, rgb(33 33 33 / 0.4), rgb(33 33 33 / 0));
+	pointer-events: none;
+}
+
+.oikos-slider__track {
+	display: flex;
+	overflow-x: auto;
+	overflow-y: hidden;
+	overscroll-behavior-x: contain;
+	scroll-snap-type: x mandatory;
+	scroll-behavior: smooth;
+	scrollbar-width: none;
+	border-radius: inherit;
+}
+
+.oikos-slider__track::-webkit-scrollbar {
+	display: none;
+}
+
+.oikos-slider__track:focus-visible {
+	outline: 2px solid var(--color-content-inverse);
+	outline-offset: 3px;
+	box-shadow: 0 0 0 5px var(--color-interactive-primary);
+}
+
+.oikos-slider__slide {
+	flex: 0 0 100%;
+	min-width: 0;
+	scroll-snap-align: start;
+	scroll-snap-stop: always;
+}
+
+/* Fotos verticales */
+.oikos-slider--portrait .oikos-slider__slide {
+	aspect-ratio: var(--slider-ratio, 3 / 4);
+}
+
+.oikos-slider--portrait .oikos-slider__slide img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+/* Indicadores: el área de toque mide 44 × 44 (o más) y el trazo visible
+   va en ::before. Una sombra suave los separa de zonas claras de la foto. */
+.oikos-slider__dots {
+	position: absolute;
+	z-index: 1;
+	inset-inline: 0;
+	bottom: var(--spacing-1);
+	display: flex;
+	justify-content: center;
+	gap: 0;
+	pointer-events: none;
+}
+
+.oikos-slider__dot {
+	display: grid;
+	place-items: center;
+	min-width: 2.75rem;
+	min-height: 2.75rem;
+	padding: 0;
+	margin-inline: calc(var(--spacing-1) * -0.75); /* acerca los trazos sin achicar el área táctil */
+	border: 0;
+	background: none;
+	cursor: pointer;
+	pointer-events: auto;
+}
+
+.oikos-slider__dot::before {
+	content: "";
+	display: block;
+	width: var(--slider-dot-size, 0.5rem);
+	height: var(--slider-dot-size, 0.5rem);
+	border-radius: 999px;
+	background-color: var(--slider-dot-idle, var(--color-content-inverse));
+	box-shadow: 0 1px 3px rgb(0 0 0 / 0.25);
+	transition:
+		width var(--transition-reveal),
+		background-color var(--transition-fast);
+}
+
+.oikos-slider__dot[aria-current="true"]::before {
+	width: var(--slider-dot-active-width, 2rem);
+	background-color: var(--slider-dot-active, var(--color-brand-caramel));
+	box-shadow:
+		0 0 0 1px var(--slider-dot-idle, var(--color-content-inverse)),
+		0 1px 3px rgb(0 0 0 / 0.25);
+}
+
+.oikos-slider__dot:focus-visible {
+	outline: 0;
+}
+
+.oikos-slider__dot:focus-visible::before {
+	box-shadow:
+		0 0 0 2px var(--color-interactive-primary),
+		0 0 0 4px var(--color-content-inverse);
+}
+
+/* Flechas (opcionales): a los lados, centradas en vertical. */
+.oikos-slider__arrow {
+	position: absolute;
+	z-index: 1;
+	top: 50%;
+	translate: 0 -50%;
+	display: grid;
+	place-items: center;
+	width: 2.75rem;
+	height: 2.75rem;
+	padding: 0;
+	border: 1px solid var(--color-border-default);
+	border-radius: 999px;
+	background-color: var(--color-surface-base);
+	color: var(--color-text-primary);
+	cursor: pointer;
+	transition: background-color var(--transition-fast), opacity var(--transition-fast);
+}
+
+.oikos-slider__arrow:hover:not(:disabled) {
+	background-color: color-mix(in srgb, var(--color-surface-base) 90%, var(--color-text-primary));
+}
+
+.oikos-slider__arrow:focus-visible {
+	outline: 0;
+	box-shadow:
+		0 0 0 2px var(--color-surface-base),
+		0 0 0 4px var(--color-interactive-primary);
+}
+
+.oikos-slider__arrow:disabled {
+	opacity: 0;
+	pointer-events: none;
+	cursor: default;
+}
+
+.oikos-slider__arrow--prev {
+	left: var(--spacing-2);
+}
+
+.oikos-slider__arrow--next {
+	right: var(--spacing-2);
+}
+
+.oikos-slider__arrow--prev .oikos-icon {
+	transform: scaleX(-1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.oikos-slider__track {
+		scroll-behavior: auto;
+	}
+
+	.oikos-slider__dot::before {
+		transition: none;
+	}
+}
