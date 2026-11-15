@@ -1,0 +1,53 @@
+{
+    "key": "group_oikos_categoria",
+    "title": "Categoría",
+    "fields": [
+        {
+            "key": "field_oikos_categoria_color",
+            "label": "Color de la etiqueta",
+            "name": "oikos_categoria_color",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "Color de la píldora con el nombre de la categoría en las tarjetas del blog.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "crema": "Crema claro (Terapia de pareja)",
+                "arena": "Arena (Terapia individual)",
+                "sage": "Sage (Terapia familiar)"
+            },
+            "default_value": "crema",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "allow_in_bindings": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "taxonomy",
+                "operator": "==",
+                "value": "category"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Color de la etiqueta de cada categoría del blog.",
+    "show_in_rest": 0,
+    "modified": 1794800000
+}

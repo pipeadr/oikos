@@ -1,0 +1,88 @@
+{
+    "key": "group_oikos_equipo",
+    "title": "Equipo",
+    "fields": [
+        {
+            "key": "field_oikos_equipo_enfoque",
+            "label": "Enfoque o rol",
+            "name": "oikos_equipo_enfoque",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Ej.: \"Psicóloga clínica, terapia de pareja\". Se usa bajo el nombre y como cargo en los datos estructurados.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_oikos_equipo_bio_corta",
+            "label": "Bio corta",
+            "name": "oikos_equipo_bio_corta",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Dos o tres líneas. Se usa en las tarjetas de equipo y como descripción de la persona para buscadores.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": 300,
+            "allow_in_bindings": 0,
+            "rows": 3,
+            "placeholder": "",
+            "new_lines": ""
+        },
+        {
+            "key": "field_oikos_equipo_bio_larga",
+            "label": "Bio larga",
+            "name": "oikos_equipo_bio_larga",
+            "aria-label": "",
+            "type": "wysiwyg",
+            "instructions": "Formación, experiencia y enfoque. Se usará en Nosotros y en la página individual cuando exista.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "allow_in_bindings": 0,
+            "tabs": "all",
+            "toolbar": "basic",
+            "media_upload": 0,
+            "delay": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "equipo"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "acf_after_title",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Datos de cada psicólogo. El nombre es el título y la foto es la imagen destacada.",
+    "show_in_rest": 0,
+    "modified": 1794800000
+}
