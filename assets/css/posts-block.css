@@ -1,0 +1,54 @@
+/**
+ * Oikos — Bloque de blog ("Ideas para relaciones…").
+ *
+ * .oikos-posts-block--count-{1|2|3}   cuántas entradas hay (sin huecos)
+ *   __title                           H2 estilo Heading
+ *   __grid                            grande (__featured) + horizontales (__side)
+ *   __cta                             botón centrado
+ *
+ * Desktop (≥ 1024): columnas 624 / 454 del Figma con gap de 32; las dos
+ * horizontales apiladas con 24 entre ellas.
+ * Tablet y móvil (< 1024): una columna; la grande a ancho completo y las
+ * horizontales apiladas debajo. En 2 columnas cada horizontal mediría ~350 px
+ * y el título quedaría en ~130 px junto a la foto; apiladas conservan la
+ * lectura del desktop.
+ */
+
+.oikos-posts-block {
+	background-color: var(--color-surface-page);
+}
+
+.oikos-posts-block__inner {
+	display: flex;
+	flex-direction: column;
+	gap: var(--spacing-4);
+}
+
+.oikos-posts-block__grid {
+	display: grid;
+	gap: var(--spacing-4);
+}
+
+.oikos-posts-block__side {
+	display: flex;
+	flex-direction: column;
+	gap: var(--spacing-3);
+}
+
+.oikos-posts-block__cta {
+	align-self: center;
+}
+
+/* Una sola entrada: la tarjeta grande con el ancho de su columna del Figma. */
+.oikos-posts-block--count-1 .oikos-posts-block__featured {
+	width: 100%;
+	max-width: 39rem; /* 624 */
+	margin-inline: auto;
+}
+
+@media (min-width: 64rem) {
+	.oikos-posts-block:not(.oikos-posts-block--count-1) .oikos-posts-block__grid {
+		grid-template-columns: minmax(0, 624fr) minmax(0, 454fr);
+		align-items: start;
+	}
+}

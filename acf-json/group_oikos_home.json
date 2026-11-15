@@ -962,6 +962,97 @@
             "mime_types": "jpg,jpeg,png,webp,avif",
             "insert": "append",
             "preview_size": "medium"
+        },
+        {
+            "key": "field_oikos_home_blog_tab",
+            "label": "Blog",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_oikos_home_blog_titulo",
+            "label": "Título",
+            "name": "oikos_home_blog_titulo",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Si se deja vacío, no se muestra el bloque.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Ideas para relaciones y vidas más conscientes",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_oikos_home_blog_entradas",
+            "label": "Entradas",
+            "name": "oikos_home_blog_entradas",
+            "aria-label": "",
+            "type": "relationship",
+            "instructions": "Opcional. Elige hasta 3 entradas; la primera sale grande. Si se deja vacío (o se eligen menos de 3), se completa con las más recientes.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "post"
+            ],
+            "post_status": [
+                "publish"
+            ],
+            "taxonomy": "",
+            "filters": [
+                "search",
+                "taxonomy"
+            ],
+            "return_format": "id",
+            "min": "",
+            "max": 3,
+            "allow_in_bindings": 0,
+            "elements": [
+                "featured_image"
+            ],
+            "bidirectional": 0,
+            "bidirectional_target": []
+        },
+        {
+            "key": "field_oikos_home_blog_boton",
+            "label": "Botón",
+            "name": "oikos_home_blog_boton",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "Opcional. Si se deja vacío: \"Explora el blog\" → página de entradas (Ajustes → Lectura).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "allow_in_bindings": 0
         }
     ],
     "location": [
@@ -984,5 +1075,5 @@
     "active": true,
     "description": "Contenido de la página de inicio.",
     "show_in_rest": 0,
-    "modified": 1794775435
+    "modified": 1794800000
 }

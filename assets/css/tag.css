@@ -1,0 +1,45 @@
+/**
+ * Oikos — Etiqueta de categoría (píldora).
+ *
+ * <span class="oikos-tag oikos-tag--arena">Terapia individual</span>
+ *
+ * Figma: Figtree Medium 14 / 100 % / 0. Padding y alto (≈ 36) deducidos de
+ * capturas. Contraste: crema y arena con text/primary (14.8:1 y 7.4:1);
+ * sage con texto crema sobre --color-brand-sage-strong (4.62:1).
+ */
+
+.oikos-tag {
+	display: inline-flex;
+	align-items: center;
+	align-self: flex-start;
+	max-width: 100%;
+	padding: var(--tag-padding-block) var(--spacing-2);
+	border: 1px solid transparent;
+	border-radius: var(--radius-full);
+	font-family: var(--font-body);
+	font-size: var(--text-small-size);
+	font-weight: 500;
+	line-height: 1;
+	letter-spacing: 0;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.oikos-tag--crema {
+	background-color: var(--color-surface-base);
+	border-color: var(--color-border-default);
+	color: var(--color-text-primary);
+}
+
+.oikos-tag--arena {
+	background-color: var(--color-brand-sand);
+	border-color: var(--color-brand-sand);
+	color: var(--color-text-primary);
+}
+
+.oikos-tag--sage {
+	background-color: var(--color-brand-sage-strong);
+	border-color: var(--color-brand-sage-strong);
+	color: var(--color-content-inverse);
+}

@@ -54,6 +54,10 @@
 	--color-decorative-caramel: #a87a53; /* color/decorative/caramel */
 	/* Caramelo oscurecido para texto crema encima (4.61:1, AA). */
 	--color-brand-caramel-strong: #926641;
+	/* Sage oscurecido para texto crema encima (etiqueta "Terapia familiar"):
+	   mezcla 52 % sage / 48 % verde = #587662 → 4.62:1 con content/inverse.
+	   Es la mezcla más clara con margen sobre 4.5:1 (sage puro da 2.97:1). */
+	--color-brand-sage-strong: #587662;
 
 	/* Gradiente de bandas destacadas: verde → sage. Termina en la mezcla
 	   50 % verde / 50 % sage (#567561, 4.7:1 con texto crema) para que el
@@ -101,6 +105,7 @@
 	--radius-md: 0.75rem;  /* 12 — botones (deducido de capturas) */
 	--radius-xs: 0.25rem;  /*  4 — indicadores del slider (deducido de capturas) */
 	--radius-lg: 1rem;     /* 16 — tarjetas */
+	--radius-full: 9999px; /* píldoras (etiquetas de categoría) */
 
 	/* Bordes */
 	--border-width-thick: 2px; /* border/width/thick (deducido de capturas) */
@@ -109,6 +114,7 @@
 	--container-padding: clamp(1.25rem, -0.169rem + 6.0545vw, 5rem);  /* 20 → 80 */
 	--space-section: clamp(3rem, 2.2432rem + 3.2291vw, 5rem);         /* 48 → 80 */
 	--card-padding: clamp(1.25rem, 1.1554rem + 0.4036vw, 1.5rem);     /* 20 → 24 */
+	--tag-padding-block: 0.625rem; /* 10 — etiqueta de categoría, alto ≈ 36 (deducido de capturas) */
 
 	/* Layout */
 	--container-max: 69.375rem; /* 1110 */
@@ -127,6 +133,7 @@
 	--text-step-size: clamp(1.75rem, 1.277rem + 2.0182vw, 3rem);      /* 28 → 48 (deducido) */
 	--text-card-hero-size: clamp(1.25rem, 1.1554rem + 0.4036vw, 1.5rem);    /* 20 → 24 — tarjetas del hero */
 	--text-card-service-size: clamp(1.25rem, 1.1554rem + 0.4036vw, 1.5rem); /* 20 → 24 — tarjetas de acompañamiento */
+	--text-post-title-size: clamp(1.125rem, 1.0777rem + 0.2018vw, 1.25rem); /* 18 → 20 — título de tarjeta de entrada (deducido) */
 	--text-body-size: 1rem;     /* 16 fijo */
 	--text-button-size: 1rem;   /* 16 fijo */
 	--text-small-size: 0.875rem; /* 14 fijo — eyebrow y menú */

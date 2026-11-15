@@ -123,6 +123,20 @@ function oikos_template_assets() {
 			'css'       => 'css/slider.css',
 			'js'        => 'js/slider.js',
 		),
+		// Blog: se agregan aquí el archivo (is_home), la entrada (is_singular post)
+		// y la plantilla Servicio al construirlos.
+		'oikos-tag'           => array(
+			'condition' => static fn() => ( is_front_page() && is_page() ) || is_page_template( 'templates/style-guide.php' ),
+			'css'       => 'css/tag.css',
+		),
+		'oikos-post-card'     => array(
+			'condition' => static fn() => is_front_page() && is_page(),
+			'css'       => 'css/post-card.css',
+		),
+		'oikos-posts-block'   => array(
+			'condition' => static fn() => is_front_page() && is_page(),
+			'css'       => 'css/posts-block.css',
+		),
 		'oikos-home'          => array(
 			'condition' => static fn() => is_front_page() && is_page(),
 			'css'       => 'css/home.css',

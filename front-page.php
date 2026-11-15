@@ -157,4 +157,17 @@ get_template_part(
 	)
 );
 
+// Blog: entradas elegidas a mano o, si faltan, las más recientes.
+get_template_part(
+	'template-parts/sections/posts-block',
+	null,
+	array(
+		'title'          => (string) oikos_field( 'oikos_home_blog_titulo', $oikos_front_id ),
+		'heading_level'  => 2,
+		'posts'          => (array) oikos_field( 'oikos_home_blog_entradas', $oikos_front_id, array() ),
+		'link'           => (array) oikos_field( 'oikos_home_blog_boton', $oikos_front_id, array() ),
+		'track_location' => 'home-blog',
+	)
+);
+
 get_footer();
