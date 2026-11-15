@@ -30,6 +30,39 @@ function oikos_faq_post_id() {
 }
 
 /**
+ * Normaliza el HTML de una respuesta (editor wysiwyg básico).
+ *
+ * El editor (con wpautop de ACF) ya entrega <p>, <ul> y <ol>; aquí se
+ * garantiza que el resultado siempre sean bloques limpios:
+ * - sin párrafos vacíos (<p></p>, <p>&nbsp;</p>, <p><br></p>);
+ * - texto suelto (sin bloques) → envuelto en <p> con wpautop();
+ * - sin <p> envolviendo listas ni otros bloques.
+ *
+ * @param string $html HTML de la respuesta.
+ * @return string
+ */
+function oikos_faq_clean_answer( $html ) {
+	$html  = trim( (string) $html );
+	$block = 'p|ul|ol|li|h[2-6]|blockquote|div';
+
+	if ( '' === $html ) {
+		return '';
+	}
+
+	if ( ! preg_match( '/<(' . $block . ')[\s>]/i', $html ) ) {
+		$html = wpautop( $html );
+	}
+
+	// <p> alrededor de un bloque: se deja solo el bloque.
+	$html = preg_replace( '#<p>\s*(<(?:ul|ol|h[2-6]|blockquote|div)[\s>].*?</(?:ul|ol|h[2-6]|blockquote|div)>)\s*</p>#is', '$1', $html );
+
+	// Párrafos vacíos.
+	$html = preg_replace( '#<p[^>]*>(?:\s|&nbsp;|&\#160;|\xC2\xA0|<br\s*/?>)*</p>#i', '', $html );
+
+	return trim( $html );
+}
+
+/**
  * Preguntas de una página, normalizadas.
  *
  * Descarta filas sin pregunta o sin respuesta.
@@ -53,7 +86,7 @@ function oikos_get_faq_items( $post_id ) {
 	$items = array();
 	foreach ( (array) oikos_field( 'oikos_faq_preguntas', $post_id, array() ) as $row ) {
 		$question = isset( $row['pregunta'] ) ? trim( wp_strip_all_tags( (string) $row['pregunta'] ) ) : '';
-		$answer   = isset( $row['respuesta'] ) ? trim( (string) $row['respuesta'] ) : '';
+		$answer   = isset( $row['respuesta'] ) ? oikos_faq_clean_answer( (string) $row['respuesta'] ) : '';
 
 		if ( '' === $question || '' === trim( wp_strip_all_tags( $answer ) ) ) {
 			continue;

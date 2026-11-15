@@ -2,10 +2,15 @@
 /**
  * Sección: preguntas frecuentes (todas las páginas, preguntas distintas en cada una).
  *
- * Título + botón a la izquierda, acordeón a la derecha y, debajo, el bloque
+ * Título + botón a la izquierda, preguntas a la derecha y, debajo, el bloque
  * "¿Tienes dudas?" con WhatsApp. No lee ACF: las plantillas la llaman con
  * oikos_the_faq_section( 'faq-<pagina>' ) (inc/faq.php), que le pasa los datos.
  * El schema FAQPage lo agrega inc/schema.php con las mismas preguntas.
+ *
+ * Cada pregunta es <details>/<summary> nativo con el encabezado (h3) dentro
+ * del <summary>: funciona sin JS, todas empiezan cerradas, se pueden abrir
+ * varias y la respuesta siempre está en el HTML. assets/js/faq.js solo agrega
+ * la animación de alto (mejora progresiva).
  *
  * Args:
  * - title          (string) Título (estilo Heading).
@@ -46,7 +51,7 @@ $oikos_title_id = wp_unique_id( 'oikos-faq-' );
 			<div class="oikos-faq__intro">
 				<?php
 				printf(
-					'<h%1$d id="%2$s" class="oikos-faq__title oikos-text-heading">%3$s</h%1$d>',
+					'<h%1$d id="%2$s" class="oikos-faq__heading oikos-text-heading">%3$s</h%1$d>',
 					(int) $oikos_level,
 					esc_attr( $oikos_title_id ),
 					esc_html( $oikos_title )
@@ -64,18 +69,24 @@ $oikos_title_id = wp_unique_id( 'oikos-faq-' );
 				<?php endif; ?>
 			</div>
 
-			<div class="oikos-faq__accordion">
-				<?php
-				get_template_part(
-					'template-parts/components/accordion',
-					null,
-					array(
-						'items'         => $oikos_args['items'],
-						'heading_level' => $oikos_level + 1,
-						'id_prefix'     => $oikos_title_id,
-					)
-				);
-				?>
+			<div class="oikos-faq__list">
+				<?php foreach ( $oikos_args['items'] as $oikos_item ) : ?>
+					<details class="oikos-faq__item">
+						<summary class="oikos-faq__question">
+							<?php
+							printf(
+								'<h%1$d class="oikos-faq__title">%2$s</h%1$d>',
+								(int) $oikos_level + 1,
+								esc_html( $oikos_item['question'] )
+							);
+							?>
+							<span class="oikos-faq__chevron" aria-hidden="true"><?php oikos_the_icon( 'chevron-down' ); ?></span>
+						</summary>
+						<div class="oikos-faq__answer oikos-text-body">
+							<?php echo wp_kses_post( $oikos_item['answer'] ); ?>
+						</div>
+					</details>
+				<?php endforeach; ?>
 			</div>
 		</div>
 
