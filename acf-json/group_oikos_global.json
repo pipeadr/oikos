@@ -301,7 +301,7 @@
                     },
                     "default_value": "",
                     "allow_in_bindings": 0,
-                    "placeholder": "https:\/\/",
+                    "placeholder": "https://",
                     "parent_repeater": "field_oikos_global_redes"
                 }
             ]
@@ -460,6 +460,32 @@
             "placement": "top",
             "endpoint": 0,
             "selected": 0
+        },
+        {
+            "key": "field_oikos_global_newsletter_logo",
+            "label": "Logo del newsletter",
+            "name": "oikos_global_newsletter_logo",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "Versión especial del logo para la banda newsletter (árbol + \"OIKOS Psicología\"), clara para fondo verde. SVG (con viewBox) o PNG; el tamaño lo controla el tema. El texto alternativo se toma de la biblioteca de medios (si está vacío se usa el nombre de la marca). Si no hay logo aquí, se usa el \"Logo para fondos oscuros\" (pestaña Marca) y, si tampoco hay, el nombre del sitio.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "id",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "svg,png",
+            "allow_in_bindings": 0,
+            "preview_size": "medium"
         },
         {
             "key": "field_oikos_global_newsletter_titulo",
@@ -629,5 +655,5 @@
     "active": true,
     "description": "Ajustes globales del sitio Oikos.",
     "show_in_rest": 0,
-    "modified": 1794780397
+    "modified": 1794781347
 }

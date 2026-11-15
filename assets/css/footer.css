@@ -52,7 +52,7 @@
 }
 
 .oikos-logo--inverse {
-	--logo-height: clamp(6rem, 4.5337rem + 6.2563vw, 9.875rem); /* 96 → 158 */
+	--logo-height: clamp(2.5rem, 2.1216rem + 1.6145vw, 3.5rem); /* 40 → 56 */
 
 	color: var(--color-content-inverse);
 	font-size: var(--text-heading-size);
@@ -64,6 +64,16 @@
 }
 
 .oikos-logo--inverse img {
+	max-width: 14rem;
+}
+
+/* Logo del newsletter (árbol + "OIKOS Psicología"): 158 de alto en desktop
+   (medido en la captura); el ancho sale del viewBox. */
+.oikos-logo--newsletter {
+	--logo-height: clamp(6rem, 4.5337rem + 6.2563vw, 9.875rem); /* 96 → 158 */
+}
+
+.oikos-logo--newsletter img {
 	max-width: 21.5rem;
 }
 
