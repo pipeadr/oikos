@@ -64,16 +64,17 @@ $oikos_sg_text_styles = array(
 );
 
 $oikos_sg_buttons = array(
-	'oikos-btn--primary'   => __( 'Agenda tu cita', 'oikos' ),
-	'oikos-btn--secondary' => __( 'Conoce el método', 'oikos' ),
-	'oikos-btn--light'     => __( 'Ver servicio', 'oikos' ),
-	'oikos-btn--tonal'     => __( 'Agenda tu cita ahora', 'oikos' ),
+	'oikos-btn--primary'       => __( 'Agenda tu cita', 'oikos' ),
+	'oikos-btn--secondary'     => __( 'Conoce el método', 'oikos' ),
+	'oikos-btn--light'         => __( 'Ver servicio', 'oikos' ),
+	'oikos-btn--tonal'         => __( 'Agenda tu cita ahora', 'oikos' ),
+	'oikos-btn--outline-light' => __( 'Conoce sobre nosotros', 'oikos' ),
 );
 
 $oikos_sg_surfaces = array(
 	'page'  => __( 'Sobre blanco', 'oikos' ),
 	'cream' => __( 'Sobre crema', 'oikos' ),
-	'dark'  => __( 'Sobre banda verde', 'oikos' ),
+	'dark'  => __( 'Sobre banda verde · --outline-light es para fotos y fondos oscuros', 'oikos' ),
 	'brown' => __( 'Sobre bloque café (footer) · --tonal es para este fondo', 'oikos' ),
 );
 
