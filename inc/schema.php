@@ -11,6 +11,10 @@
  * - El Person del usuario de WordPress deja de generarse en esas entradas
  *   (no es el autor real). La representación del sitio no se toca.
  *
+ * Preguntas frecuentes (inc/faq.php):
+ * - Si la página tiene preguntas, el WebPage pasa a ['WebPage', 'FAQPage']
+ *   con mainEntity → piezas Question (+ Answer). Sin preguntas, nada.
+ *
  * @package oikos
  */
 
@@ -210,3 +214,110 @@ function oikos_schema_team_person( $member_id, $org_id = '' ) {
 	 */
 	return apply_filters( 'oikos_schema_team_person', $person, $member_id );
 }
+
+/* ==========================================================================
+   Preguntas frecuentes → FAQPage
+   ========================================================================== */
+
+/**
+ * Etiquetas HTML que Google acepta en el texto de una respuesta (Answer.text).
+ *
+ * @return array
+ */
+function oikos_schema_faq_allowed_html() {
+	$simple = array();
+	foreach ( array( 'p', 'br', 'ol', 'ul', 'li', 'strong', 'b', 'em', 'i', 'h2', 'h3', 'h4', 'h5', 'h6', 'div' ) as $tag ) {
+		$simple[ $tag ] = array();
+	}
+
+	$simple['a'] = array( 'href' => true );
+
+	return $simple;
+}
+
+/**
+ * FAQPage en el grafo de Yoast con las preguntas de la página.
+ *
+ * Igual que el bloque FAQ de Yoast: el WebPage pasa a ['WebPage', 'FAQPage']
+ * con mainEntity → una pieza Question por pregunta (con su Answer). Las
+ * preguntas son las mismas que imprime la sección (oikos_get_faq_items()).
+ *
+ * @param array  $graph   Grafo de Yoast.
+ * @param object $context Meta_Tags_Context.
+ * @return array
+ */
+function oikos_schema_graph_faq( $graph, $context ) {
+	if ( ! is_array( $graph ) ) {
+		return $graph;
+	}
+
+	$items = oikos_get_faq_items( oikos_faq_post_id() );
+
+	if ( ! $items ) {
+		return $graph;
+	}
+
+	$webpage_id = is_object( $context ) && ! empty( $context->main_schema_id ) ? (string) $context->main_schema_id : '';
+	$canonical  = is_object( $context ) && ! empty( $context->canonical ) ? (string) $context->canonical : '';
+	$language   = get_bloginfo( 'language' );
+
+	// Busca el WebPage principal (el de main_schema_id o, si no, el primero).
+	$webpage_key = null;
+	foreach ( $graph as $key => $piece ) {
+		$types = isset( $piece['@type'] ) ? (array) $piece['@type'] : array();
+
+		if ( ! array_intersect( $types, array( 'WebPage', 'CollectionPage', 'ProfilePage', 'AboutPage', 'ContactPage', 'FAQPage' ) ) ) {
+			continue;
+		}
+
+		if ( null === $webpage_key || ( '' !== $webpage_id && isset( $piece['@id'] ) && $webpage_id === $piece['@id'] ) ) {
+			$webpage_key = $key;
+		}
+	}
+
+	if ( null === $webpage_key ) {
+		return $graph;
+	}
+
+	$webpage    = $graph[ $webpage_key ];
+	$webpage_id = isset( $webpage['@id'] ) ? (string) $webpage['@id'] : $webpage_id;
+	$base       = '' !== $canonical ? $canonical : ( isset( $webpage['url'] ) ? (string) $webpage['url'] : $webpage_id );
+	$base       = strtok( $base, '#' );
+
+	$refs      = array();
+	$questions = array();
+	foreach ( $items as $index => $item ) {
+		$question_id = $base . '#faq-pregunta-' . ( $index + 1 );
+		$answer      = trim( wp_kses( $item['answer'], oikos_schema_faq_allowed_html() ) );
+
+		$refs[]      = array( '@id' => $question_id );
+		$questions[] = array(
+			'@type'            => 'Question',
+			'@id'              => $question_id,
+			'position'         => $index + 1,
+			'url'              => $question_id,
+			'name'             => $item['question'],
+			'answerCount'      => 1,
+			'acceptedAnswer'   => array(
+				'@type'      => 'Answer',
+				'text'       => $answer,
+				'inLanguage' => $language,
+			),
+			'inLanguage'       => $language,
+			'mainEntityOfPage' => array( '@id' => $webpage_id ),
+		);
+	}
+
+	$types            = isset( $webpage['@type'] ) ? (array) $webpage['@type'] : array( 'WebPage' );
+	$types[]          = 'FAQPage';
+	$webpage['@type'] = array_values( array_unique( $types ) );
+
+	$main_entity           = isset( $webpage['mainEntity'] ) ? $webpage['mainEntity'] : array();
+	$main_entity           = isset( $main_entity['@id'] ) ? array( $main_entity ) : (array) $main_entity;
+	$webpage['mainEntity'] = array_merge( $main_entity, $refs );
+
+	$graph[ $webpage_key ] = $webpage;
+
+	return array_merge( $graph, $questions );
+}
+add_filter( 'wpseo_schema_graph', 'oikos_schema_graph_faq', 20, 2 );
