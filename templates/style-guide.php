@@ -47,6 +47,7 @@ $oikos_sg_colors = array(
 	),
 	__( 'Derivados (contraste AA con texto crema)', 'oikos' ) => array(
 		'--color-brand-caramel-strong' => __( 'caramelo oscurecido · botón --tonal', 'oikos' ),
+		'--color-brand-sage-strong'    => __( 'sage oscurecido · etiqueta sage (4.62:1)', 'oikos' ),
 		'--gradient-brand'             => __( 'gradiente de bandas · verde → mezcla 50 % sage', 'oikos' ),
 	),
 );
@@ -164,7 +165,7 @@ get_header();
 		<div class="oikos-container">
 			<h2 id="sg-radius" class="oikos-text-heading"><?php esc_html_e( 'Radios', 'oikos' ); ?></h2>
 			<ul class="oikos-sg__radii">
-				<?php foreach ( array( '--radius-xs' => 'radius/xs · indicadores', '--radius-md' => 'radius/md · botones', '--radius-lg' => 'radius/lg · tarjetas' ) as $oikos_var => $oikos_label ) : ?>
+				<?php foreach ( array( '--radius-xs' => 'radius/xs · indicadores', '--radius-md' => 'radius/md · botones', '--radius-lg' => 'radius/lg · tarjetas', '--radius-full' => 'píldora · etiquetas' ) as $oikos_var => $oikos_label ) : ?>
 					<li>
 						<span class="oikos-sg__radius" style="border-radius: var(<?php echo esc_attr( $oikos_var ); ?>);"></span>
 						<code><?php echo esc_html( $oikos_var ); ?></code>
@@ -197,6 +198,19 @@ get_header();
 			<a class="oikos-btn oikos-btn--primary oikos-btn--block-mobile" href="#sg-buttons"><?php esc_html_e( 'Agenda tu cita', 'oikos' ); ?></a>
 		</div>
 		<p class="oikos-sg__meta" data-sg-button-height></p>
+	</section>
+
+	<!-- Etiquetas de categoría -->
+	<section class="oikos-section oikos-container" aria-labelledby="sg-tags">
+		<h2 id="sg-tags" class="oikos-text-heading"><?php esc_html_e( 'Etiquetas de categoría', 'oikos' ); ?></h2>
+		<div class="oikos-sg__buttons">
+			<?php
+			foreach ( array( 'crema' => 'Terapia de pareja', 'arena' => 'Terapia individual', 'sage' => 'Terapia familiar' ) as $oikos_color => $oikos_label ) {
+				get_template_part( 'template-parts/components/tag', null, array( 'label' => $oikos_label, 'color' => $oikos_color ) );
+			}
+			?>
+		</div>
+		<p class="oikos-sg__meta"><code>.oikos-tag--crema · --arena · --sage</code> · <?php esc_html_e( 'el color se elige en cada categoría (Entradas → Categorías)', 'oikos' ); ?></p>
 	</section>
 
 	<!-- Tarjeta base -->
