@@ -1,0 +1,108 @@
+/**
+ * Oikos — Hero foto + texto (variante "split", páginas internas).
+ *
+ * .oikos-hero-split                 sección
+ *   __inner                         grid: foto | texto
+ *     __media > img                 foto cuadrada (LCP) con radius/lg
+ *     __content                     H1 + párrafo + CTA
+ *
+ * Modificadores: --image-left, --no-media (solo texto).
+ *
+ * Medidas del diseño (1366): 176 desde el borde superior hasta la foto
+ * (--header-offset del <main> + --hero-split-top), foto 643 × 643, texto
+ * ≈ 411, gap spacing/7 y spacing/4 debajo.
+ *
+ * Tablet (768–1023): dos columnas 2:3 (foto más angosta, como media-text),
+ * para que el H1 y el CTA sigan en el primer pantallazo (en una columna la
+ * foto cuadrada mediría ~680 px).
+ * Móvil (< 768): foto arriba (4:3) y texto debajo, botón a ancho completo.
+ */
+
+.oikos-hero-split {
+	padding-top: var(--hero-split-top);
+	padding-bottom: var(--spacing-4);
+	background-color: var(--color-surface-page);
+}
+
+.oikos-hero-split__inner {
+	display: grid;
+	/* Texto fijo en 411 (Figma) y la foto toma el resto: 643 en 1366 y ~420
+	   en 1024, así el H1 mantiene sus 3 líneas en todo el rango desktop. */
+	grid-template-columns: minmax(0, 1fr) 25.6875rem;
+	grid-template-areas: "media content";
+	align-items: center;
+	gap: var(--spacing-7); /* 56 */
+}
+
+.oikos-hero-split--no-media .oikos-hero-split__inner {
+	grid-template-columns: minmax(0, 1fr);
+	grid-template-areas: "content";
+}
+
+/* Foto */
+.oikos-hero-split__media {
+	grid-area: media;
+	display: block;
+	min-width: 0;
+}
+
+.oikos-hero-split__media img {
+	display: block;
+	width: 100%;
+	height: auto;
+	aspect-ratio: 1;
+	object-fit: cover;
+	border-radius: var(--radius-lg);
+}
+
+/* Texto */
+.oikos-hero-split__content {
+	grid-area: content;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: var(--spacing-3); /* 24 */
+	min-width: 0;
+}
+
+.oikos-hero-split__title {
+	color: var(--color-text-primary);
+}
+
+.oikos-hero-split--no-media .oikos-hero-split__content {
+	max-inline-size: 40rem;
+}
+
+/* ==========================================================================
+   Tablet (768–1023)
+   ========================================================================== */
+
+@media (max-width: 63.9375rem) {
+	.oikos-hero-split__inner {
+		grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+		gap: var(--spacing-5); /* 40 */
+	}
+}
+
+/* ==========================================================================
+   Móvil (< 768)
+   ========================================================================== */
+
+@media (max-width: 47.9375rem) {
+	.oikos-hero-split__inner {
+		grid-template-columns: minmax(0, 1fr);
+		grid-template-areas:
+			"media"
+			"content";
+		gap: var(--spacing-4); /* 32 */
+	}
+
+	/* 4:3: el H1 entra en el primer pantallazo a 375 × 667. */
+	.oikos-hero-split__media img {
+		aspect-ratio: 4 / 3;
+	}
+
+	.oikos-hero-split__content {
+		align-items: stretch; /* botón --block-mobile a ancho completo */
+	}
+}

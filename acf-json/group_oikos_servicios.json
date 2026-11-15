@@ -1,0 +1,130 @@
+{
+    "key": "group_oikos_servicios",
+    "title": "Servicios general",
+    "fields": [
+        {
+            "key": "field_oikos_servicios_tab_hero",
+            "label": "Hero",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_oikos_servicios_hero_imagen",
+            "label": "Imagen",
+            "name": "oikos_servicios_hero_imagen",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "Foto cuadrada de al menos 1300 × 1300 px (se recorta al centro). Es la imagen principal de la página (la primera que se carga). El texto alternativo se edita en la biblioteca de medios.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "id",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "jpg,jpeg,png,webp,avif",
+            "allow_in_bindings": 0,
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_oikos_servicios_hero_titulo",
+            "label": "Título (H1)",
+            "name": "oikos_servicios_hero_titulo",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Si se deja vacío, se usa el título de la página.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_oikos_servicios_hero_texto",
+            "label": "Texto",
+            "name": "oikos_servicios_hero_texto",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "rows": 4,
+            "placeholder": "",
+            "new_lines": "br"
+        },
+        {
+            "key": "field_oikos_servicios_hero_boton",
+            "label": "Botón",
+            "name": "oikos_servicios_hero_boton",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "Si se deja vacío, se usa el CTA global \"Agenda tu cita\" de Oikos — Global.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "allow_in_bindings": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "templates/servicios.php"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "acf_after_title",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": [
+        "the_content"
+    ],
+    "active": true,
+    "description": "Contenido de la página general de servicios.",
+    "show_in_rest": 0,
+    "modified": 1794800000
+}

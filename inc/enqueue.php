@@ -92,6 +92,11 @@ function oikos_template_assets() {
 			'condition' => static fn() => is_front_page() && is_page(),
 			'css'       => 'css/hero.css',
 		),
+		// Hero foto + texto: se agregan aquí otras páginas internas que lo usen.
+		'oikos-hero-split'    => array(
+			'condition' => static fn() => is_page_template( 'templates/servicios.php' ),
+			'css'       => 'css/hero-split.css',
+		),
 		// Foto + texto: se agregan aquí Nosotros, Servicios y El método al construirlas.
 		'oikos-media-text'    => array(
 			'condition' => static fn() => is_front_page() && is_page(),

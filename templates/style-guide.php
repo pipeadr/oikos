@@ -54,6 +54,7 @@ $oikos_sg_colors = array(
 
 $oikos_sg_text_styles = array(
 	'oikos-text-display'      => array( 'Display', 'Terapia psicológica para cuidar de ti y de tus relaciones.' ),
+	'oikos-text-display-sm'   => array( 'Display S', 'Servicios psicológicos para reconstruir tu bienestar emocional' ),
 	'oikos-text-heading'      => array( 'Heading', 'Lo que no se sana, se repite' ),
 	'oikos-text-card'         => array( 'Card', 'Presencial y virtual' ),
 	'oikos-text-card-hero'    => array( 'Card hero', '+150 procesos acompañados' ),
