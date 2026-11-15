@@ -11,7 +11,9 @@
  * - title           (string)   Texto del H1.
  * - text            (string)   Párrafo (admite <br>).
  * - link            (array)    url, title, target.
- * - cards           (string[]) Hasta 3 textos cortos.
+ * - cards           (array)    Hasta 3 tarjetas: array{text:string, description?:string}
+ *                              (también acepta strings sueltos). Con descripción, la
+ *                              tarjeta se puede enfocar con Tab y la revela al hover/foco.
  * - track_location  (string)   data-track-location del botón.
  *
  * @package oikos
@@ -38,7 +40,23 @@ $oikos_focus_x = min( 100, max( 0, (int) $oikos_args['focus_x'] ) );
 $oikos_focus_y = min( 100, max( 0, (int) $oikos_args['focus_y'] ) );
 $oikos_picture = oikos_hero_picture( $oikos_args['image_id'], $oikos_args['image_mobile_id'], 'oikos-hero__media' );
 $oikos_link    = is_array( $oikos_args['link'] ) ? $oikos_args['link'] : array();
-$oikos_cards   = array_slice( array_filter( array_map( 'strval', (array) $oikos_args['cards'] ), 'strlen' ), 0, 3 );
+$oikos_cards   = array();
+
+foreach ( (array) $oikos_args['cards'] as $oikos_card ) {
+	$oikos_card = is_array( $oikos_card ) ? $oikos_card : array( 'text' => $oikos_card );
+	$oikos_text = isset( $oikos_card['text'] ) ? trim( (string) $oikos_card['text'] ) : '';
+
+	if ( '' === $oikos_text ) {
+		continue;
+	}
+
+	$oikos_cards[] = array(
+		'text'        => $oikos_text,
+		'description' => isset( $oikos_card['description'] ) ? trim( (string) $oikos_card['description'] ) : '',
+	);
+}
+
+$oikos_cards = array_slice( $oikos_cards, 0, 3 );
 
 $oikos_classes = 'oikos-hero oikos-hero--cover';
 if ( $oikos_picture ) {
@@ -74,8 +92,13 @@ if ( $oikos_picture ) {
 		<?php if ( $oikos_cards ) : ?>
 			<ul class="oikos-hero__cards" role="list">
 				<?php foreach ( $oikos_cards as $oikos_card ) : ?>
-					<li class="oikos-card oikos-hero__card">
-						<p class="oikos-text-card"><?php echo esc_html( $oikos_card ); ?></p>
+					<?php $oikos_has_reveal = '' !== $oikos_card['description']; ?>
+					<?php // Con descripción: enfocable (tabindex) para revelarla con teclado. No es enlace ni botón. ?>
+					<li class="oikos-card oikos-hero__card<?php echo $oikos_has_reveal ? ' oikos-hero__card--reveal' : ''; ?>"<?php echo $oikos_has_reveal ? ' tabindex="0"' : ''; ?>>
+						<p class="oikos-hero__card-title oikos-text-card"><?php echo esc_html( $oikos_card['text'] ); ?></p>
+						<?php if ( $oikos_has_reveal ) : ?>
+							<p class="oikos-hero__card-desc"><?php echo esc_html( $oikos_card['description'] ); ?></p>
+						<?php endif; ?>
 					</li>
 				<?php endforeach; ?>
 			</ul>

@@ -9,9 +9,17 @@
  *         __title                    estilo Card, centrado
  *
  * Colores: --arena (texto text/primary), --cafe y --verde (texto inverse).
- * Cada tarjeta está inclinada (--card-tilt por posición); al hover o foco se
- * endereza y se eleva. Con prefers-reduced-motion cambia sin animación ni
- * desplazamiento.
+ * Cada tarjeta está inclinada (--card-tilt por posición) y la mantiene en
+ * todos los estados; al hover o foco se eleva levemente.
+ *
+ * --reveal (tarjeta con descripción): al hover (solo con mouse) o foco el
+ * fondo pasa a café oscuro (text/secondary), el título sube y se desvanece y
+ * la descripción entra desde abajo. Ambas capas comparten la misma celda de
+ * la grilla (sin saltos de tamaño) y solo cambian de opacidad: los lectores
+ * de pantalla leen las dos. Sin hover (táctil): título y descripción juntos
+ * en el color normal; < 1024 una columna de tarjetas rectangulares.
+ *
+ * Con prefers-reduced-motion cambia sin animación ni desplazamiento.
  *
  * Medidas del diseño (1366): tarjetas cuadradas (~343 px) con 40 px entre
  * ellas, 48 px del encabezado a las tarjetas y de las tarjetas al botón.
@@ -76,7 +84,6 @@
 	text-decoration: none;
 	rotate: var(--card-tilt);
 	transition:
-		rotate var(--transition-lift),
 		translate var(--transition-lift),
 		box-shadow var(--transition-lift);
 }
@@ -99,9 +106,76 @@
 
 .oikos-service-card:hover,
 .oikos-service-card:focus-visible {
-	rotate: 0deg;
-	translate: 0 calc(-1 * var(--spacing-1));
+	translate: 0 calc(-1 * var(--spacing-1) / 2); /* 4: elevación sutil, sin enderezarse */
 	box-shadow: var(--shadow-lift);
+}
+
+/* --------------------------------------------------------------------------
+   Tarjeta con descripción (--reveal)
+   Medidas del diseño: Figtree 400, 16 px / 125 %, ~236 px de ancho.
+   -------------------------------------------------------------------------- */
+
+.oikos-service-card--reveal {
+	--reveal-shift: var(--spacing-1);
+
+	display: grid;
+	grid-template-areas: "stack";
+	place-items: center;
+	transition:
+		translate var(--transition-lift),
+		box-shadow var(--transition-lift),
+		background-color var(--transition-reveal),
+		color var(--transition-reveal);
+}
+
+.oikos-service-card--reveal > * {
+	grid-area: stack;
+	transition:
+		opacity var(--transition-reveal),
+		translate var(--transition-reveal);
+}
+
+.oikos-service-card__desc {
+	max-inline-size: 15rem; /* 240 */
+	font-family: var(--font-body);
+	font-size: var(--text-body-size);
+	font-weight: 400;
+	line-height: 1.25;
+	text-wrap: pretty;
+	opacity: 0;
+	translate: 0 var(--reveal-shift);
+}
+
+.oikos-service-card--reveal:focus-visible {
+	background-color: var(--color-text-secondary);
+	color: var(--color-content-inverse);
+}
+
+.oikos-service-card--reveal:focus-visible .oikos-service-card__title {
+	opacity: 0;
+	translate: 0 calc(-1 * var(--reveal-shift));
+}
+
+.oikos-service-card--reveal:focus-visible .oikos-service-card__desc {
+	opacity: 1;
+	translate: 0 0;
+}
+
+@media (hover: hover) {
+	.oikos-service-card--reveal:hover {
+		background-color: var(--color-text-secondary);
+		color: var(--color-content-inverse);
+	}
+
+	.oikos-service-card--reveal:hover .oikos-service-card__title {
+		opacity: 0;
+		translate: 0 calc(-1 * var(--reveal-shift));
+	}
+
+	.oikos-service-card--reveal:hover .oikos-service-card__desc {
+		opacity: 1;
+		translate: 0 0;
+	}
 }
 
 /* Foco: doble anillo (oscuro + crema) que se ve sobre los tres colores. */
@@ -120,6 +194,12 @@
 	.oikos-service-card:focus-visible {
 		translate: none;
 	}
+
+	.oikos-service-card--reveal,
+	.oikos-service-card--reveal > * {
+		--reveal-shift: 0px;
+		transition: none;
+	}
 }
 
 /* ==========================================================================
@@ -129,6 +209,12 @@
 @media (max-width: 63.9375rem) {
 	.oikos-service-cards__list {
 		gap: var(--spacing-3); /* 24 */
+	}
+
+	/* Con mouse en este rango la tarjeta mide ~213–280 px: descripción a
+	   14 px para que quepa en el cuadrado. */
+	.oikos-service-card__desc {
+		font-size: var(--text-small-size);
 	}
 }
 
@@ -163,5 +249,71 @@
 
 	.oikos-service-card__title {
 		max-width: none;
+	}
+}
+
+/* ==========================================================================
+   Sin hover (pantallas táctiles): título y descripción juntos, en el color
+   normal de la tarjeta; el foco solo muestra el anillo. < 1024: una columna
+   de tarjetas rectangulares (como en móvil) que crecen con el texto.
+   ========================================================================== */
+
+@media (hover: none) {
+	.oikos-service-card--reveal {
+		grid-template-areas: "title" "desc";
+		align-content: center;
+		row-gap: var(--spacing-1);
+	}
+
+	.oikos-service-card--reveal .oikos-service-card__title {
+		grid-area: title;
+	}
+
+	.oikos-service-card--reveal .oikos-service-card__desc {
+		grid-area: desc;
+	}
+
+	.oikos-service-card--reveal .oikos-service-card__desc,
+	.oikos-service-card--reveal:focus-visible .oikos-service-card__title,
+	.oikos-service-card--reveal:focus-visible .oikos-service-card__desc {
+		opacity: 1;
+		translate: none;
+	}
+
+	.oikos-service-card--reveal:focus-visible {
+		background-color: var(--card-bg);
+		color: var(--card-color);
+	}
+}
+
+@media (hover: none) and (max-width: 63.9375rem) {
+	/* 40 entre tarjetas: en tablet son anchas y la inclinación acerca las
+	   esquinas. */
+	.oikos-service-cards__list {
+		grid-template-columns: minmax(0, 1fr);
+		gap: var(--spacing-5);
+	}
+
+	.oikos-service-cards__item:nth-child(odd) {
+		--card-tilt: -1.5deg;
+	}
+
+	.oikos-service-cards__item:nth-child(even) {
+		--card-tilt: 1.5deg;
+	}
+
+	.oikos-service-card--reveal {
+		aspect-ratio: auto;
+		min-block-size: 10rem; /* 160: proporción de las tarjetas de móvil */
+		padding: var(--spacing-4) var(--card-padding);
+	}
+
+	.oikos-service-card__title {
+		max-width: none;
+	}
+
+	.oikos-service-card__desc {
+		max-inline-size: 32rem;
+		font-size: var(--text-body-size);
 	}
 }

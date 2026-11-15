@@ -156,6 +156,7 @@ Las 3 páginas de terapia (pareja, individual, familiar) usan **la misma plantil
 - **Hero** en sus variantes (foto a pantalla completa con texto; foto + texto en dos columnas; foto en B/N con texto).
 - **Grilla de tarjetas de temas** (beige, 2×3 o 2×4).
 - **Pasos numerados** ("Cómo funciona"/"Así es una sesión", 3 pasos): `template-parts/sections/steps.php` + `steps.css`. Args `layout` (hoy `split`; nuevas disposiciones = agregar a la lista blanca del PHP y un modificador `--layout-<nombre>`) y `background` (`none` | `cream` | `white`).
+- **Tarjetas con descripción revelable** (tarjetas del hero y de Acompañamiento, modificador `--reveal`): campo "Descripción" del repetidor; si está vacío no hay cambio. Hover (solo `(hover: hover)`) o foco → fondo text/secondary, el título sube y se desvanece y la descripción entra desde abajo (`--transition-reveal`; sin movimiento con `prefers-reduced-motion`). Las dos capas comparten celda de grilla (sin saltos de tamaño) y solo cambian de opacidad, así que los lectores de pantalla leen ambas. Las tarjetas del hero no son enlaces: llevan `tabindex="0"` solo si tienen descripción. Las de Acompañamiento **mantienen su inclinación** en hover (solo se elevan 4 px). En `(hover: none)` título y descripción se ven juntos en el color normal; Acompañamiento pasa a una columna rectangular por debajo de 1024.
 - **Badges** (3 tarjetas, contenido global).
 - **Carrusel de servicios** (Servicios general, Nosotros, Contacto).
 - **Tarjetas de modalidad** (Virtual / Presencial; Nosotros y sidebar del blog).
