@@ -6,7 +6,7 @@
  *     __header > __title, __subtitle
  *     __list > __item                3 columnas
  *       .oikos-service-card          enlace = tarjeta completa
- *         __title                    estilo Card, centrado
+ *         __title                    estilo Card service (Bricolage 24), centrado
  *
  * Colores: --arena (texto text/primary), --cafe y --verde (texto inverse).
  * Cada tarjeta está inclinada (--card-tilt por posición) y la mantiene en
@@ -51,19 +51,21 @@
 	list-style: none;
 }
 
-/* Inclinación por posición (medida sobre la captura). */
+/* Inclinación por posición. Figma mide la rotación en sentido antihorario y
+   CSS en sentido horario: "-5°" en Figma = 5deg aquí. La primera viene del
+   panel de Figma; la segunda y la tercera, medidas sobre la captura. */
 .oikos-service-cards__item {
-	--card-tilt: -3deg;
+	--card-tilt: 5deg;
 	display: flex;
 	min-width: 0;
 }
 
 .oikos-service-cards__item:nth-child(3n + 2) {
-	--card-tilt: 2.5deg;
+	--card-tilt: -1deg;
 }
 
 .oikos-service-cards__item:nth-child(3n) {
-	--card-tilt: -2deg;
+	--card-tilt: -5deg;
 }
 
 /* Tarjeta */
@@ -98,10 +100,12 @@
 	--card-color: var(--color-content-inverse);
 }
 
+/* Corte normal (no balance) con ancho limitado: "Terapia de / pareja" y
+   "Terapia / individual", como el diseño. */
 .oikos-service-card__title {
-	max-width: 10ch;
+	max-width: 6em;
 	color: inherit;
-	text-wrap: balance;
+	text-wrap: wrap;
 }
 
 .oikos-service-card:hover,
@@ -234,13 +238,14 @@
 		gap: var(--spacing-3); /* 24 */
 	}
 
-	/* Misma especificidad que los :nth-child de desktop para reemplazarlos. */
+	/* Misma especificidad que los :nth-child de desktop para reemplazarlos.
+	   Mismo sentido que en desktop (la primera hacia la derecha). */
 	.oikos-service-cards__item:nth-child(odd) {
-		--card-tilt: -1.5deg;
+		--card-tilt: 1.5deg;
 	}
 
 	.oikos-service-cards__item:nth-child(even) {
-		--card-tilt: 1.5deg;
+		--card-tilt: -1.5deg;
 	}
 
 	.oikos-service-card {
@@ -295,11 +300,11 @@
 	}
 
 	.oikos-service-cards__item:nth-child(odd) {
-		--card-tilt: -1.5deg;
+		--card-tilt: 1.5deg;
 	}
 
 	.oikos-service-cards__item:nth-child(even) {
-		--card-tilt: 1.5deg;
+		--card-tilt: -1.5deg;
 	}
 
 	.oikos-service-card--reveal {
