@@ -567,6 +567,45 @@
             "append": ""
         },
         {
+            "key": "field_oikos_global_blog_tab",
+            "label": "Blog",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_oikos_global_blog_mostrar_autores",
+            "label": "Mostrar autores en las tarjetas del blog",
+            "name": "oikos_global_blog_mostrar_autores",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "Los autores se siguen guardando en cada entrada y en los datos estructurados (SEO) aunque no se muestren.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "allow_in_bindings": 0,
+            "ui": 1,
+            "ui_on_text": "Sí",
+            "ui_off_text": "No"
+        },
+        {
             "key": "field_oikos_global_tab_analitica",
             "label": "Analítica",
             "name": "",
@@ -624,5 +663,5 @@
     "active": true,
     "description": "Ajustes globales del sitio Oikos.",
     "show_in_rest": 0,
-    "modified": 1794181420
+    "modified": 1794810000
 }

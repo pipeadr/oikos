@@ -77,6 +77,18 @@ function oikos_post_authors( $post_id ) {
 }
 
 /**
+ * ¿Las tarjetas del blog muestran la línea de autores?
+ *
+ * Interruptor de "Oikos — Global" (apagado por defecto). Solo afecta a lo
+ * visible: los autores se siguen guardando y van en el schema de Yoast.
+ *
+ * @return bool
+ */
+function oikos_show_post_authors() {
+	return (bool) apply_filters( 'oikos_show_post_authors', (bool) oikos_option( 'oikos_global_blog_mostrar_autores', false ) );
+}
+
+/**
  * Categoría principal de una entrada.
  *
  * La principal de Yoast si existe; si no, la primera. Ignora la categoría

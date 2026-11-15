@@ -18,6 +18,8 @@
  * - track_location (string) data-track-location del enlace.
  * - image_loading  (string) 'lazy' | 'eager'.
  * - sizes          (string) Atributo sizes de la imagen (opcional; cada variante trae uno).
+ * - show_authors   (bool|null) Mostrar la línea de autores. null = interruptor
+ *                           global (oikos_show_post_authors()). Oculta no deja hueco.
  *
  * @package oikos
  */
@@ -33,6 +35,7 @@ $oikos_args = wp_parse_args(
 		'track_location' => '',
 		'image_loading'  => 'lazy',
 		'sizes'          => '',
+		'show_authors'   => null,
 	)
 );
 
@@ -46,7 +49,8 @@ $oikos_variant = in_array( $oikos_args['variant'], array( 'featured', 'horizonta
 $oikos_level   = min( 6, max( 2, (int) $oikos_args['heading_level'] ) );
 $oikos_title   = get_the_title( $oikos_post_id );
 $oikos_term    = oikos_post_category( $oikos_post_id );
-$oikos_authors = wp_list_pluck( oikos_post_authors( $oikos_post_id ), 'name' );
+$oikos_show_authors = null === $oikos_args['show_authors'] ? oikos_show_post_authors() : (bool) $oikos_args['show_authors'];
+$oikos_authors      = $oikos_show_authors ? wp_list_pluck( oikos_post_authors( $oikos_post_id ), 'name' ) : array();
 
 if ( 'horizontal' === $oikos_variant ) {
 	$oikos_size  = 'oikos-square-sm';
