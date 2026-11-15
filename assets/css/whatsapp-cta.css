@@ -1,0 +1,52 @@
+/**
+ * Oikos — Componente "¿Tienes dudas? ¡Estamos a un mensaje!" + WhatsApp
+ * (template-parts/components/whatsapp-cta.php).
+ *
+ * .oikos-whatsapp-cta           fila centrada: texto + ícono
+ *   __text                      Body, text/primary
+ *   __link                      ícono enlazado, área táctil de 48 × 48
+ *     __icon                    SVG en línea (currentColor)
+ */
+
+.oikos-whatsapp-cta {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	gap: var(--spacing-1) var(--spacing-2);
+	text-align: center;
+	color: var(--color-text-primary);
+}
+
+.oikos-whatsapp-cta__link {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	width: var(--field-height);  /* 48 */
+	height: var(--field-height);
+	border-radius: var(--radius-full);
+	background-color: var(--color-interactive-primary);
+	color: var(--color-content-inverse);
+	transition: background-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.oikos-whatsapp-cta__link:hover {
+	background-color: color-mix(in srgb, var(--color-interactive-primary) 85%, var(--color-text-primary));
+}
+
+.oikos-whatsapp-cta__link:active {
+	transform: translateY(1px);
+}
+
+.oikos-whatsapp-cta__link:focus-visible {
+	outline: 0;
+	box-shadow:
+		0 0 0 2px var(--color-surface-base),
+		0 0 0 4px var(--color-interactive-primary);
+}
+
+.oikos-whatsapp-cta__icon {
+	width: 1.5rem;
+	height: 1.5rem;
+}

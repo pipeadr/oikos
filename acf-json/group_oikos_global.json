@@ -145,8 +145,29 @@
             "maxlength": "",
             "allow_in_bindings": 0,
             "rows": 2,
+            "placeholder": "Hola, quiero información sobre la terapia en Oikos",
+            "new_lines": ""
+        },
+        {
+            "key": "field_oikos_global_whatsapp_cta_texto",
+            "label": "Texto del bloque WhatsApp",
+            "name": "oikos_global_whatsapp_cta_texto",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Frase junto al ícono de WhatsApp (debajo de las preguntas frecuentes y en otras secciones).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "¿Tienes dudas? ¡Estamos a un mensaje!",
+            "maxlength": "",
+            "allow_in_bindings": 0,
             "placeholder": "",
-            "new_lines": "br"
+            "prepend": "",
+            "append": ""
         },
         {
             "key": "field_oikos_global_correo",
@@ -655,5 +676,5 @@
     "active": true,
     "description": "Ajustes globales del sitio Oikos.",
     "show_in_rest": 0,
-    "modified": 1794781347
+    "modified": 1794787200
 }
