@@ -71,6 +71,8 @@ Definidos en `assets/css/base.css`. Los nombres siguen los tokens del Figma: `gr
 
 Superficies sobre foto (sección Nosotros): `--color-surface-glass` (vidrio verdoso: mezcla verde/sage al 35 % + `backdrop-filter: blur(16px)`; título text/primary, descripción blanca surface/page), `--color-border-glass` (blanco 20 %) y `--overlay-photo` (velo verde al 30 %). Medido en el render: descripción ≥ 4.8:1, título crema de la sección ≥ 4.3:1, título oscuro de tarjeta 2.6–3.4:1 (excepción, ver Accesibilidad). Oscurecer el vidrio empeora el título; aclararlo rompe la descripción.
 
+Banda newsletter: `--gradient-newsletter` (radial del Figma, `50% 212.08% at 50% 50%`, verde → **`--color-brand-sage-strong`** en lugar de sage puro: con sage el lema daba 3.6:1 y los bordes a 375 px 3:1; así el mínimo es 4.62:1). Formularios: `--color-feedback-error` (#B3261E, *deducido*, 6:1 sobre crema), `--color-feedback-success` (= interactive/primary), `--field-height` (48, medido), `--text-tagline-size` (16 → 18).
+
 Otros tokens: `--shadow-float` (barras y desplegables flotantes), `--shadow-lift` y `--transition-lift` (tarjetas que se elevan al hover), `--z-header`, `--header-top`, `--header-bar-height`, `--header-offset` (espacio que ocupa el header fijo; `main` lo usa como padding superior).
 
 ### Tipografía
@@ -96,7 +98,7 @@ Modificadores de color: `.oikos-text-secondary`, `.oikos-text-inverse`.
 
 ### Espaciado, radios y layout
 - Escala de 8 px: `spacing/N` → `--spacing-N` (`--spacing-1` = 8 … `--spacing-10` = 80).
-- Radios: `--radius-xs` = 4 px (indicadores del slider, *deducido*), `--radius-md` = 12 px (botones, *deducido*), `--radius-lg` = 16 px (tarjetas), `--radius-full` (píldoras/etiquetas). `--tag-padding-block` = 10 px (alto de etiqueta ≈ 36, *deducido*).
+- Radios: `--radius-xs` = 4 px (indicadores del slider, *deducido*), `--radius-sm` = 8 px (campos de formulario, medido en captura), `--radius-md` = 12 px (botones, *deducido*), `--radius-lg` = 16 px (tarjetas), `--radius-full` (píldoras/etiquetas). `--tag-padding-block` = 10 px (alto de etiqueta ≈ 36, *deducido*).
 - Bordes: `--border-width-thick` = 2 px (*deducido*).
 - Contenedor: `.oikos-container` → ancho máximo `--container-max` (1110 px) con `--container-padding` a cada lado. En 1366 deja 128 px por lado, como el Figma.
 - Sección: `.oikos-section` → `padding-block: var(--space-section)`.
@@ -115,7 +117,15 @@ Modificadores de color: `.oikos-text-secondary`, `.oikos-text-inverse`.
 - Logos: `template-parts/components/logo.php` + `oikos_logo_img()`. Acepta SVG sin width/height (el alto lo da el CSS); alt de la biblioteca o, si falta, `oikos_global_marca_nombre`.
 - Íconos: `oikos_the_icon( 'nombre' )` con SVG de `assets/img/icons/`. Ilustraciones decorativas: `oikos_the_decor( 'decor-lineas', 'clase' )` (SVG en línea de `assets/img/`, `aria-hidden`, tamaño por CSS).
 - Botones que caen al CTA global si el campo está vacío: `oikos_link_or_cta( $link )`.
-- Newsletter sin plataforma: si `oikos_global_newsletter_action` está vacío, el formulario no se envía y muestra el mensaje pendiente. Para conectar: ese campo o los filtros `oikos_newsletter_form_action` / `oikos_newsletter_email_name` y la acción `oikos_newsletter_form_fields`.
+- **Newsletter** (`template-parts/layout/newsletter.php`, estilos en `footer.css`): logo para fondos oscuros (o nombre del sitio) + lema a la izquierda (columna de 345 px, gap 64); título (estilo Heading), descripción y formulario CF7 a la derecha. < 1024: marca arriba y todo centrado (contenido máx. 700 px); < 768: campo y botón apilados a ancho completo. El formulario se elige en "Oikos — Global" → pestaña **Newsletter** (`oikos_global_newsletter_formulario`, más `_titulo` y `_texto`); sin formulario solo se ven los textos. Plantilla del formulario CF7 (copiarla igual en cada entorno):
+  ```
+  <div class="oikos-form__row">
+  <label class="oikos-form__field"><span class="screen-reader-text">Correo electrónico</span>[email* correo autocomplete:email placeholder "correo@correo.com"]</label>
+  [submit "Suscribirme"]
+  </div>
+  <div class="oikos-form__consent">[acceptance autorizacion]Acepto la <a href="/politica-de-tratamiento-de-datos/">política de tratamiento de datos</a>.[/acceptance]</div>
+  ```
+  Configuración adicional: `acceptance_as_validation: on` (sin aceptar la casilla muestra un error en vez de deshabilitar el botón). Las suscripciones quedan en **CFDB7**; el envío a una plataforma externa sigue pendiente.
 
 ### Responsive
 No hay diseño móvil ni tablet. **El valor del Figma es el máximo (desktop, frame de 1366); el mínimo es para 375.** Entre ambos se interpola en línea recta con `clamp()`. Los componentes usan estos tokens y no definen sus propios valores por breakpoint.
@@ -180,8 +190,12 @@ Las 3 páginas de terapia (pareja, individual, familiar) usan **la misma plantil
 - **Acordeón de FAQ** (accesible: `button` + `aria-expanded`; contenido presente en el HTML para SEO).
 - **Testimonios** (carrusel de tarjetas con estrellas).
 - **Trivia "Mitos y verdades"** (Servicios general): interactiva, N preguntas, temporizador, botones Verdad/Mito, contenido por repetidor ACF. JS propio, carga solo en esa plantilla.
-- **Formularios CF7:** contacto (nombre, correo, WhatsApp, tema de consulta, mensaje) y lead de El Método (nombre, correo, WhatsApp). Estilizados con las clases del tema.
-- **Newsletter** *(plataforma pendiente)*.
+- **Formularios CF7:** contacto (nombre, correo, WhatsApp, tema de consulta, mensaje), lead de El Método (nombre, correo, WhatsApp) y newsletter. Base común en `inc/forms.php` + `assets/css/forms.css` (global):
+  - El tema **desactiva el CSS de CF7** y el **autop** del formulario (no el del correo): el markup lo define la plantilla de cada formulario con `.oikos-form__row` (campo + botón en fila, apilados < 768), `.oikos-form__field` (`<label>` con el texto en `.screen-reader-text` si el diseño no muestra etiqueta) y `.oikos-form__consent`.
+  - El `<form>` recibe `.oikos-form` por el atributo `html_class` del shortcode; sobre fondos oscuros, además `.oikos-form--inverse` (mensajes crema).
+  - El submit recibe solo `oikos-btn oikos-btn--primary` (filtro `wpcf7_form_elements`); el del formulario del newsletter, `--light` + `data-track="suscripcion"` / `data-track-location="footer-newsletter"`.
+  - Estados: campo inválido con borde de 2 px `--color-feedback-error`, tip y caja de respuesta con ícono (no dependen solo del color), spinner de 16 px dentro del botón mientras envía.
+  - En WAMP el correo falla (`failed`, sin `wpcf7mailsent`); para probar el `dataLayer` en local, `skip_mail: on` temporal en la configuración adicional.
 
 ### Blog
 - Archivo: hero, buscador con filtro por categoría, grilla de 3 columnas, botón "Carga más" (AJAX vía REST/admin-ajax, con fallback de paginación real para SEO), FAQ.
@@ -225,7 +239,8 @@ Contraste AA, foco visible, navegación por teclado (menú móvil, acordeones, c
 
 ## Pendientes
 - [ ] **Agendamiento:** lógica completa por definir (disponibilidad, profesional, modalidad, conexión con Google Calendar, confirmación, pagos). Diseño: calendario mensual con días disponibles, duración 1 hora, selector de zona horaria, lista de horas por día.
-- [ ] Plataforma del newsletter (Mailchimp, Brevo…).
+- [ ] Plataforma del newsletter (Mailchimp, Brevo…): hoy CF7 + CFDB7. Texto de éxito del formulario 75 sigue siendo el genérico de CF7 ("Gracias por tu mensaje…").
+- [ ] Página "Política de tratamiento de datos" (`/politica-de-tratamiento-de-datos/`) con el texto legal real en cada entorno (en local hay una de relleno).
 - [ ] Confirmar roles exactos de los colores y colores secundarios faltantes.
 - [ ] Confirmar contra Figma los valores deducidos de capturas: `radius/md` (12), estilos Card / Eyebrow / Nav y el fondo de página blanco como token.
 - [ ] Testimonios reales (con autorización de los pacientes).
