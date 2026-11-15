@@ -74,7 +74,7 @@ Superficies sobre foto (sección Nosotros): `--color-surface-glass` (vidrio verd
 
 Banda newsletter: `--gradient-newsletter` (radial del Figma, `50% 212.08% at 50% 50%`, verde → **`--color-brand-sage-strong`** en lugar de sage puro: con sage el lema daba 3.6:1 y los bordes a 375 px 3:1; así el mínimo es 4.62:1). Formularios: `--color-feedback-error` (#B3261E, *deducido*, 6:1 sobre crema), `--color-feedback-success` (= interactive/primary), `--field-height` (48, medido), `--text-tagline-size` (16 → 18).
 
-Otros tokens: `--shadow-float` (barras y desplegables flotantes), `--shadow-lift` y `--transition-lift` (tarjetas que se elevan al hover), `--z-header`, `--header-top`, `--header-bar-height`, `--header-offset` (espacio que ocupa el header fijo; `main` lo usa como padding superior).
+Otros tokens: `--shadow-float` (barras y desplegables flotantes), `--shadow-lift` y `--transition-lift` (tarjetas que se elevan al hover), `--z-header`, `--header-top`, `--header-bar-height`, `--header-offset` (espacio que ocupa el header fijo; `main` lo usa como padding superior), `--hero-split-top` (24 → 44: lo que el hero foto + texto suma sobre `--header-offset` para quedar a 176 como el Figma).
 
 ### Tipografía
 - **Bricolage Grotesque** (`--font-heading`, solo peso 500, con eje de tamaño óptico `opsz`) y **Figtree** (`--font-body`, variable 400–700; el 700 lo usan las tarjetas del hero). Auto-hospedadas en `assets/fonts` (woff2, subset latin, licencias OFL incluidas), `font-display: swap`, ambas precargadas (`oikos_preload_fonts()` en `inc/enqueue.php`).
@@ -83,6 +83,7 @@ Otros tokens: `--shadow-float` (barras y desplegables flotantes), `--shadow-lift
 | Estilo Figma | Clase | Fuente | Tamaño móvil → desktop | Line-height | Tracking |
 |---|---|---|---|---|---|
 | Display | `.oikos-text-display` | Bricolage 500 | 38 → 64 | 110 % | -2 % |
+| Display S *(deducido)* | `.oikos-text-display-sm` (`--text-display-sm-size`) | Bricolage 500 | 32 → 40 | 120 % | -2 % |
 | Heading | `.oikos-text-heading` | Bricolage 500 | 26 → 32 | 125 % | -1.5 % |
 | Body | `.oikos-text-body` | Figtree 400 | 16 | 150 % | 0 |
 | Button | `.oikos-text-button` | Figtree 500 | 16 | 140 % | 2 % |
@@ -152,7 +153,7 @@ Bordes redondeados generosos, tarjetas crema sobre fondos crema/blanco, gradient
 | Página | URL | Plantilla |
 |---|---|---|
 | Inicio | `/` | `front-page.php` |
-| Servicios (general) | `/servicios/` | Servicios general |
+| Servicios (general) | `/servicios/` | Servicios general (`templates/servicios.php`) |
 | Terapia de pareja | `/servicios/terapia-de-pareja/` | **Servicio** (compartida) |
 | Terapia individual | `/servicios/terapia-individual/` | **Servicio** (compartida) |
 | Terapia familiar | `/servicios/terapia-familiar/` | **Servicio** (compartida) |
@@ -176,6 +177,8 @@ Las 3 páginas de terapia (pareja, individual, familiar) usan **la misma plantil
 ## Componentes reutilizables (construir una vez)
 - **Header** (nav flotante crema con píldoras + CTA) y **footer** (banda newsletter verde + bloque café con CTA, menús, contacto, redes). Menús administrables desde Apariencia → Menús.
 - **Hero** en sus variantes (foto a pantalla completa con texto; foto + texto en dos columnas; foto en B/N con texto).
+- **Hero foto + texto** (`template-parts/sections/hero-split.php` + `hero-split.css`; páginas internas, hoy Servicios general): foto cuadrada (`oikos-square`, LCP vía `oikos_hero_picture()` con `size`/`sizes` propios) con `--radius-lg` a la izquierda y H1 `.oikos-text-display-sm` + Body text/secondary + botón primario (`data-track="agenda-cita"`) a la derecha, centrado en vertical. No activa `oikos_has_hero`: el header queda en modo página interna. Desktop: texto fijo de 411 px y la foto toma el resto (643 en 1366), gap spacing/7, spacing/4 debajo; tablet 2:3 (foto más angosta) para mantener H1 y CTA en el primer pantallazo; < 768 foto 4:3 arriba y botón a ancho completo. Sin foto → solo texto. Al usarlo en otra plantilla, agregarla a la condición de `oikos-hero-split` en `oikos_template_assets()`.
+  - Grupo ACF "Servicios general" (`group_oikos_servicios`, una pestaña por sección): `oikos_servicios_hero_imagen`, `_titulo` (vacío → título de la página), `_texto`, `_boton` (vacío → CTA global).
 - **Grilla de tarjetas de temas** (beige, 2×3 o 2×4).
 - **Pasos numerados** ("Cómo funciona"/"Así es una sesión", 3 pasos): `template-parts/sections/steps.php` + `steps.css`. Args `layout` (hoy `split`; nuevas disposiciones = agregar a la lista blanca del PHP y un modificador `--layout-<nombre>`) y `background` (`none` | `cream` | `white`).
 - **Tarjetas con descripción revelable** (tarjetas del hero y de Acompañamiento, modificador `--reveal`): campo "Descripción" del repetidor; si está vacío no hay cambio. Hover (solo `(hover: hover)`) o foco → fondo text/secondary, el título sube y se desvanece y la descripción entra desde abajo (`--transition-reveal`; sin movimiento con `prefers-reduced-motion`). Las dos capas comparten celda de grilla (sin saltos de tamaño) y solo cambian de opacidad, así que los lectores de pantalla leen ambas. Las tarjetas del hero no son enlaces: llevan `tabindex="0"` solo si tienen descripción. Las de Acompañamiento **mantienen su inclinación** en hover (solo se elevan 4 px); inclinación desktop `5deg` / `-1deg` / `-5deg` (**ojo con el signo:** Figma mide la rotación antihoraria y CSS horaria, así que "-5°" en Figma = `5deg` en CSS). En `(hover: none)` título y descripción se ven juntos en el color normal; Acompañamiento pasa a una columna rectangular por debajo de 1024.
