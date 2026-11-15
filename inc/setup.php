@@ -88,3 +88,31 @@ function oikos_cleanup_head() {
 	remove_action( 'wp_head', 'rsd_link' );
 }
 add_action( 'init', 'oikos_cleanup_head' );
+
+/**
+ * Clase no-js en <html>: oikos_js_class() la cambia por "js" antes del
+ * primer pintado. Los componentes que se cierran con JS (acordeón) se
+ * muestran abiertos con .no-js, sin salto de layout cuando sí hay JS.
+ *
+ * @param string $output  Atributos de <html>.
+ * @param string $doctype 'html' | 'xhtml'.
+ * @return string
+ */
+function oikos_html_no_js( $output, $doctype = 'html' ) {
+	if ( 'html' !== $doctype || is_admin() || is_feed() ) {
+		return $output;
+	}
+
+	return $output . ' class="no-js"';
+}
+add_filter( 'language_attributes', 'oikos_html_no_js', 10, 2 );
+
+/**
+ * Cambia no-js por js en <html> (script en línea, antes de cualquier CSS).
+ *
+ * @return void
+ */
+function oikos_js_class() {
+	wp_print_inline_script_tag( "document.documentElement.classList.replace('no-js','js');" );
+}
+add_action( 'wp_head', 'oikos_js_class', 0 );
