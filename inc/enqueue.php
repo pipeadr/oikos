@@ -2,7 +2,7 @@
 /**
  * Encolado de CSS y JS.
  *
- * - base.css y main.js en todo el sitio.
+ * - base.css y los componentes globales en todo el sitio.
  * - Assets por plantilla: solo donde se necesitan (ver oikos_template_assets()).
  * - JS siempre con defer.
  *
@@ -25,7 +25,8 @@ function oikos_enqueue_assets() {
 	);
 
 	// Componentes globales (pequeños y presentes en casi todas las páginas).
-	foreach ( array( 'button', 'card', 'header', 'footer' ) as $oikos_component ) {
+	// forms: el formulario del newsletter está en el footer de todas las páginas.
+	foreach ( array( 'button', 'card', 'header', 'footer', 'forms' ) as $oikos_component ) {
 		wp_enqueue_style(
 			'oikos-' . $oikos_component,
 			oikos_asset_uri( 'css/' . $oikos_component . '.css' ),
@@ -34,16 +35,8 @@ function oikos_enqueue_assets() {
 		);
 	}
 
-	wp_enqueue_script(
-		'oikos-main',
-		oikos_asset_uri( 'js/main.js' ),
-		array(),
-		oikos_asset_version( 'js/main.js' ),
-		array(
-			'strategy'  => 'defer',
-			'in_footer' => true,
-		)
-	);
+	// main.js (JS global) no se encola mientras esté vacío: ahorra una petición.
+	// Si vuelve a tener código, restaurar aquí su wp_enqueue_script con defer.
 
 	// Header: submenú, menú móvil y sticky (presente en todas las páginas).
 	wp_enqueue_script(
