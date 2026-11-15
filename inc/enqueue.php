@@ -133,7 +133,7 @@ function oikos_template_assets() {
 function oikos_preload_fonts() {
 	return array(
 		'fonts/bricolage-grotesque-500-opsz.woff2',
-		'fonts/figtree-400-600.woff2',
+		'fonts/figtree-400-700.woff2',
 	);
 }
 

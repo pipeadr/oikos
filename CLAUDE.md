@@ -70,7 +70,7 @@ Definidos en `assets/css/base.css`. Los nombres siguen los tokens del Figma: `gr
 Otros tokens: `--shadow-float` (barras y desplegables flotantes), `--shadow-lift` y `--transition-lift` (tarjetas que se elevan al hover), `--z-header`, `--header-top`, `--header-bar-height`, `--header-offset` (espacio que ocupa el header fijo; `main` lo usa como padding superior).
 
 ### Tipografía
-- **Bricolage Grotesque** (`--font-heading`, solo peso 500, con eje de tamaño óptico `opsz`) y **Figtree** (`--font-body`, variable 400–600). Auto-hospedadas en `assets/fonts` (woff2, subset latin, licencias OFL incluidas), `font-display: swap`, ambas precargadas (`oikos_preload_fonts()` en `inc/enqueue.php`).
+- **Bricolage Grotesque** (`--font-heading`, solo peso 500, con eje de tamaño óptico `opsz`) y **Figtree** (`--font-body`, variable 400–700; el 700 lo usan las tarjetas del hero). Auto-hospedadas en `assets/fonts` (woff2, subset latin, licencias OFL incluidas), `font-display: swap`, ambas precargadas (`oikos_preload_fonts()` en `inc/enqueue.php`).
 - Estilos como **clases independientes del nivel de encabezado** (un `h2` puede usar `.oikos-text-display`). Sin clase, `h1` = Display, `h2` = Heading, `h3–h6` = Card.
 
 | Estilo Figma | Clase | Fuente | Tamaño móvil → desktop | Line-height | Tracking |
@@ -80,6 +80,8 @@ Otros tokens: `--shadow-float` (barras y desplegables flotantes), `--shadow-lift
 | Body | `.oikos-text-body` | Figtree 400 | 16 | 150 % | 0 |
 | Button | `.oikos-text-button` | Figtree 500 | 16 | 140 % | 2 % |
 | Card *(deducido)* | `.oikos-text-card` | Figtree 600 | 18 → 20 | 125 % | 0 |
+| Card hero | `.oikos-text-card-hero` (`--text-card-hero-size`) | Figtree **700** | 20 → 24 | 100 % | 0 |
+| Card service | `.oikos-text-card-service` (`--text-card-service-size`) | Bricolage 500 | 20 → 24 | 133 % | -1 % |
 | Step *(deducido)* | `.oikos-text-step` | Bricolage 500 | 28 → 48 | 110 % | -2 % |
 | Eyebrow *(deducido)* | `.oikos-text-eyebrow` | Figtree 500 | 14 | 140 % | 0 |
 | Nav *(deducido)* | `.oikos-text-nav` | Figtree 500 | 14 | 140 % | 0 |
@@ -118,6 +120,7 @@ No hay diseño móvil ni tablet. **El valor del Figma es el máximo (desktop, fr
 | `--space-section` | 48 | 80 |
 | `--card-padding` | 20 | 24 |
 | Display / Heading / Card | 38 / 26 / 18 | 64 / 32 / 20 |
+| Card hero / Card service | 20 / 20 | 24 / 24 |
 | Body / Button / Eyebrow / Nav | fijos: 16 / 16 / 14 / 14 (el texto de lectura nunca baja de 16) | |
 
 - **Botones en móvil:** mantienen 54 px de alto (más que los 44 px táctiles mínimos). **No van a ancho completo por defecto**, porque en el diseño son cortos y alineados a la izquierda, y en tarjetas o junto a otros elementos el ancho completo rompe la composición. El CTA principal de una sección (hero, bandas CTA) usa `.oikos-btn--block-mobile` (100 % por debajo de 768 px).
@@ -156,7 +159,7 @@ Las 3 páginas de terapia (pareja, individual, familiar) usan **la misma plantil
 - **Hero** en sus variantes (foto a pantalla completa con texto; foto + texto en dos columnas; foto en B/N con texto).
 - **Grilla de tarjetas de temas** (beige, 2×3 o 2×4).
 - **Pasos numerados** ("Cómo funciona"/"Así es una sesión", 3 pasos): `template-parts/sections/steps.php` + `steps.css`. Args `layout` (hoy `split`; nuevas disposiciones = agregar a la lista blanca del PHP y un modificador `--layout-<nombre>`) y `background` (`none` | `cream` | `white`).
-- **Tarjetas con descripción revelable** (tarjetas del hero y de Acompañamiento, modificador `--reveal`): campo "Descripción" del repetidor; si está vacío no hay cambio. Hover (solo `(hover: hover)`) o foco → fondo text/secondary, el título sube y se desvanece y la descripción entra desde abajo (`--transition-reveal`; sin movimiento con `prefers-reduced-motion`). Las dos capas comparten celda de grilla (sin saltos de tamaño) y solo cambian de opacidad, así que los lectores de pantalla leen ambas. Las tarjetas del hero no son enlaces: llevan `tabindex="0"` solo si tienen descripción. Las de Acompañamiento **mantienen su inclinación** en hover (solo se elevan 4 px). En `(hover: none)` título y descripción se ven juntos en el color normal; Acompañamiento pasa a una columna rectangular por debajo de 1024.
+- **Tarjetas con descripción revelable** (tarjetas del hero y de Acompañamiento, modificador `--reveal`): campo "Descripción" del repetidor; si está vacío no hay cambio. Hover (solo `(hover: hover)`) o foco → fondo text/secondary, el título sube y se desvanece y la descripción entra desde abajo (`--transition-reveal`; sin movimiento con `prefers-reduced-motion`). Las dos capas comparten celda de grilla (sin saltos de tamaño) y solo cambian de opacidad, así que los lectores de pantalla leen ambas. Las tarjetas del hero no son enlaces: llevan `tabindex="0"` solo si tienen descripción. Las de Acompañamiento **mantienen su inclinación** en hover (solo se elevan 4 px); inclinación desktop `5deg` / `-1deg` / `-5deg` (**ojo con el signo:** Figma mide la rotación antihoraria y CSS horaria, así que "-5°" en Figma = `5deg` en CSS). En `(hover: none)` título y descripción se ven juntos en el color normal; Acompañamiento pasa a una columna rectangular por debajo de 1024.
 - **Badges** (3 tarjetas, contenido global).
 - **Carrusel de servicios** (Servicios general, Nosotros, Contacto).
 - **Tarjetas de modalidad** (Virtual / Presencial; Nosotros y sidebar del blog).

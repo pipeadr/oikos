@@ -95,7 +95,7 @@ if ( $oikos_picture ) {
 					<?php $oikos_has_reveal = '' !== $oikos_card['description']; ?>
 					<?php // Con descripción: enfocable (tabindex) para revelarla con teclado. No es enlace ni botón. ?>
 					<li class="oikos-card oikos-hero__card<?php echo $oikos_has_reveal ? ' oikos-hero__card--reveal' : ''; ?>"<?php echo $oikos_has_reveal ? ' tabindex="0"' : ''; ?>>
-						<p class="oikos-hero__card-title oikos-text-card"><?php echo esc_html( $oikos_card['text'] ); ?></p>
+						<p class="oikos-hero__card-title oikos-text-card-hero"><?php echo esc_html( $oikos_card['text'] ); ?></p>
 						<?php if ( $oikos_has_reveal ) : ?>
 							<p class="oikos-hero__card-desc"><?php echo esc_html( $oikos_card['description'] ); ?></p>
 						<?php endif; ?>
