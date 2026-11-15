@@ -63,9 +63,12 @@ Definidos en `assets/css/base.css`. Los nombres siguen los tokens del Figma: `gr
 | color/surface/base | `--color-surface-base` | #FBF5E9 |
 | color/border/default | `--color-border-default` | #212121 al 16 % |
 | *(por confirmar)* fondo de página | `--color-surface-page` | #FFFFFF |
-| marca, sin rol | `--color-brand-sage` · `--color-brand-sand` · `--color-brand-caramel` | #80957D · #D1A980 · #A87A53 |
+| marca, sin rol | `--color-brand-sage` · `--color-brand-sand` | #80957D · #D1A980 |
+| color/decorative/caramel | `--color-decorative-caramel` | #A87A53 |
 | derivado (AA con texto crema) | `--color-brand-caramel-strong` | #926641 (4.61:1) |
 | gradiente de bandas | `--gradient-brand` | interactive/primary → mezcla 50 % con sage (#567561, 4.7:1). Sage puro con texto crema da 2.97:1: no usarlo bajo texto |
+
+Superficies sobre foto (sección Nosotros): `--color-surface-glass` (vidrio verdoso: mezcla verde/sage al 35 % + `backdrop-filter: blur(16px)`; título text/primary, descripción blanca surface/page), `--color-border-glass` (blanco 20 %) y `--overlay-photo` (velo verde al 30 %). Medido en el render: descripción ≥ 4.8:1, título crema de la sección ≥ 4.3:1, título oscuro de tarjeta 2.6–3.4:1 (excepción, ver Accesibilidad). Oscurecer el vidrio empeora el título; aclararlo rompe la descripción.
 
 Otros tokens: `--shadow-float` (barras y desplegables flotantes), `--shadow-lift` y `--transition-lift` (tarjetas que se elevan al hover), `--z-header`, `--header-top`, `--header-bar-height`, `--header-offset` (espacio que ocupa el header fijo; `main` lo usa como padding superior).
 
@@ -90,13 +93,14 @@ Modificadores de color: `.oikos-text-secondary`, `.oikos-text-inverse`.
 
 ### Espaciado, radios y layout
 - Escala de 8 px: `spacing/N` → `--spacing-N` (`--spacing-1` = 8 … `--spacing-10` = 80).
-- Radios: `--radius-md` = 12 px (botones, *deducido*), `--radius-lg` = 16 px (tarjetas).
+- Radios: `--radius-xs` = 4 px (indicadores del slider, *deducido*), `--radius-md` = 12 px (botones, *deducido*), `--radius-lg` = 16 px (tarjetas).
+- Bordes: `--border-width-thick` = 2 px (*deducido*).
 - Contenedor: `.oikos-container` → ancho máximo `--container-max` (1110 px) con `--container-padding` a cada lado. En 1366 deja 128 px por lado, como el Figma.
 - Sección: `.oikos-section` → `padding-block: var(--space-section)`.
 
 ### Componentes base
 - **Botón** (`assets/css/button.css`): `.oikos-btn` + `--primary` (fondo interactive/primary), `--secondary` (interactive/secondary), `--light` (surface/base, texto text/primary; no usar sobre fondo crema porque no se ve). Alto 54 px, padding spacing/2 × spacing/3, `--radius-md`, estilo Button. Hover oscurece, active oscurece más y baja 1 px, focus-visible con doble anillo.
-- Variantes extra: `--tonal` (caramelo oscurecido con borde crema, **solo sobre el café** interactive/secondary) y `--compact` (44 px de alto, CTA del header).
+- Variantes extra: `--tonal` (caramelo oscurecido con borde crema, **solo sobre el café** interactive/secondary), `--outline-light` (transparente con borde y texto content/inverse; **solo sobre fotos o fondos oscuros**; el borde es `box-shadow: inset` para mantener los 54 px) y `--compact` (44 px de alto, CTA del header).
 - **Tarjeta** (`assets/css/card.css`): `.oikos-card` → surface/base, `--card-padding`, gap spacing/2, `--radius-lg`, borde 1 px border/default.
 
 ### Header y footer
@@ -160,6 +164,8 @@ Las 3 páginas de terapia (pareja, individual, familiar) usan **la misma plantil
 - **Grilla de tarjetas de temas** (beige, 2×3 o 2×4).
 - **Pasos numerados** ("Cómo funciona"/"Así es una sesión", 3 pasos): `template-parts/sections/steps.php` + `steps.css`. Args `layout` (hoy `split`; nuevas disposiciones = agregar a la lista blanca del PHP y un modificador `--layout-<nombre>`) y `background` (`none` | `cream` | `white`).
 - **Tarjetas con descripción revelable** (tarjetas del hero y de Acompañamiento, modificador `--reveal`): campo "Descripción" del repetidor; si está vacío no hay cambio. Hover (solo `(hover: hover)`) o foco → fondo text/secondary, el título sube y se desvanece y la descripción entra desde abajo (`--transition-reveal`; sin movimiento con `prefers-reduced-motion`). Las dos capas comparten celda de grilla (sin saltos de tamaño) y solo cambian de opacidad, así que los lectores de pantalla leen ambas. Las tarjetas del hero no son enlaces: llevan `tabindex="0"` solo si tienen descripción. Las de Acompañamiento **mantienen su inclinación** en hover (solo se elevan 4 px); inclinación desktop `5deg` / `-1deg` / `-5deg` (**ojo con el signo:** Figma mide la rotación antihoraria y CSS horaria, así que "-5°" en Figma = `5deg` en CSS). En `(hover: none)` título y descripción se ven juntos en el color normal; Acompañamiento pasa a una columna rectangular por debajo de 1024.
+- **Slider** (`template-parts/components/slider.php` + `slider.css` + `slider.js`): CSS scroll-snap con arrastre táctil nativo, sin librerías y **sin autoplay**. Recibe `slides` (HTML ya escapado de cada diapositiva), `label`, `item_label` ("Ir a la {foto} 2 de 3"), `arrows` (bool) y `class` (`oikos-slider--portrait` = fotos con `aspect-ratio`). Indicadores (Figma) = botones con `aria-current`, centrados sobre la foto a 16 px del pie: píldoras de 8 px de alto, `--radius-xs`, borde `--border-width-thick` del mismo color; activa 64 px `--color-decorative-caramel`, inactivas 32 px crema, 12 px entre ellas; cambian de ancho y color en `--transition-indicator` (250 ms; sin animación con movimiento reducido). Área táctil de 44 px de alto. Degradado oscuro muy sutil (25 %) al pie de las fotos. Teclado: ← → Inicio Fin en el carrusel y en los indicadores. Activo por `IntersectionObserver`. Con 1 diapositiva no hay indicadores ni rol de carrusel. Variables (`--slider-ratio`, `--slider-radius`, `--slider-dot-*`) **sin declarar en el componente** (respaldo en `var()`): la sección que lo usa las define sin pelear especificidad. Cada plantilla que lo use se agrega a la condición de `oikos-slider` en `oikos_template_assets()`. Imágenes: la primera `eager`, el resto `lazy`.
+- **Sección "Nosotros" del Inicio** (`template-parts/sections/about.php` + `about.css`): foto de fondo lazy con velo, título crema, hasta 4 tarjetas de vidrio y botón `--outline-light`; slider de fotos a la derecha (debajo en < 1024). Proporción del slider: 443/673 desktop (columna de 443 px, máx. 42 %), 5/6 tablet, 4/5 móvil.
 - **Badges** (3 tarjetas, contenido global).
 - **Carrusel de servicios** (Servicios general, Nosotros, Contacto).
 - **Tarjetas de modalidad** (Virtual / Presencial; Nosotros y sidebar del blog).
@@ -190,6 +196,8 @@ Las 3 páginas de terapia (pareja, individual, familiar) usan **la misma plantil
 - Enlazado interno: servicios ↔ entradas del blog de su categoría.
 
 ## Accesibilidad
+**Excepción aceptada (2026-11-15, por fidelidad a Figma):** el título oscuro de las tarjetas de vidrio de "Nosotros" (Inicio) da 2.6–3.4:1 y no cumple AA. No extender esta excepción a otros componentes.
+
 Contraste AA, foco visible, navegación por teclado (menú móvil, acordeones, carruseles, trivia, agendador), `prefers-reduced-motion` respetado.
 
 ## Analítica (GTM)

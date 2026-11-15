@@ -133,4 +133,28 @@ foreach ( (array) oikos_field( 'oikos_home_pasos_lista', $oikos_front_id, array(
 	?>
 </div>
 <?php
+// Nosotros: foto de fondo, tarjetas translúcidas y slider de fotos.
+$oikos_about_cards = array();
+foreach ( (array) oikos_field( 'oikos_home_nosotros_tarjetas', $oikos_front_id, array() ) as $oikos_row ) {
+	$oikos_about_cards[] = array(
+		'title' => isset( $oikos_row['titulo'] ) ? (string) $oikos_row['titulo'] : '',
+		'text'  => isset( $oikos_row['texto'] ) ? (string) $oikos_row['texto'] : '',
+	);
+}
+
+get_template_part(
+	'template-parts/sections/about',
+	null,
+	array(
+		'image_id'       => (int) oikos_field( 'oikos_home_nosotros_imagen', $oikos_front_id, 0 ),
+		'title'          => (string) oikos_field( 'oikos_home_nosotros_titulo', $oikos_front_id ),
+		'heading_level'  => 2,
+		'cards'          => $oikos_about_cards,
+		'link'           => (array) oikos_field( 'oikos_home_nosotros_boton', $oikos_front_id, array() ),
+		'gallery'        => (array) oikos_field( 'oikos_home_nosotros_galeria', $oikos_front_id, array() ),
+		'track'          => 'conoce-nosotros',
+		'track_location' => 'home-nosotros',
+	)
+);
+
 get_footer();

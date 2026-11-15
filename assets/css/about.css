@@ -1,0 +1,164 @@
+/**
+ * Oikos — Sección "Nosotros" (template-parts/sections/about.php).
+ *
+ * .oikos-about                 sección: foto de fondo + velo + contenido
+ *   __bg                       <img> de fondo (lazy, object-fit: cover)
+ *   __inner                    grilla: contenido | slider
+ *     __content                título, tarjetas, botón
+ *       __cards / __card       tarjetas de vidrio (2 × 2; 1 columna en móvil)
+ *     __media                  slider de fotos verticales (componente slider)
+ *
+ * Modificadores: --has-bg (hay foto), --no-slider (una sola columna).
+ *
+ * Contraste (medido sobre foto oliva como la del diseño, luminancia 0.09–0.26):
+ * - Título crema sobre foto + velo --overlay-photo (verde 30 %): ≥ 4.3:1.
+ * - Descripción blanca sobre el vidrio verdoso: ≥ 4.8:1 (AA).
+ * - Título oscuro de las tarjetas: 2.6–3.4:1. NO cumple AA: excepción de
+ *   diseño aceptada el 2026-11-15 (fidelidad a Figma). No oscurecer más el
+ *   vidrio sin revisarlo: empeora el título; aclararlo rompe la descripción.
+ *
+ * Capas: color de respaldo < foto (z -2) < velo (z -1) < contenido.
+ */
+
+.oikos-about {
+	position: relative;
+	isolation: isolate;
+	overflow: hidden;
+	background-color: var(--color-interactive-primary); /* mientras carga o sin foto */
+	color: var(--color-content-inverse);
+}
+
+.oikos-about__bg {
+	position: absolute;
+	inset: 0;
+	z-index: -2;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.oikos-about--has-bg::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	background-color: var(--overlay-photo);
+	pointer-events: none;
+}
+
+/* ==========================================================================
+   Layout
+   ========================================================================== */
+
+.oikos-about__inner {
+	display: grid;
+	/* Derecha: foto de 443 px como en Figma (42 % como máximo en laptops). */
+	grid-template-columns: minmax(0, 1fr) minmax(0, min(27.6875rem, 42%));
+	align-items: center;
+	gap: var(--spacing-8);
+}
+
+.oikos-about--no-slider .oikos-about__inner {
+	grid-template-columns: minmax(0, 1fr);
+}
+
+.oikos-about__content {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: var(--spacing-4);
+}
+
+.oikos-about__title {
+	margin: 0;
+	max-width: 30ch;
+	text-wrap: balance;
+}
+
+/* ==========================================================================
+   Tarjetas de vidrio
+   ========================================================================== */
+
+.oikos-about__cards {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: var(--spacing-2);
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.oikos-about__card {
+	display: flex;
+	flex-direction: column;
+	gap: var(--spacing-1);
+	padding: var(--card-padding);
+	border: 1px solid var(--color-border-glass);
+	border-radius: var(--radius-lg);
+	background-color: var(--color-surface-glass);
+	-webkit-backdrop-filter: blur(16px); /* empareja el fondo detrás de la tarjeta */
+	backdrop-filter: blur(16px);
+}
+
+.oikos-about__card-title {
+	margin: 0;
+	color: var(--color-text-primary);
+}
+
+.oikos-about__card-text {
+	margin: 0;
+	color: var(--color-surface-page);
+}
+
+/* ==========================================================================
+   Slider
+   ========================================================================== */
+
+.oikos-about__media {
+	min-width: 0;
+}
+
+.oikos-about__slider {
+	--slider-ratio: 443 / 673; /* Figma */
+}
+
+.oikos-about__slider .oikos-slider__track {
+	background-color: color-mix(in srgb, var(--color-interactive-primary) 80%, var(--color-text-primary));
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+/* < 1024: una columna; slider debajo, a ancho completo. */
+@media (max-width: 63.9375rem) {
+	.oikos-about__inner {
+		grid-template-columns: minmax(0, 1fr);
+		gap: var(--spacing-6);
+	}
+
+	.oikos-about__slider {
+		--slider-ratio: 5 / 6;
+	}
+}
+
+/* < 768: tarjetas en una columna; botón a ancho completo (--block-mobile). */
+@media (max-width: 47.9375rem) {
+	.oikos-about__inner {
+		gap: var(--spacing-5);
+	}
+
+	.oikos-about__content {
+		align-items: stretch;
+		gap: var(--spacing-3);
+	}
+
+	.oikos-about__cards {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.oikos-about__slider {
+		--slider-ratio: 4 / 5;
+	}
+}

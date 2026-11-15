@@ -784,6 +784,184 @@
             },
             "return_format": "array",
             "allow_in_bindings": 0
+        },
+        {
+            "key": "field_oikos_home_nosotros_tab",
+            "label": "Nosotros",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_oikos_home_nosotros_imagen",
+            "label": "Imagen de fondo",
+            "name": "oikos_home_nosotros_imagen",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "Cubre toda la sección (se recorta según el tamaño de pantalla). Mínimo 2000 px de ancho. Es decorativa: no necesita texto alternativo. Si está vacía, el fondo es verde.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "id",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "jpg,jpeg,png,webp,avif",
+            "allow_in_bindings": 0,
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_oikos_home_nosotros_titulo",
+            "label": "Título",
+            "name": "oikos_home_nosotros_titulo",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Sin título no se muestra la sección.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": 120,
+            "allow_in_bindings": 0,
+            "rows": 2,
+            "placeholder": "",
+            "new_lines": ""
+        },
+        {
+            "key": "field_oikos_home_nosotros_tarjetas",
+            "label": "Tarjetas",
+            "name": "oikos_home_nosotros_tarjetas",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "Hasta 4 tarjetas (grilla 2 × 2).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "pagination": 0,
+            "min": 0,
+            "max": 4,
+            "collapsed": "field_oikos_home_nosotros_tarjetas_titulo",
+            "button_label": "Agregar tarjeta",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_oikos_home_nosotros_tarjetas_titulo",
+                    "label": "Título",
+                    "name": "titulo",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": 60,
+                    "allow_in_bindings": 0,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_oikos_home_nosotros_tarjetas"
+                },
+                {
+                    "key": "field_oikos_home_nosotros_tarjetas_texto",
+                    "label": "Texto",
+                    "name": "texto",
+                    "aria-label": "",
+                    "type": "textarea",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 0,
+                    "rows": 3,
+                    "placeholder": "",
+                    "new_lines": "",
+                    "parent_repeater": "field_oikos_home_nosotros_tarjetas"
+                }
+            ]
+        },
+        {
+            "key": "field_oikos_home_nosotros_boton",
+            "label": "Botón",
+            "name": "oikos_home_nosotros_boton",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "Ej.: \"Conoce sobre nosotros\" → /nosotros/. Opcional.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "allow_in_bindings": 0
+        },
+        {
+            "key": "field_oikos_home_nosotros_galeria",
+            "label": "Fotos del slider",
+            "name": "oikos_home_nosotros_galeria",
+            "aria-label": "",
+            "type": "gallery",
+            "instructions": "Fotos verticales (mínimo 900 × 1200 px). El texto alternativo se edita en la biblioteca de medios. Con una sola foto no se muestran los indicadores.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "id",
+            "library": "all",
+            "min": "",
+            "max": 8,
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "jpg,jpeg,png,webp,avif",
+            "insert": "append",
+            "preview_size": "medium"
         }
     ],
     "location": [
@@ -806,5 +984,5 @@
     "active": true,
     "description": "Contenido de la página de inicio.",
     "show_in_rest": 0,
-    "modified": 1794540194
+    "modified": 1794775435
 }

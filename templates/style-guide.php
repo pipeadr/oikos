@@ -41,9 +41,9 @@ $oikos_sg_colors = array(
 		'--color-surface-page'          => __( 'fondo de página (por confirmar)', 'oikos' ),
 	),
 	__( 'Marca (sin rol confirmado)', 'oikos' ) => array(
-		'--color-brand-sage'    => 'sage',
-		'--color-brand-sand'    => 'arena',
-		'--color-brand-caramel' => 'caramelo',
+		'--color-brand-sage'         => 'sage',
+		'--color-brand-sand'         => 'arena',
+		'--color-decorative-caramel' => 'decorative/caramel',
 	),
 	__( 'Derivados (contraste AA con texto crema)', 'oikos' ) => array(
 		'--color-brand-caramel-strong' => __( 'caramelo oscurecido · botón --tonal', 'oikos' ),
@@ -64,16 +64,17 @@ $oikos_sg_text_styles = array(
 );
 
 $oikos_sg_buttons = array(
-	'oikos-btn--primary'   => __( 'Agenda tu cita', 'oikos' ),
-	'oikos-btn--secondary' => __( 'Conoce el método', 'oikos' ),
-	'oikos-btn--light'     => __( 'Ver servicio', 'oikos' ),
-	'oikos-btn--tonal'     => __( 'Agenda tu cita ahora', 'oikos' ),
+	'oikos-btn--primary'       => __( 'Agenda tu cita', 'oikos' ),
+	'oikos-btn--secondary'     => __( 'Conoce el método', 'oikos' ),
+	'oikos-btn--light'         => __( 'Ver servicio', 'oikos' ),
+	'oikos-btn--tonal'         => __( 'Agenda tu cita ahora', 'oikos' ),
+	'oikos-btn--outline-light' => __( 'Conoce sobre nosotros', 'oikos' ),
 );
 
 $oikos_sg_surfaces = array(
 	'page'  => __( 'Sobre blanco', 'oikos' ),
 	'cream' => __( 'Sobre crema', 'oikos' ),
-	'dark'  => __( 'Sobre banda verde', 'oikos' ),
+	'dark'  => __( 'Sobre banda verde · --outline-light es para fotos y fondos oscuros', 'oikos' ),
 	'brown' => __( 'Sobre bloque café (footer) · --tonal es para este fondo', 'oikos' ),
 );
 
@@ -163,7 +164,7 @@ get_header();
 		<div class="oikos-container">
 			<h2 id="sg-radius" class="oikos-text-heading"><?php esc_html_e( 'Radios', 'oikos' ); ?></h2>
 			<ul class="oikos-sg__radii">
-				<?php foreach ( array( '--radius-md' => 'radius/md · botones', '--radius-lg' => 'radius/lg · tarjetas' ) as $oikos_var => $oikos_label ) : ?>
+				<?php foreach ( array( '--radius-xs' => 'radius/xs · indicadores', '--radius-md' => 'radius/md · botones', '--radius-lg' => 'radius/lg · tarjetas' ) as $oikos_var => $oikos_label ) : ?>
 					<li>
 						<span class="oikos-sg__radius" style="border-radius: var(<?php echo esc_attr( $oikos_var ); ?>);"></span>
 						<code><?php echo esc_html( $oikos_var ); ?></code>
