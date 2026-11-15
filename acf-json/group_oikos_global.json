@@ -406,7 +406,7 @@
         },
         {
             "key": "field_oikos_global_tab_footer",
-            "label": "Footer y newsletter",
+            "label": "Footer",
             "name": "",
             "aria-label": "",
             "type": "tab",
@@ -444,8 +444,52 @@
             "append": ""
         },
         {
+            "key": "field_oikos_global_tab_newsletter",
+            "label": "Newsletter",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_oikos_global_newsletter_logo",
+            "label": "Logo del newsletter",
+            "name": "oikos_global_newsletter_logo",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "Versión especial del logo para la banda newsletter (árbol + \"OIKOS Psicología\"), clara para fondo verde. SVG (con viewBox) o PNG; el tamaño lo controla el tema. El texto alternativo se toma de la biblioteca de medios (si está vacío se usa el nombre de la marca). Si no hay logo aquí, se usa el \"Logo para fondos oscuros\" (pestaña Marca) y, si tampoco hay, el nombre del sitio.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "id",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "svg,png",
+            "allow_in_bindings": 0,
+            "preview_size": "medium"
+        },
+        {
             "key": "field_oikos_global_newsletter_titulo",
-            "label": "Título del newsletter",
+            "label": "Título",
             "name": "oikos_global_newsletter_titulo",
             "aria-label": "",
             "type": "text",
@@ -457,7 +501,7 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "Recibe ideas para tus relaciones",
+            "default_value": "Un acompañamiento que llega a tu correo",
             "maxlength": "",
             "allow_in_bindings": 0,
             "placeholder": "",
@@ -466,7 +510,7 @@
         },
         {
             "key": "field_oikos_global_newsletter_texto",
-            "label": "Texto del newsletter",
+            "label": "Descripción",
             "name": "oikos_global_newsletter_texto",
             "aria-label": "",
             "type": "textarea",
@@ -478,7 +522,7 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "Contenido práctico sobre pareja, familia y bienestar emocional, directo a tu correo.",
+            "default_value": "Enviamos contenido pensado para que sigas creciendo entre sesión y sesión: reflexiones, herramientas y lecturas sin tecnicismos.",
             "maxlength": "",
             "allow_in_bindings": 0,
             "rows": 2,
@@ -486,54 +530,12 @@
             "new_lines": "br"
         },
         {
-            "key": "field_oikos_global_newsletter_placeholder",
-            "label": "Placeholder del campo de correo",
-            "name": "oikos_global_newsletter_placeholder",
+            "key": "field_oikos_global_newsletter_formulario",
+            "label": "Formulario CF7",
+            "name": "oikos_global_newsletter_formulario",
             "aria-label": "",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "Tu correo electrónico",
-            "maxlength": "",
-            "allow_in_bindings": 0,
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_oikos_global_newsletter_boton",
-            "label": "Texto del botón",
-            "name": "oikos_global_newsletter_boton",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "Suscribirme",
-            "maxlength": "",
-            "allow_in_bindings": 0,
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_oikos_global_newsletter_action",
-            "label": "URL de envío del formulario",
-            "name": "oikos_global_newsletter_action",
-            "aria-label": "",
-            "type": "url",
-            "instructions": "Dirección (action) del formulario que da la plataforma de newsletter. Mientras esté vacía, el formulario no se envía y muestra el mensaje de abajo.",
+            "type": "post_object",
+            "instructions": "Formulario de Contact Form 7 que se muestra en la banda newsletter del footer. Sin formulario, la banda muestra solo el título y la descripción. Plantilla recomendada (campo y botón en una fila, casilla debajo): ver CLAUDE.md → Newsletter. En \"Configuración adicional\" del formulario: acceptance_as_validation: on.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -541,30 +543,20 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "",
+            "post_type": [
+                "wpcf7_contact_form"
+            ],
+            "post_status": [
+                "publish"
+            ],
+            "taxonomy": "",
+            "return_format": "id",
+            "multiple": 0,
+            "allow_null": 1,
             "allow_in_bindings": 0,
-            "placeholder": "https://"
-        },
-        {
-            "key": "field_oikos_global_newsletter_mensaje_pendiente",
-            "label": "Mensaje mientras no hay plataforma",
-            "name": "oikos_global_newsletter_mensaje_pendiente",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "Muy pronto podrás suscribirte. ¡Gracias por tu interés!",
-            "maxlength": "",
-            "allow_in_bindings": 0,
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
+            "bidirectional": 0,
+            "ui": 1,
+            "bidirectional_target": []
         },
         {
             "key": "field_oikos_global_blog_tab",
@@ -663,5 +655,5 @@
     "active": true,
     "description": "Ajustes globales del sitio Oikos.",
     "show_in_rest": 0,
-    "modified": 1794810000
+    "modified": 1794781347
 }
