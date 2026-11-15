@@ -41,9 +41,9 @@ $oikos_sg_colors = array(
 		'--color-surface-page'          => __( 'fondo de página (por confirmar)', 'oikos' ),
 	),
 	__( 'Marca (sin rol confirmado)', 'oikos' ) => array(
-		'--color-brand-sage'    => 'sage',
-		'--color-brand-sand'    => 'arena',
-		'--color-brand-caramel' => 'caramelo',
+		'--color-brand-sage'         => 'sage',
+		'--color-brand-sand'         => 'arena',
+		'--color-decorative-caramel' => 'decorative/caramel',
 	),
 	__( 'Derivados (contraste AA con texto crema)', 'oikos' ) => array(
 		'--color-brand-caramel-strong' => __( 'caramelo oscurecido · botón --tonal', 'oikos' ),
@@ -164,7 +164,7 @@ get_header();
 		<div class="oikos-container">
 			<h2 id="sg-radius" class="oikos-text-heading"><?php esc_html_e( 'Radios', 'oikos' ); ?></h2>
 			<ul class="oikos-sg__radii">
-				<?php foreach ( array( '--radius-md' => 'radius/md · botones', '--radius-lg' => 'radius/lg · tarjetas' ) as $oikos_var => $oikos_label ) : ?>
+				<?php foreach ( array( '--radius-xs' => 'radius/xs · indicadores', '--radius-md' => 'radius/md · botones', '--radius-lg' => 'radius/lg · tarjetas' ) as $oikos_var => $oikos_label ) : ?>
 					<li>
 						<span class="oikos-sg__radius" style="border-radius: var(<?php echo esc_attr( $oikos_var ); ?>);"></span>
 						<code><?php echo esc_html( $oikos_var ); ?></code>

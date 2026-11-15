@@ -51,7 +51,7 @@
 	/* Color — marca, sin rol confirmado */
 	--color-brand-sage: #80957d;
 	--color-brand-sand: #d1a980;
-	--color-brand-caramel: #a87a53;
+	--color-decorative-caramel: #a87a53; /* color/decorative/caramel */
 	/* Caramelo oscurecido para texto crema encima (4.61:1, AA). */
 	--color-brand-caramel-strong: #926641;
 
@@ -96,7 +96,11 @@
 
 	/* Radios */
 	--radius-md: 0.75rem;  /* 12 — botones (deducido de capturas) */
+	--radius-xs: 0.25rem;  /*  4 — indicadores del slider (deducido de capturas) */
 	--radius-lg: 1rem;     /* 16 — tarjetas */
+
+	/* Bordes */
+	--border-width-thick: 2px; /* border/width/thick (deducido de capturas) */
 
 	/* Espaciado fluido semántico (móvil → desktop) */
 	--container-padding: clamp(1.25rem, -0.169rem + 6.0545vw, 5rem);  /* 20 → 80 */
@@ -128,6 +132,7 @@
 	--transition-fast: 150ms ease;
 	--transition-lift: 250ms cubic-bezier(0.2, 0.7, 0.3, 1); /* tarjetas que se elevan */
 	--transition-reveal: 280ms cubic-bezier(0, 0, 0.2, 1);   /* ease-out: tarjetas que revelan su descripción */
+	--transition-indicator: 250ms ease;                      /* indicadores del slider (ancho y color) */
 }
 
 /* Pantallas bajas (teléfono horizontal): menos aire sobre el header fijo. */
