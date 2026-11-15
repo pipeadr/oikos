@@ -205,18 +205,27 @@ function oikos_logo_img( $attachment_id, $attr = array() ) {
  * @param int    $image_id        ID de la imagen desktop.
  * @param int    $image_mobile_id ID de la imagen móvil (0 = sin imagen móvil).
  * @param string $class           Clase del <picture>.
+ * @param array  $args            Opcional: 'size' (tamaño registrado, por defecto 'full')
+ *                                y 'sizes' (atributo sizes, por defecto '100vw').
  * @return string '' si la imagen desktop no existe.
  */
-function oikos_hero_picture( $image_id, $image_mobile_id = 0, $class = '' ) {
+function oikos_hero_picture( $image_id, $image_mobile_id = 0, $class = '', $args = array() ) {
 	$image_id        = absint( $image_id );
 	$image_mobile_id = absint( $image_mobile_id );
+	$args            = wp_parse_args(
+		$args,
+		array(
+			'size'  => 'full',
+			'sizes' => '100vw',
+		)
+	);
 
 	$img = $image_id ? wp_get_attachment_image(
 		$image_id,
-		'full',
+		$args['size'],
 		false,
 		array(
-			'sizes'         => '100vw',
+			'sizes'         => $args['sizes'],
 			'loading'       => false,
 			'fetchpriority' => 'high',
 			'decoding'      => 'async',
