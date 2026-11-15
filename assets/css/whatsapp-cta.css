@@ -2,51 +2,51 @@
  * Oikos — Componente "¿Tienes dudas? ¡Estamos a un mensaje!" + WhatsApp
  * (template-parts/components/whatsapp-cta.php).
  *
- * .oikos-whatsapp-cta           fila centrada: texto + ícono
- *   __text                      Body, text/primary
- *   __link                      ícono enlazado, área táctil de 48 × 48
- *     __icon                    SVG en línea (currentColor)
+ * .oikos-whatsapp-cta           contenedor (centra el enlace)
+ *   __link                      un solo enlace: frase + ícono (gap 24)
+ *     __text                    estilo Button, color interactive/primary
+ *     __icon                    logo de WhatsApp 48 × 48, verde de marca, sin fondo
+ *
+ * Medidas y colores tomados de la captura del Figma (frame 1366).
+ * El verde del ícono no cumple 3:1, pero es de apoyo: la frase nombra el enlace.
  */
 
 .oikos-whatsapp-cta {
 	display: flex;
-	flex-wrap: wrap;
-	align-items: center;
 	justify-content: center;
-	gap: var(--spacing-1) var(--spacing-2);
 	text-align: center;
-	color: var(--color-text-primary);
 }
 
 .oikos-whatsapp-cta__link {
 	display: inline-flex;
+	flex-wrap: wrap;
 	align-items: center;
 	justify-content: center;
-	flex-shrink: 0;
-	width: var(--field-height);  /* 48 */
-	height: var(--field-height);
-	border-radius: var(--radius-full);
-	background-color: var(--color-interactive-primary);
-	color: var(--color-content-inverse);
-	transition: background-color var(--transition-fast), transform var(--transition-fast);
+	gap: var(--spacing-1) var(--spacing-3); /* 8 | 24 */
+	border-radius: var(--radius-sm);
+	color: var(--color-interactive-primary);
+	text-decoration: none;
 }
 
-.oikos-whatsapp-cta__link:hover {
-	background-color: color-mix(in srgb, var(--color-interactive-primary) 85%, var(--color-text-primary));
-}
-
-.oikos-whatsapp-cta__link:active {
-	transform: translateY(1px);
+.oikos-whatsapp-cta__link:hover .oikos-whatsapp-cta__text {
+	text-decoration: underline;
+	text-decoration-thickness: 2px;
+	text-underline-offset: 0.15em;
 }
 
 .oikos-whatsapp-cta__link:focus-visible {
-	outline: 0;
-	box-shadow:
-		0 0 0 2px var(--color-surface-base),
-		0 0 0 4px var(--color-interactive-primary);
+	outline: 2px solid var(--color-interactive-primary);
+	outline-offset: 4px;
 }
 
 .oikos-whatsapp-cta__icon {
-	width: 1.5rem;
-	height: 1.5rem;
+	flex-shrink: 0;
+	width: 3rem;  /* 48 */
+	height: 3rem;
+	color: var(--color-brand-whatsapp);
+	transition: transform var(--transition-fast);
+}
+
+.oikos-whatsapp-cta__link:hover .oikos-whatsapp-cta__icon {
+	transform: scale(1.06);
 }

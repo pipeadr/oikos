@@ -52,6 +52,9 @@
 	--color-brand-sage: #80957d;
 	--color-brand-sand: #d1a980;
 	--color-decorative-caramel: #a87a53; /* color/decorative/caramel */
+	/* Ícono de WhatsApp (medido en captura del Figma). 1.94:1 sobre blanco:
+	   solo como ícono de apoyo junto a texto que nombra el enlace. */
+	--color-brand-whatsapp: #65d072;
 	/* Caramelo oscurecido para texto crema encima (4.61:1, AA). */
 	--color-brand-caramel-strong: #926641;
 	/* Sage oscurecido para texto crema encima (etiqueta "Terapia familiar"):
