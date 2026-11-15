@@ -64,6 +64,14 @@
 		color-mix(in srgb, var(--color-interactive-primary) 50%, var(--color-brand-sage)) 100%
 	);
 
+	/* Superficies sobre foto (sección Nosotros del Inicio).
+	   Vidrio: crema al 60 % con texto text/primary → ≥ 6.2:1 sobre cualquier
+	   foto (incluso negra). Velo: verde al 45 % sobre la foto → el título
+	   crema (texto grande, ≥ 24 px) da ≥ 3:1 aun sobre rayos de sol claros. */
+	--color-surface-glass: rgb(251 245 233 / 0.6);
+	--color-border-glass: rgb(251 245 233 / 0.4);
+	--overlay-photo: rgb(45 85 69 / 0.45);
+
 	/* Sombras */
 	--shadow-float: 0 0.5rem 1.5rem rgb(33 33 33 / 0.12), 0 0.0625rem 0.125rem rgb(33 33 33 / 0.08);
 	/* Elevación de tarjetas al hover/foco (más difusa que la de las barras). */
