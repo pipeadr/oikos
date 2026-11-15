@@ -65,12 +65,15 @@
 	);
 
 	/* Superficies sobre foto (sección Nosotros del Inicio).
-	   Vidrio: crema al 60 % con texto text/primary → ≥ 6.2:1 sobre cualquier
-	   foto (incluso negra). Velo: verde al 45 % sobre la foto → el título
-	   crema (texto grande, ≥ 24 px) da ≥ 3:1 aun sobre rayos de sol claros. */
-	--color-surface-glass: rgb(251 245 233 / 0.6);
-	--color-border-glass: rgb(251 245 233 / 0.4);
-	--overlay-photo: rgb(45 85 69 / 0.45);
+	   Vidrio verdoso: mezcla verde/sage al 35 % + backdrop-filter. Encima,
+	   título text/primary y descripción blanca (surface/page).
+	   Velo: verde interactive/primary al 30 % sobre la foto. Medido en el
+	   render sobre foto oliva (luminancia 0.09–0.26): descripción ≥ 4.8:1,
+	   título de la sección en crema ≥ 4.3:1; el título oscuro de las tarjetas da 2.6–3.4:1
+	   (excepción de diseño aceptada, ver CLAUDE.md → Accesibilidad). */
+	--color-surface-glass: rgb(86 117 97 / 0.35);
+	--color-border-glass: rgb(255 255 255 / 0.2);
+	--overlay-photo: rgb(45 85 69 / 0.3);
 
 	/* Sombras */
 	--shadow-float: 0 0.5rem 1.5rem rgb(33 33 33 / 0.12), 0 0.0625rem 0.125rem rgb(33 33 33 / 0.08);

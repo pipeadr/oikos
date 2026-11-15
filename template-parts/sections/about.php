@@ -84,8 +84,8 @@ foreach ( array_map( 'absint', (array) $oikos_args['gallery'] ) as $oikos_image_
 		array(
 			'loading'  => $oikos_slides ? 'lazy' : 'eager',
 			'decoding' => 'async',
-			// Columna derecha: ancho completo del contenedor < 1024; ~436 px en desktop.
-			'sizes'    => '(max-width: 63.9375rem) calc(100vw - 2.5rem), 28rem',
+			// Columna derecha: ancho completo del contenedor < 1024; 443 px en desktop (Figma).
+			'sizes'    => '(max-width: 63.9375rem) calc(100vw - 2.5rem), 27.6875rem',
 		)
 	);
 }

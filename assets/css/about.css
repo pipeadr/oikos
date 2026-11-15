@@ -10,11 +10,12 @@
  *
  * Modificadores: --has-bg (hay foto), --no-slider (una sola columna).
  *
- * Contraste (peor caso medido con una foto clara de rayos de sol):
- * - Título crema sobre la foto + velo --overlay-photo (verde 45 %): ≥ 3.2:1.
- *   Es texto grande (Heading ≥ 26 px), así que AA pide 3:1.
- * - Tarjetas: crema al 60 % con texto text/primary: ≥ 6.2:1 sobre cualquier
- *   foto, incluso negra.
+ * Contraste (medido sobre foto oliva como la del diseño, luminancia 0.09–0.26):
+ * - Título crema sobre foto + velo --overlay-photo (verde 30 %): ≥ 4.3:1.
+ * - Descripción blanca sobre el vidrio verdoso: ≥ 4.8:1 (AA).
+ * - Título oscuro de las tarjetas: 2.6–3.4:1. NO cumple AA: excepción de
+ *   diseño aceptada el 2026-11-15 (fidelidad a Figma). No oscurecer más el
+ *   vidrio sin revisarlo: empeora el título; aclararlo rompe la descripción.
  *
  * Capas: color de respaldo < foto (z -2) < velo (z -1) < contenido.
  */
@@ -51,7 +52,8 @@
 
 .oikos-about__inner {
 	display: grid;
-	grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+	/* Derecha: foto de 443 px como en Figma (42 % como máximo en laptops). */
+	grid-template-columns: minmax(0, 1fr) minmax(0, min(27.6875rem, 42%));
 	align-items: center;
 	gap: var(--spacing-8);
 }
@@ -95,14 +97,18 @@
 	border: 1px solid var(--color-border-glass);
 	border-radius: var(--radius-lg);
 	background-color: var(--color-surface-glass);
-	-webkit-backdrop-filter: blur(8px);
-	backdrop-filter: blur(8px);
+	-webkit-backdrop-filter: blur(16px); /* empareja el fondo detrás de la tarjeta */
+	backdrop-filter: blur(16px);
 }
 
-.oikos-about__card-title,
-.oikos-about__card-text {
+.oikos-about__card-title {
 	margin: 0;
 	color: var(--color-text-primary);
+}
+
+.oikos-about__card-text {
+	margin: 0;
+	color: var(--color-surface-page);
 }
 
 /* ==========================================================================
@@ -114,7 +120,7 @@
 }
 
 .oikos-about__slider {
-	--slider-ratio: 3 / 4;
+	--slider-ratio: 443 / 673; /* Figma */
 }
 
 .oikos-about__slider .oikos-slider__track {
