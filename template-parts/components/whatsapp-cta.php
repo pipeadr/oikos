@@ -5,6 +5,12 @@
  * Reutilizable por sí solo. El número y el mensaje predeterminado salen de
  * "Oikos — Global" → Contacto (oikos_whatsapp_url()). Sin número no imprime nada.
  *
+ * Frase + ícono forman un solo enlace (Figma: frase en verde, ícono verde
+ * WhatsApp sin fondo). La frase identifica el enlace, así que el ícono es de
+ * apoyo y su verde claro (1.94:1) no tiene requisito de contraste (WCAG
+ * 1.4.11). Sin aria-label: el nombre accesible incluye el texto visible
+ * (WCAG 2.5.3) + "(WhatsApp, se abre en una pestaña nueva)".
+ *
  * Args:
  * - text           (string) Frase. Vacío → oikos_global_whatsapp_cta_texto.
  * - track_location (string) data-track-location del enlace.
@@ -36,16 +42,18 @@ if ( '' === $oikos_text ) {
 }
 ?>
 <div class="<?php echo esc_attr( trim( 'oikos-whatsapp-cta ' . $oikos_args['class'] ) ); ?>">
-	<p class="oikos-whatsapp-cta__text oikos-text-body"><?php echo esc_html( $oikos_text ); ?></p>
 	<a
 		class="oikos-whatsapp-cta__link"
 		href="<?php echo esc_url( $oikos_url ); ?>"
 		target="_blank"
 		rel="noopener"
-		aria-label="<?php esc_attr_e( 'Escríbenos por WhatsApp', 'oikos' ); ?>"
 		data-track="whatsapp"
 		<?php if ( '' !== $oikos_args['track_location'] ) : ?>
 			data-track-location="<?php echo esc_attr( $oikos_args['track_location'] ); ?>"
 		<?php endif; ?>
-	><?php oikos_the_icon( 'whatsapp', 'oikos-whatsapp-cta__icon' ); ?></a>
+	>
+		<span class="oikos-whatsapp-cta__text oikos-text-button"><?php echo esc_html( $oikos_text ); ?></span>
+		<span class="screen-reader-text"><?php esc_html_e( '(WhatsApp, se abre en una pestaña nueva)', 'oikos' ); ?></span>
+		<?php oikos_the_icon( 'whatsapp', 'oikos-whatsapp-cta__icon' ); ?>
+	</a>
 </div>
