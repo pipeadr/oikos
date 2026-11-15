@@ -52,13 +52,15 @@ $oikos_sg_colors = array(
 );
 
 $oikos_sg_text_styles = array(
-	'oikos-text-display' => array( 'Display', 'Terapia psicológica para cuidar de ti y de tus relaciones.' ),
-	'oikos-text-heading' => array( 'Heading', 'Lo que no se sana, se repite' ),
-	'oikos-text-card'    => array( 'Card', 'Presencial y virtual' ),
-	'oikos-text-body'    => array( 'Body', 'En Oikos acompañamos procesos individuales, de pareja y de familia con calidez y rigor profesional. Un espacio seguro —presencial en Medellín o virtual desde donde estés— para entender lo que duele, sanar lo que se repite y construir vínculos más conscientes.' ),
-	'oikos-text-button'  => array( 'Button', 'Agenda tu cita' ),
-	'oikos-text-eyebrow' => array( 'Eyebrow', 'El método' ),
-	'oikos-text-nav'     => array( 'Nav', 'Acompañamientos' ),
+	'oikos-text-display'      => array( 'Display', 'Terapia psicológica para cuidar de ti y de tus relaciones.' ),
+	'oikos-text-heading'      => array( 'Heading', 'Lo que no se sana, se repite' ),
+	'oikos-text-card'         => array( 'Card', 'Presencial y virtual' ),
+	'oikos-text-card-hero'    => array( 'Card hero', '+150 procesos acompañados' ),
+	'oikos-text-card-service' => array( 'Card service', 'Terapia de pareja' ),
+	'oikos-text-body'         => array( 'Body', 'En Oikos acompañamos procesos individuales, de pareja y de familia con calidez y rigor profesional. Un espacio seguro —presencial en Medellín o virtual desde donde estés— para entender lo que duele, sanar lo que se repite y construir vínculos más conscientes.' ),
+	'oikos-text-button'       => array( 'Button', 'Agenda tu cita' ),
+	'oikos-text-eyebrow'      => array( 'Eyebrow', 'El método' ),
+	'oikos-text-nav'          => array( 'Nav', 'Acompañamientos' ),
 );
 
 $oikos_sg_buttons = array(

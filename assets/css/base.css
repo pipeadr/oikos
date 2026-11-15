@@ -110,6 +110,8 @@
 	--text-heading-size: clamp(1.625rem, 1.4831rem + 0.6054vw, 2rem); /* 26 → 32 */
 	--text-card-size: clamp(1.125rem, 1.0777rem + 0.2018vw, 1.25rem); /* 18 → 20 */
 	--text-step-size: clamp(1.75rem, 1.277rem + 2.0182vw, 3rem);      /* 28 → 48 (deducido) */
+	--text-card-hero-size: clamp(1.25rem, 1.1554rem + 0.4036vw, 1.5rem);    /* 20 → 24 — tarjetas del hero */
+	--text-card-service-size: clamp(1.25rem, 1.1554rem + 0.4036vw, 1.5rem); /* 20 → 24 — tarjetas de acompañamiento */
 	--text-body-size: 1rem;     /* 16 fijo */
 	--text-button-size: 1rem;   /* 16 fijo */
 	--text-small-size: 0.875rem; /* 14 fijo — eyebrow y menú */
@@ -336,6 +338,25 @@ body {
 	font-weight: 600;
 	line-height: 1.25;
 	letter-spacing: 0;
+}
+
+/* Título de las tarjetas del hero (Figma: Figtree Bold 24 / 100 %). */
+.oikos-text-card-hero {
+	font-family: var(--font-body);
+	font-size: var(--text-card-hero-size);
+	font-weight: 700;
+	line-height: 1;
+	letter-spacing: 0;
+}
+
+/* Título de las tarjetas de acompañamiento (Figma: Typography/Heading…,
+   Bricolage Medium 24 / 133 % / -1 %). */
+.oikos-text-card-service {
+	font-family: var(--font-heading);
+	font-size: var(--text-card-service-size);
+	font-weight: 500;
+	line-height: 1.33;
+	letter-spacing: -0.01em;
 }
 
 .oikos-text-step {

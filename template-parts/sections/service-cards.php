@@ -85,7 +85,7 @@ $oikos_location = (string) $oikos_args['track_location'];
 					>
 						<?php
 						printf(
-							'<h%1$d class="oikos-service-card__title oikos-text-card">%2$s</h%1$d>',
+							'<h%1$d class="oikos-service-card__title oikos-text-card-service">%2$s</h%1$d>',
 							(int) $oikos_level + 1,
 							esc_html( $oikos_card['text'] )
 						);
