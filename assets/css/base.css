@@ -28,9 +28,9 @@
 @font-face {
 	font-family: "Figtree";
 	font-style: normal;
-	font-weight: 400 600;
+	font-weight: 400 700;
 	font-display: swap;
-	src: url("../fonts/figtree-400-600.woff2") format("woff2");
+	src: url("../fonts/figtree-400-700.woff2") format("woff2");
 }
 
 /* ==========================================================================
