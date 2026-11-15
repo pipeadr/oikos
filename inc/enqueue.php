@@ -130,6 +130,21 @@ function oikos_template_assets() {
 			'condition' => static fn() => is_front_page() && is_page(),
 			'css'       => 'css/posts-block.css',
 		),
+		// Preguntas frecuentes: en cualquier vista cuya página tenga preguntas.
+		'oikos-accordion'     => array(
+			'condition' => 'oikos_page_has_faq',
+			'css'       => 'css/accordion.css',
+			'js'        => 'js/accordion.js',
+		),
+		'oikos-faq'           => array(
+			'condition' => 'oikos_page_has_faq',
+			'css'       => 'css/faq.css',
+		),
+		// Bloque WhatsApp: se agregan aquí otras vistas que lo usen sin FAQ.
+		'oikos-whatsapp-cta'  => array(
+			'condition' => 'oikos_page_has_faq',
+			'css'       => 'css/whatsapp-cta.css',
+		),
 		'oikos-home'          => array(
 			'condition' => static fn() => is_front_page() && is_page(),
 			'css'       => 'css/home.css',

@@ -1,0 +1,67 @@
+/**
+ * Oikos — Sección Preguntas frecuentes (template-parts/sections/faq.php).
+ *
+ * .oikos-faq                    sección (con .oikos-section)
+ *   __inner                     grid: intro | acordeón (295 | 751 en el frame de 1366)
+ *     __intro                   título (Heading) + botón
+ *     __accordion               componente acordeón (accordion.css)
+ *   __whatsapp                  bloque "¿Tienes dudas?" centrado (whatsapp-cta.css)
+ *
+ * < 1024: una columna (intro arriba, acordeón debajo a ancho completo).
+ * < 768: botón a ancho completo (.oikos-btn--block-mobile).
+ */
+
+.oikos-faq {
+	color: var(--color-text-primary);
+}
+
+.oikos-faq__inner {
+	display: grid;
+	/* Proporción del Figma (295 | 751 con gap 64 en 1110): en 1024 el título
+	   no queda aplastado por un acordeón de ancho fijo. */
+	grid-template-columns: minmax(0, 295fr) minmax(0, 751fr);
+	gap: var(--spacing-8); /* 64 */
+	align-items: start;
+}
+
+.oikos-faq__intro {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: var(--spacing-4); /* 32 */
+	min-width: 0;
+}
+
+.oikos-faq__title {
+	text-wrap: balance;
+}
+
+.oikos-faq__accordion {
+	min-width: 0;
+}
+
+.oikos-faq__whatsapp {
+	margin-top: var(--spacing-6); /* 48 */
+}
+
+@media (max-width: 63.9375rem) {
+	.oikos-faq__inner {
+		grid-template-columns: minmax(0, 1fr);
+		gap: var(--spacing-5); /* 40 */
+	}
+
+	.oikos-faq__title {
+		max-width: 24ch;
+	}
+}
+
+@media (max-width: 47.9375rem) {
+	.oikos-faq__intro {
+		align-items: stretch;
+		gap: var(--spacing-3); /* 24 */
+	}
+
+	.oikos-faq__whatsapp {
+		margin-top: var(--spacing-5); /* 40 */
+	}
+}

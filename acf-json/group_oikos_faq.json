@@ -1,0 +1,131 @@
+{
+    "key": "group_oikos_faq",
+    "title": "Preguntas frecuentes",
+    "fields": [
+        {
+            "key": "field_oikos_faq_titulo",
+            "label": "Título",
+            "name": "oikos_faq_titulo",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Preguntas frecuentes sobre nuestra terapia psicológica",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_oikos_faq_preguntas",
+            "label": "Preguntas",
+            "name": "oikos_faq_preguntas",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "Si no hay preguntas, la sección no se muestra. Las preguntas también se publican como datos estructurados (FAQPage) para Google.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "pagination": 0,
+            "min": 0,
+            "max": 0,
+            "collapsed": "field_oikos_faq_preguntas_pregunta",
+            "button_label": "Agregar pregunta",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_oikos_faq_preguntas_pregunta",
+                    "label": "Pregunta",
+                    "name": "pregunta",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 0,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_oikos_faq_preguntas"
+                },
+                {
+                    "key": "field_oikos_faq_preguntas_respuesta",
+                    "label": "Respuesta",
+                    "name": "respuesta",
+                    "aria-label": "",
+                    "type": "wysiwyg",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "allow_in_bindings": 0,
+                    "tabs": "visual",
+                    "toolbar": "basic",
+                    "media_upload": 0,
+                    "delay": 1,
+                    "parent_repeater": "field_oikos_faq_preguntas"
+                }
+            ]
+        },
+        {
+            "key": "field_oikos_faq_boton",
+            "label": "Botón",
+            "name": "oikos_faq_boton",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "Opcional. Vacío: usa el CTA \"Agenda tu cita\" de Oikos — Global.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "allow_in_bindings": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "page"
+            }
+        ]
+    ],
+    "menu_order": 90,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Sección de preguntas frecuentes, reutilizable en cualquier página.",
+    "show_in_rest": 0,
+    "modified": 1794787200
+}

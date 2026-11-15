@@ -170,4 +170,7 @@ get_template_part(
 	)
 );
 
+// Preguntas frecuentes (grupo ACF "Preguntas frecuentes" de la página).
+oikos_the_faq_section( 'faq-home', $oikos_front_id );
+
 get_footer();
