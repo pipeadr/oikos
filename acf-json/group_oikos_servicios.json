@@ -451,6 +451,152 @@
             "step": 1,
             "prepend": "",
             "append": "s"
+        },
+        {
+            "key": "field_oikos_servicios_tab_temas",
+            "label": "Temas",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_oikos_servicios_temas_titulo",
+            "label": "Título (H2)",
+            "name": "oikos_servicios_temas_titulo",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Si se deja vacío, la sección no se muestra.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Todo lo que puedes trabajar en un proceso terapéutico",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_oikos_servicios_temas_texto",
+            "label": "Texto",
+            "name": "oikos_servicios_temas_texto",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "rows": 2,
+            "placeholder": "",
+            "new_lines": ""
+        },
+        {
+            "key": "field_oikos_servicios_temas_lista",
+            "label": "Temas",
+            "name": "oikos_servicios_temas_lista",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "Entre 2 y 12. Se muestran en filas de 4 (2 en móvil). Al presionar un tema, la tarjeta se abre y muestra su descripción.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "pagination": 0,
+            "min": 2,
+            "max": 12,
+            "collapsed": "field_oikos_servicios_temas_lista_titulo",
+            "button_label": "Agregar tema",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "required": 1,
+                    "key": "field_oikos_servicios_temas_lista_titulo",
+                    "label": "Título",
+                    "name": "titulo",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "Corto: una o dos palabras por línea (la tarjeta es angosta).",
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 0,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_oikos_servicios_temas_lista"
+                },
+                {
+                    "key": "field_oikos_servicios_temas_lista_descripcion",
+                    "label": "Descripción",
+                    "name": "descripcion",
+                    "aria-label": "",
+                    "type": "textarea",
+                    "instructions": "Una frase de hasta unos 110 caracteres para que quepa en la tarjeta abierta.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 0,
+                    "rows": 3,
+                    "placeholder": "",
+                    "new_lines": "",
+                    "parent_repeater": "field_oikos_servicios_temas_lista"
+                },
+                {
+                    "key": "field_oikos_servicios_temas_lista_enlace",
+                    "label": "Enlace (opcional)",
+                    "name": "enlace",
+                    "aria-label": "",
+                    "type": "link",
+                    "instructions": "Por ejemplo, una entrada del blog. Aparece al final de la descripción; si el texto del enlace se deja vacío, dice \"Leer más\".",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "array",
+                    "allow_in_bindings": 0,
+                    "parent_repeater": "field_oikos_servicios_temas_lista"
+                }
+            ]
         }
     ],
     "location": [
@@ -473,5 +619,5 @@
     "active": true,
     "description": "Contenido de la página general de servicios.",
     "show_in_rest": 0,
-    "modified": 1794853509
+    "modified": 1794859778
 }
