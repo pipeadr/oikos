@@ -1,0 +1,292 @@
+/**
+ * Oikos — Carrusel de servicios (template-parts/sections/services-carousel.php)
+ * y tarjeta de servicio (template-parts/components/therapy-card.php).
+ *
+ * .oikos-services-carousel          sección (container de consultas: mide el sangrado)
+ *   __inner                         grilla: texto | carrusel (una columna < 1024)
+ *     __content                     título (Heading) + texto (Body text/secondary)
+ *     __media                       carrusel; sangra hasta el borde derecho de la pantalla
+ *
+ * .oikos-therapy-card               tarjeta (Figma 595 × 349 en desktop)
+ *   __media / __img                 foto que cubre la tarjeta + degradado (::after)
+ *   __body                          título (enlace a la página) + descripción
+ *     __desc                        ::before = vista previa de 1 línea (attr(data-preview))
+ *       __text                      descripción completa (siempre en el HTML)
+ *   __cta                           botón claro a ancho completo (CTA global)
+ *
+ * Estados de la tarjeta con --card-open (0 reposo · 1 expandida): la foto pasa
+ * de scale(--card-zoom) a 1 y la descripción completa entra con fundido y
+ * desplazamiento hacia arriba. Solo cambian scale/translate/opacity (sin
+ * saltos de layout: la descripción completa siempre ocupa su lugar).
+ * Expandida con :hover (solo hover: hover), :focus-within y, en pantallas
+ * táctiles, la diapositiva activa del slider (.is-active).
+ */
+
+/* ==========================================================================
+   Sección
+   ========================================================================== */
+
+.oikos-services-carousel {
+	container-type: inline-size;
+	overflow-x: clip; /* el carrusel sangra; la página nunca se desplaza en horizontal */
+	/* Del borde derecho del contenedor al de la pantalla (100cqw = ancho de la sección). */
+	--services-bleed: calc((100cqw - min(var(--container-max), 100cqw - 2 * var(--container-padding))) / 2);
+}
+
+.oikos-services-carousel__inner {
+	display: grid;
+	/* Texto a 345 px (Figma) y carrusel en el resto. */
+	grid-template-columns: minmax(0, 21.5625rem) minmax(0, 1fr);
+	align-items: center;
+	gap: var(--spacing-8);
+}
+
+.oikos-services-carousel__content {
+	display: flex;
+	flex-direction: column;
+	gap: var(--spacing-2);
+}
+
+.oikos-services-carousel__title,
+.oikos-services-carousel__text {
+	margin: 0;
+}
+
+.oikos-services-carousel__media {
+	min-width: 0;
+	margin-inline-end: calc(-1 * var(--services-bleed));
+}
+
+.oikos-services-carousel__slider {
+	--slider-end-space: var(--services-bleed);
+	--slider-slide-size: min(37.1875rem, 85%); /* 595 */
+}
+
+/* Cada diapositiva es un contenedor: la proporción de la tarjeta depende de su ancho. */
+.oikos-services-carousel__slider .oikos-slider__slide {
+	container: therapy-card / inline-size;
+}
+
+/* ==========================================================================
+   Tarjeta de servicio
+   ========================================================================== */
+
+.oikos-therapy-card {
+	--card-zoom: 1.3;              /* acercamiento en reposo (medido comparando capturas) */
+	--card-shift: var(--spacing-3); /* lo que sube el texto al expandirse */
+	--card-open: 0;
+
+	position: relative;
+	isolation: isolate;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	gap: var(--spacing-3);
+	box-sizing: border-box;
+	aspect-ratio: 595 / 349; /* alto mínimo: crece si el texto lo necesita */
+	padding: var(--spacing-2);
+	border-radius: var(--radius-lg);
+	background-color: var(--color-text-secondary); /* sin foto o mientras carga */
+	color: var(--color-content-inverse);
+}
+
+.oikos-therapy-card__media {
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	overflow: hidden; /* en la capa de la foto: la tarjeta puede crecer con el texto */
+	border-radius: inherit;
+}
+
+
+.oikos-therapy-card__img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: var(--card-focus, 50% 50%);
+	transform-origin: var(--card-focus, 50% 50%);
+	scale: calc(var(--card-zoom) - (var(--card-zoom) - 1) * var(--card-open));
+	transition: scale var(--transition-card-zoom);
+}
+
+.oikos-therapy-card__body {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	gap: var(--spacing-1);
+}
+
+/* Degradado oscuro (text/secondary) anclado al bloque de texto, no al alto de
+   la tarjeta: se desvanece en los spacing/8 de encima del título y llega a
+   0.8 donde empieza el texto, así el texto crema cumple AA sobre cualquier
+   foto (peor caso, foto blanca: título 5.4:1) aunque la tarjeta crezca en
+   móvil. Baja hasta el pie de la tarjeta (detrás del botón). */
+.oikos-therapy-card__body::before {
+	content: "";
+	position: absolute;
+	z-index: -1; /* sobre la foto, bajo el texto (la tarjeta aísla el apilado) */
+	inset-inline: calc(-1 * var(--spacing-2));
+	top: calc(-1 * var(--spacing-8));
+	bottom: calc(-1 * (var(--spacing-3) + 3.375rem + var(--spacing-2))); /* gap + botón 54 + padding */
+	border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+	background-image: linear-gradient(
+		to bottom,
+		rgb(75 58 47 / 0) 0,
+		rgb(75 58 47 / 0.8) var(--spacing-8),
+		rgb(75 58 47 / 0.95) 100%
+	);
+	pointer-events: none;
+}
+
+/* Título (Figma: Figtree 500, 24 → 20 en móvil). */
+.oikos-therapy-card__title {
+	margin: 0;
+	font-family: var(--font-body);
+	font-size: var(--text-card-hero-size);
+	font-weight: 500;
+	line-height: 1.25;
+	letter-spacing: 0;
+	color: var(--color-content-inverse);
+	translate: 0 calc(var(--card-shift) * (1 - var(--card-open)));
+	transition: translate var(--transition-card-zoom);
+}
+
+.oikos-therapy-card__link {
+	color: inherit;
+	text-decoration: none;
+	border-radius: var(--radius-xs);
+}
+
+.oikos-therapy-card__link:hover {
+	text-decoration: underline;
+	text-decoration-thickness: 1px;
+	text-underline-offset: 0.15em;
+}
+
+.oikos-therapy-card__link:focus-visible {
+	outline: 2px solid var(--color-content-inverse);
+	outline-offset: 2px;
+}
+
+.oikos-therapy-card__desc {
+	position: relative;
+}
+
+/* Vista previa: primera línea con puntos suspensivos y fundido a la derecha.
+   El segundo content (con texto alternativo vacío) evita que se lea dos veces;
+   el primero es el respaldo de navegadores sin esa sintaxis. */
+.oikos-therapy-card__desc::before {
+	content: attr(data-preview);
+	content: attr(data-preview) / "";
+	position: absolute;
+	inset-inline: 0;
+	top: 0;
+	overflow: hidden;
+	font-family: var(--font-body);
+	font-size: var(--text-body-size);
+	line-height: 1.5;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	-webkit-mask-image: linear-gradient(to right, #000 75%, transparent);
+	mask-image: linear-gradient(to right, #000 75%, transparent);
+	opacity: calc(1 - var(--card-open));
+	translate: 0 calc(var(--card-shift) * (1 - var(--card-open)));
+	transition:
+		opacity var(--transition-card-zoom),
+		translate var(--transition-card-zoom);
+	pointer-events: none;
+}
+
+.oikos-therapy-card__text {
+	margin: 0;
+	color: var(--color-content-inverse);
+	opacity: var(--card-open);
+	translate: 0 calc(var(--card-shift) * (1 - var(--card-open)));
+	transition:
+		opacity var(--transition-card-zoom),
+		translate var(--transition-card-zoom);
+}
+
+.oikos-therapy-card__cta {
+	display: flex;
+	width: 100%;
+}
+
+/* Proporción según el ancho de la tarjeta (no del viewport): con la descripción
+   completa en más líneas, la tarjeta crece para que la foto siga viéndose arriba. */
+@container therapy-card (max-width: 31.25rem) { /* < 500 */
+	.oikos-therapy-card {
+		aspect-ratio: 1;
+	}
+}
+
+@container therapy-card (max-width: 21.25rem) { /* < 340: móvil */
+	.oikos-therapy-card {
+		aspect-ratio: 3 / 5;
+	}
+}
+
+/* ---- Estado expandido ---------------------------------------------------- */
+
+.oikos-therapy-card:focus-within {
+	--card-open: 1;
+}
+
+@media (hover: hover) {
+	.oikos-therapy-card:hover {
+		--card-open: 1;
+	}
+}
+
+/* Táctil: expandida la diapositiva activa del slider. Sin JS (o fuera de un
+   slider) todas expandidas, para que la descripción siempre se pueda leer. */
+@media (hover: none) {
+	.oikos-therapy-card {
+		--card-open: 1;
+	}
+
+	.oikos-slider.is-ready .oikos-slider__slide:not(.is-active) .oikos-therapy-card:not(:focus-within) {
+		--card-open: 0;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.oikos-therapy-card {
+		--card-zoom: 1;
+		--card-shift: 0px;
+	}
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+/* < 1024: texto arriba a ancho completo; carrusel debajo (~1.5 tarjetas). */
+@media (max-width: 63.9375rem) {
+	.oikos-services-carousel__inner {
+		grid-template-columns: minmax(0, 1fr);
+		gap: var(--spacing-5);
+	}
+
+	.oikos-services-carousel__content {
+		max-width: 40rem;
+	}
+
+	.oikos-services-carousel__slider {
+		--slider-slide-size: 66%;
+	}
+}
+
+/* < 768: ~1.15 tarjetas; tarjeta más alta para la descripción completa. */
+@media (max-width: 47.9375rem) {
+	.oikos-services-carousel__inner {
+		gap: var(--spacing-4);
+	}
+
+	.oikos-services-carousel__slider {
+		--slider-slide-size: 85%;
+		--slider-gap: var(--spacing-2);
+	}
+
+}
