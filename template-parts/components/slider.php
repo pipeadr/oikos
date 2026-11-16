@@ -14,6 +14,9 @@
  * - item_label (string)   Qué es cada diapositiva, para los indicadores: "Ir a la {foto} 2 de 3".
  * - arrows     (bool)     Mostrar flechas anterior/siguiente. Default false.
  * - class      (string)   Clases extra del contenedor (modificadores, p. ej. 'oikos-slider--portrait').
+ *                         Modificadores: --portrait (fotos), --cards (varias visibles),
+ *                         --dots-below (indicadores debajo), --on-light (fondo claro).
+ *                         Ver css/slider.css.
  *
  * @package oikos
  */

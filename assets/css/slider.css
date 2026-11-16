@@ -12,7 +12,21 @@
  *   en --slider-ratio). Lleva un degradado oscuro abajo para que los
  *   indicadores se vean sobre cualquier foto (WCAG 1.4.11).
  *
- * Indicadores y flechas van sobre las diapositivas (position: absolute).
+ * - --cards: varias diapositivas visibles (tarjetas). Ancho de cada una en
+ *   --slider-slide-size (100 %), separación --slider-gap (spacing/3). Para
+ *   que sangren hasta el borde de la pantalla, la sección agranda el
+ *   contenedor con margen negativo y pone el mismo valor como
+ *   --slider-end-space (espacio al final de la pista).
+ * - --dots-below: indicadores debajo de las diapositivas (en el flujo), a
+ *   --slider-dot-offset del pie.
+ * - --on-light: colores de indicadores para fondo claro (Figma): activo
+ *   interactive/secondary, inactivos sand-strong (≥ 3:1 sobre blanco).
+ *
+ * Estado (slider.js): .is-ready en el contenedor cuando el JS arrancó;
+ * .is-active en la diapositiva activa; evento 'oikos-slider:change'.
+ *
+ * Indicadores y flechas van sobre las diapositivas (position: absolute),
+ * salvo con --dots-below.
  *
  * Variables para cada uso (no se declaran aquí: los valores por defecto van
  * como respaldo en var(), así cualquier sección las define sin pelear
@@ -185,6 +199,63 @@
 
 .oikos-slider__arrow--prev .oikos-icon {
 	transform: scaleX(-1);
+}
+
+/* ==========================================================================
+   Modificadores
+   ========================================================================== */
+
+/* Varias diapositivas visibles (tarjetas). */
+.oikos-slider--cards {
+	border-radius: 0;
+}
+
+.oikos-slider--cards .oikos-slider__track {
+	gap: var(--slider-gap, var(--spacing-3));
+	padding-inline-end: var(--slider-end-space, 0);
+	border-radius: 0;
+}
+
+.oikos-slider--cards .oikos-slider__slide {
+	display: flex; /* la tarjeta se estira al alto de la más alta */
+	flex-basis: var(--slider-slide-size, 100%);
+	scroll-snap-stop: normal;
+}
+
+.oikos-slider--cards .oikos-slider__slide > * {
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+/* El anillo de foco de la pista va por dentro (el borde derecho sangra). */
+.oikos-slider--cards .oikos-slider__track:focus-visible {
+	outline-offset: -2px;
+	box-shadow: none;
+}
+
+/* Indicadores debajo, en el flujo. */
+.oikos-slider--dots-below .oikos-slider__dots {
+	position: static;
+	/* La píldora queda a --slider-dot-offset del pie; el área táctil de 44 la rodea. */
+	margin-top: calc(var(--slider-dot-offset, var(--spacing-2)) - (2.75rem - var(--slider-dot-height, 0.5rem)) / 2);
+	/* Centrados bajo la zona visible, no bajo el espacio que sangra. */
+	margin-inline-end: var(--slider-end-space, 0);
+}
+
+/* Fondo claro. */
+.oikos-slider--on-light {
+	--slider-dot-active: var(--color-interactive-secondary);
+	--slider-dot-idle: var(--color-brand-sand-strong);
+}
+
+.oikos-slider--on-light .oikos-slider__dot:focus-visible::before {
+	box-shadow:
+		0 0 0 2px var(--color-surface-page),
+		0 0 0 4px var(--color-interactive-primary);
+}
+
+.oikos-slider--on-light .oikos-slider__track:focus-visible {
+	outline-color: var(--color-interactive-primary);
 }
 
 @media (prefers-reduced-motion: reduce) {
