@@ -17,6 +17,7 @@ require_once get_template_directory() . '/inc/enqueue.php';
 require_once get_template_directory() . '/inc/cpt.php';
 require_once get_template_directory() . '/inc/blog.php';
 require_once get_template_directory() . '/inc/faq.php';
+require_once get_template_directory() . '/inc/services.php';
 require_once get_template_directory() . '/inc/acf.php';
 require_once get_template_directory() . '/inc/schema.php';
 require_once get_template_directory() . '/inc/analytics.php';
