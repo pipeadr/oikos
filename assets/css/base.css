@@ -95,6 +95,14 @@
 		var(--color-surface-base) 100%
 	), var(--color-surface-base);
 
+	/* Fondo de "Todo lo que puedes trabajar…" (Figma: radial arena abajo a la
+	   derecha sobre crema). */
+	--gradient-topics: radial-gradient(
+		83.64% 70.98% at 100% 100%,
+		var(--color-brand-sand) 0%,
+		var(--color-surface-base) 100%
+	);
+
 	/* Retroalimentación de formularios (deducidos; sin token en Figma).
 	   Error: 6.5:1 sobre surface/page y 6:1 sobre surface/base. */
 	--color-feedback-error: #b3261e;
@@ -115,6 +123,10 @@
 	--shadow-float: 0 0.5rem 1.5rem rgb(33 33 33 / 0.12), 0 0.0625rem 0.125rem rgb(33 33 33 / 0.08);
 	/* Elevación de tarjetas al hover/foco (más difusa que la de las barras). */
 	--shadow-lift: 0 1rem 2rem rgb(33 33 33 / 0.16), 0 0.125rem 0.25rem rgb(33 33 33 / 0.08);
+	/* La misma elevación como filter (para elementos recortados con clip-path,
+	   donde box-shadow no se ve). drop-shadow no tiene spread: blur a la mitad. */
+	--drop-shadow-lift: drop-shadow(0 0.75rem 1rem rgb(33 33 33 / 0.14)) drop-shadow(0 0.125rem 0.125rem rgb(33 33 33 / 0.08));
+	--drop-shadow-hover: drop-shadow(0 0.375rem 0.625rem rgb(33 33 33 / 0.1));
 
 	/* Fuentes */
 	--font-fallback: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
@@ -138,6 +150,7 @@
 	--radius-sm: 0.5rem;   /*  8 — campos de formulario (medido en captura) */
 	--radius-xs: 0.25rem;  /*  4 — indicadores del slider (deducido de capturas) */
 	--radius-lg: 1rem;     /* 16 — tarjetas */
+	--radius-xl: 1.5rem;   /* 24 — tarjetas de temas (medido en captura) */
 	--radius-full: 9999px; /* píldoras (etiquetas de categoría) */
 
 	/* Bordes */
@@ -186,6 +199,7 @@
 	--transition-card-zoom: 450ms cubic-bezier(0, 0, 0.2, 1); /* ease-out: tarjeta de servicio (zoom de foto y descripción) */
 	--transition-color: 300ms ease;                          /* cambio de color de texto (beneficio activo) */
 	--transition-crossfade: 500ms ease;                      /* fundido cruzado de fotos */
+	--transition-expand: 350ms cubic-bezier(0, 0, 0.2, 1);   /* ease-out: tarjeta de tema que se abre a doble ancho */
 }
 
 /* Pantallas bajas (teléfono horizontal): menos aire sobre el header fijo. */

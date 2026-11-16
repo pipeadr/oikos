@@ -1,0 +1,399 @@
+/**
+ * Oikos — Grilla de temas con tarjetas que se abren
+ * ("Todo lo que puedes trabajar en un proceso terapéutico").
+ *
+ * .oikos-topics                        sección (fondo radial propio)
+ *   __inner                            intro | tarjetas
+ *     __intro > __heading + __lead
+ *     __cards                          contenedor (container query: 2 o 4 columnas)
+ *       __grid > __item(.is-open)      celda fija; la tarjeta flota dentro
+ *         __card                       absoluta, 2 celdas de ancho, recortada con clip-path
+ *           __content                  título + descripción, anclados abajo
+ *             __title > __button       el ::after cubre la tarjeta
+ *             __body > __body-inner    descripción + enlace opcional
+ *
+ * Medidas del diseño (1366): grilla de 720 = 4 × 162 + 3 × 24 (filas
+ * también a 24), tarjeta 162 × 173, radio 24, padding 16, título Figtree
+ * 500 20/150 %, descripción Body 16/24 text/secondary.
+ *
+ * Abierta mide 2 celdas SIN el gap (324): la vecina se asoma 24 px por
+ * detrás (decisión de diseño). La tarjeta siempre mide 2 celdas; cerrada,
+ * el clip-path deja ver solo su celda, así que abrir no mueve la grilla.
+ * En la última columna se ancla a la derecha y se abre hacia la izquierda;
+ * la columna real la da :nth-child dentro de la query de columnas.
+ *
+ * Estados (topics.js): .is-open (abierta), .is-closing (cerrándose: queda
+ * por encima de las demás, debajo de la que se abre).
+ * Sin JS (@media (scripting: none)): tarjetas estáticas con la descripción
+ * visible.
+ */
+
+.oikos-topics {
+	--topics-gap: var(--spacing-2);   /* 16 en 2 columnas, 24 en 4 */
+	--topics-pad: var(--spacing-2);   /* 16 */
+	--topics-radius: var(--radius-xl); /* 24 */
+
+	padding-block: var(--space-section);
+	background: var(--gradient-topics), var(--color-surface-base);
+	color: var(--color-text-primary);
+}
+
+/* ==========================================================================
+   Disposición: apilado (intro arriba) → lado a lado desde 1152
+   ========================================================================== */
+
+.oikos-topics__inner {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	row-gap: var(--spacing-5); /* 40 */
+}
+
+/* Lado a lado solo cuando caben intro (≥ 256) y 4 tarjetas de ≥ 150. A
+   1024 la grilla quedaría en ~577 px (tarjetas de ~130) y los títulos de
+   dos palabras se partirían en 3 líneas. */
+@media (min-width: 72rem) {
+	.oikos-topics__inner {
+		grid-template-columns: minmax(16rem, 1fr) minmax(0, 45rem);
+		column-gap: var(--spacing-8); /* 64 */
+		align-items: center;
+	}
+}
+
+/* Ancho medido: el título corta en 3 líneas ("Todo lo que puedes /
+   trabajar en un / proceso terapéutico") y el texto en 2. */
+.oikos-topics__intro {
+	max-inline-size: 19.5rem;
+}
+
+.oikos-topics__lead {
+	margin-top: var(--spacing-2); /* 16 */
+}
+
+/* ==========================================================================
+   Grilla: 2 columnas; 4 si las tarjetas miden ≥ 150
+   ========================================================================== */
+
+.oikos-topics__cards {
+	container-type: inline-size;
+}
+
+.oikos-topics__grid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: var(--topics-gap);
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+/* 4 × 150 + 3 × 24 = 672. */
+@container (min-width: 42rem) {
+	.oikos-topics__grid {
+		--topics-gap: var(--spacing-3); /* 24 */
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+	}
+}
+
+/* ==========================================================================
+   Celda y tarjeta
+   ========================================================================== */
+
+.oikos-topics__item {
+	/* Dirección de apertura: hacia la derecha (start) por defecto. */
+	--topics-clip: inset(0 50% 0 0 round var(--topics-radius));
+	--topics-shift: 0px;
+
+	position: relative;
+	z-index: 0;
+	aspect-ratio: 162 / 173;
+	border-radius: var(--topics-radius);
+	transition:
+		transform var(--transition-lift),
+		filter var(--transition-expand);
+}
+
+/* Última columna: se abre hacia la izquierda. La grilla se llena fila por
+   fila, así que nth-child dentro de cada query da la columna real con
+   cualquier cantidad de temas. */
+.oikos-topics__item:nth-child(2n) {
+	--topics-clip: inset(0 0 0 50% round var(--topics-radius));
+	/* Corre el contenido una celda: 50 % del contenido (2 celdas − 2 pad) + pad. */
+	--topics-shift: calc(50% + var(--topics-pad));
+}
+
+@container (min-width: 42rem) {
+	.oikos-topics__item:nth-child(2n) {
+		--topics-clip: inset(0 50% 0 0 round var(--topics-radius));
+		--topics-shift: 0px;
+	}
+
+	.oikos-topics__item:nth-child(4n) {
+		--topics-clip: inset(0 0 0 50% round var(--topics-radius));
+		--topics-shift: calc(50% + var(--topics-pad));
+	}
+}
+
+.oikos-topics__item:nth-child(2n) .oikos-topics__card {
+	inset-inline: auto 0;
+}
+
+@container (min-width: 42rem) {
+	.oikos-topics__item:nth-child(2n) .oikos-topics__card {
+		inset-inline: 0 auto;
+	}
+
+	.oikos-topics__item:nth-child(4n) .oikos-topics__card {
+		inset-inline: auto 0;
+	}
+}
+
+/* Siempre mide 2 celdas (sin el gap). min-height: si una descripción larga
+   no cabe, crece hacia abajo en vez de cortar texto. */
+.oikos-topics__card {
+	position: absolute;
+	top: 0;
+	inset-inline: 0 auto;
+	display: flex;
+	flex-direction: column;
+	width: 200%;
+	min-height: 100%;
+	/* Arriba 8: con título de 2 líneas y descripción de 3 la tarjeta abierta
+	   cabe en 173, como el Figma (allí el título queda a ~10 del borde). */
+	padding: var(--spacing-1) var(--topics-pad) var(--topics-pad);
+	border-radius: var(--topics-radius);
+	background-color: var(--color-brand-sand);
+	box-shadow: inset 0 0 0 1px transparent;
+	clip-path: var(--topics-clip);
+	/* En la última columna el contenido cerrado está corrido una celda hacia
+	   afuera: el clip-path lo oculta pero seguiría sumando desplazamiento
+	   horizontal a la página. */
+	overflow: clip;
+	transition:
+		clip-path var(--transition-expand),
+		box-shadow var(--transition-expand);
+}
+
+.oikos-topics__content {
+	position: relative; /* bloque de referencia del ::after del botón */
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	justify-content: flex-end;
+	transform: translateX(var(--topics-shift));
+	transition: transform var(--transition-expand);
+}
+
+/* Cerrado y abierto corta igual: al ancho de una celda. */
+.oikos-topics__title {
+	max-inline-size: calc(50% - var(--topics-pad));
+	margin: 0;
+	color: var(--color-text-primary);
+	font-family: var(--font-body);
+	font-size: var(--text-card-size);
+	font-weight: 500;
+	line-height: 1.5;
+	letter-spacing: 0;
+	/* Corte normal, como el Figma ("Relaciones de / pareja"); balance (h3
+	   global) daría "Relaciones / de pareja". */
+	text-wrap: wrap;
+}
+
+.oikos-topics__button {
+	display: block;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background: none;
+	color: inherit;
+	font: inherit;
+	letter-spacing: inherit;
+	text-align: start;
+	cursor: pointer;
+}
+
+/* Toda la tarjeta es el área de clic (incluido el padding). */
+.oikos-topics__button::after {
+	content: "";
+	position: absolute;
+	inset: calc(var(--spacing-1) * -1) calc(var(--topics-pad) * -1) calc(var(--topics-pad) * -1);
+}
+
+.oikos-topics__button:focus-visible {
+	outline: none;
+}
+
+/* Foco: cerrada, el anillo rodea la celda; abierta, la tarjeta completa
+   (el clip-path se abre 4 px para que el anillo no quede recortado). */
+.oikos-topics__item:not(.is-open):has(.oikos-topics__button:focus-visible) {
+	outline: 2px solid var(--color-interactive-primary);
+	outline-offset: 2px;
+}
+
+.oikos-topics__item.is-open:has(.oikos-topics__button:focus-visible) .oikos-topics__card {
+	outline: 2px solid var(--color-interactive-primary);
+	outline-offset: 2px;
+}
+
+/* Descripción: siempre en el HTML. Cerrada no ocupa alto (fila 0fr), es
+   transparente y visibility: hidden (fuera del árbol de accesibilidad y del
+   orden de tabulación); su ancho ya es el de la tarjeta abierta, así que no
+   se reacomoda al animar. */
+.oikos-topics__body {
+	display: grid;
+	grid-template-rows: 0fr;
+	margin-top: 0;
+	opacity: 0;
+	visibility: hidden;
+	color: var(--color-text-secondary);
+	transition:
+		grid-template-rows var(--transition-expand),
+		margin-top var(--transition-expand),
+		opacity var(--transition-fast),
+		visibility 0s linear var(--transition-expand);
+}
+
+.oikos-topics__body-inner {
+	min-height: 0;
+	overflow: hidden;
+	/* Aire para el anillo de foco del enlace, que si no lo recorta el overflow. */
+	margin: -0.25rem;
+	padding: 0.25rem;
+}
+
+.oikos-topics__text {
+	margin: 0;
+	font-size: var(--text-body-size);
+	line-height: 1.5;
+}
+
+/* Por encima del ::after del botón. */
+.oikos-topics__link {
+	position: relative;
+	z-index: 1;
+	display: inline-block;
+	margin-top: var(--spacing-1);
+	color: var(--color-text-primary);
+	font-weight: 500;
+	text-decoration: underline;
+	text-underline-offset: 0.2em;
+}
+
+.oikos-topics__link:hover {
+	text-decoration-thickness: 2px;
+}
+
+.oikos-topics__link:focus-visible {
+	outline: 2px solid var(--color-interactive-primary);
+	outline-offset: 2px;
+	border-radius: var(--radius-xs);
+}
+
+/* ==========================================================================
+   Abierta
+   ========================================================================== */
+
+.oikos-topics__item.is-closing {
+	z-index: 2;
+}
+
+.oikos-topics__item.is-open {
+	z-index: 3;
+	filter: var(--drop-shadow-lift);
+}
+
+.oikos-topics__item.is-open .oikos-topics__card {
+	/* Borde claro sutil (medido sobre la captura: crema translúcido). */
+	box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-surface-base) 55%, transparent);
+	clip-path: inset(-4px round calc(var(--topics-radius) + 4px));
+}
+
+.oikos-topics__item.is-open .oikos-topics__content {
+	transform: none;
+}
+
+.oikos-topics__item.is-open .oikos-topics__body {
+	grid-template-rows: 1fr;
+	margin-top: var(--spacing-2); /* 16 */
+	opacity: 1;
+	visibility: visible;
+	transition:
+		grid-template-rows var(--transition-expand),
+		margin-top var(--transition-expand),
+		opacity var(--transition-expand) 100ms,
+		visibility 0s;
+}
+
+/* Hover (solo mouse): elevación sutil; no abre. */
+@media (hover: hover) {
+	.oikos-topics__item:not(.is-open):not(.oikos-topics__item--static):hover {
+		transform: translateY(-4px);
+		filter: var(--drop-shadow-hover);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.oikos-topics__item:not(.is-open):hover {
+		transform: none;
+	}
+
+	/* Los hijos también: con la duración global de 0.01ms y transition-property
+	   "all" por defecto, animarían la visibility que heredan. */
+	.oikos-topics__body,
+	.oikos-topics__body *,
+	.oikos-topics__item.is-open .oikos-topics__body {
+		transition: none;
+	}
+}
+
+/* ==========================================================================
+   Sin JS: tarjetas estáticas con la descripción a la vista
+   ========================================================================== */
+
+@media (scripting: none) {
+	.oikos-topics__item {
+		aspect-ratio: auto;
+		min-height: 10.8125rem; /* 173 */
+	}
+
+	.oikos-topics__card,
+	.oikos-topics__item:nth-child(n) .oikos-topics__card {
+		position: relative;
+		inset: auto;
+		width: auto;
+		height: 100%;
+		padding-top: var(--topics-pad);
+		clip-path: none;
+	}
+
+	/* 2 columnas a cualquier ancho (en 4 la descripción quedaría en ~130 px). */
+	.oikos-topics__grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.oikos-topics__content {
+		justify-content: flex-start;
+		transform: none;
+	}
+
+	.oikos-topics__title {
+		max-inline-size: none;
+	}
+
+	.oikos-topics__body {
+		grid-template-rows: 1fr;
+		margin-top: var(--spacing-1);
+		opacity: 1;
+		visibility: visible;
+	}
+
+	.oikos-topics__text {
+		font-size: var(--text-body-size);
+	}
+}
+
+/* Móvil: la grilla de 2 columnas sin JS sería muy estrecha para leer. */
+@media (scripting: none) and (max-width: 47.9375rem) {
+	.oikos-topics__grid {
+		grid-template-columns: minmax(0, 1fr);
+	}
+}
