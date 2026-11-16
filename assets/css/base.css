@@ -42,6 +42,7 @@
 	--color-text-primary: #212121;
 	--color-text-secondary: #4b3a2f;
 	--color-interactive-primary: #2d5545;
+	--color-text-brand: var(--color-interactive-primary); /* color/text/brand (#2D5545) */
 	--color-interactive-secondary: #8e5325;
 	--color-content-inverse: #fbf5e9;
 	--color-surface-base: #fbf5e9;
@@ -84,6 +85,15 @@
 		var(--color-interactive-primary) 0%,
 		var(--color-brand-sage-strong) 100%
 	);
+
+	/* Fondo de "¿Por qué asistir a terapia?" (Figma: radial arena arriba a la
+	   derecha sobre crema). Figma apila las capas al revés que CSS: su
+	   linear-gradient sólido va debajo, como color de fondo. */
+	--gradient-benefits: radial-gradient(
+		65.15% 86.21% at 100% 0%,
+		var(--color-brand-sand) 0%,
+		var(--color-surface-base) 100%
+	), var(--color-surface-base);
 
 	/* Retroalimentación de formularios (deducidos; sin token en Figma).
 	   Error: 6.5:1 sobre surface/page y 6:1 sobre surface/base. */
@@ -158,6 +168,7 @@
 	--text-display-sm-size: clamp(2rem, 1.8108rem + 0.8073vw, 2.5rem); /* 32 → 40 — H1 de páginas internas (deducido) */
 	--text-card-size: clamp(1.125rem, 1.0777rem + 0.2018vw, 1.25rem); /* 18 → 20 */
 	--text-step-size: clamp(1.75rem, 1.277rem + 2.0182vw, 3rem);      /* 28 → 48 (deducido) */
+	--text-heading-lg-size: clamp(1.75rem, 1.277rem + 2.0182vw, 3rem); /* 28 → 48 — beneficios de "¿Por qué asistir?" (Figma: Typography/Heading…) */
 	--text-card-hero-size: clamp(1.25rem, 1.1554rem + 0.4036vw, 1.5rem);    /* 20 → 24 — tarjetas del hero */
 	--text-card-service-size: clamp(1.25rem, 1.1554rem + 0.4036vw, 1.5rem); /* 20 → 24 — tarjetas de acompañamiento */
 	--text-post-title-size: clamp(1.125rem, 1.0777rem + 0.2018vw, 1.25rem); /* 18 → 20 — título de tarjeta de entrada (deducido) */
@@ -173,6 +184,8 @@
 	--transition-indicator: 250ms ease;                      /* indicadores del slider (ancho y color) */
 	--transition-accordion: 250ms ease;                      /* apertura del acordeón y giro del chevron */
 	--transition-card-zoom: 450ms cubic-bezier(0, 0, 0.2, 1); /* ease-out: tarjeta de servicio (zoom de foto y descripción) */
+	--transition-color: 300ms ease;                          /* cambio de color de texto (beneficio activo) */
+	--transition-crossfade: 500ms ease;                      /* fundido cruzado de fotos */
 }
 
 /* Pantallas bajas (teléfono horizontal): menos aire sobre el header fijo. */
@@ -426,6 +439,16 @@ body {
 	font-weight: 500;
 	line-height: 1.1;
 	letter-spacing: -0.02em;
+}
+
+/* Título de beneficio (Figma: Typography/Heading…, Bricolage Medium
+   48 / 120 % / -2.5 %). */
+.oikos-text-heading-lg {
+	font-family: var(--font-heading);
+	font-size: var(--text-heading-lg-size);
+	font-weight: 500;
+	line-height: 1.2;
+	letter-spacing: -0.025em;
 }
 
 .oikos-text-eyebrow {

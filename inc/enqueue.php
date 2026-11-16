@@ -120,6 +120,12 @@ function oikos_template_assets() {
 			'condition' => static fn() => is_page_template( 'templates/servicios.php' ),
 			'css'       => 'css/services-carousel.css',
 		),
+		// "¿Por qué asistir a terapia?" (beneficios con foto que rota).
+		'oikos-benefits'      => array(
+			'condition' => static fn() => is_page_template( 'templates/servicios.php' ),
+			'css'       => 'css/benefits.css',
+			'js'        => 'js/benefits.js',
+		),
 		// Slider: se agregan aquí Nosotros, Contacto y testimonios al construirlos.
 		'oikos-slider'        => array(
 			'condition' => static fn() => ( is_front_page() && is_page() ) || is_page_template( 'templates/servicios.php' ),
