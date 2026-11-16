@@ -3,16 +3,18 @@
  *
  * - Clic, Enter o Espacio en un beneficio (es un <button>) lo activa: mueve
  *   .is-active y aria-current y hace el fundido a su foto (data-photo; si es
- *   la misma, no cambia nada). Elegir un beneficio detiene la rotación: el
- *   botón de pausa queda en "Reanudar" por si se quiere volver a activar.
+ *   la misma, no cambia nada). Elegir un beneficio detiene la rotación para
+ *   siempre (ya eligió).
  * - Rotación automática (data-autoplay, 2+ beneficios, sin movimiento
  *   reducido): un temporizador pasa al siguiente cada data-interval segundos
  *   (al final vuelve al primero). Al pausar guarda el tiempo restante y al
  *   reanudar sigue desde ahí. La línea de progreso es una animación CSS de la
  *   misma duración que se congela con la misma clase (.is-paused).
  *   Pausan: mouse encima, foco de teclado dentro y sección fuera de pantalla
- *   (IntersectionObserver). La pausa del usuario (botón o elección) quita
- *   .is-rotating: al reanudar, el beneficio activo empieza su tiempo de cero.
+ *   (IntersectionObserver); al salir sigue. Elegir un beneficio quita
+ *   .is-rotating (la línea desaparece).
+ * - Sin botón de pausa (pedido del cliente): WCAG 2.2.2 queda cubierto por
+ *   la pausa con hover/foco, la parada al elegir y prefers-reduced-motion.
  * - Sin aria-live: los cambios automáticos no se anuncian.
  */
 (() => {
@@ -24,7 +26,6 @@
 		const items = Array.from(root.querySelectorAll('.oikos-benefits__item'));
 		const buttons = items.map((item) => item.querySelector('.oikos-benefits__button'));
 		const photos = Array.from(root.querySelectorAll('[data-photo-index]'));
-		const toggle = root.querySelector('.oikos-benefits__toggle');
 
 		if (items.length < 2 || buttons.some((button) => !button)) {
 			return;
@@ -51,13 +52,13 @@
 
 		// --- Rotación ---------------------------------------------------------
 
-		const canRotate = root.hasAttribute('data-autoplay') && Boolean(toggle);
+		const canRotate = root.hasAttribute('data-autoplay');
 		const interval = Math.min(20, Math.max(4, Number(root.dataset.interval) || 7)) * 1000;
 		const pause = {
 			hover: false,
 			focus: false,
 			offscreen: 'IntersectionObserver' in window,
-			user: false,
+			chosen: false,
 		};
 
 		let timer = 0;
@@ -66,7 +67,7 @@
 
 		const enabled = () => canRotate && !reducedMotion.matches;
 		const paused = () => pause.hover || pause.focus || pause.offscreen;
-		const running = () => enabled() && !pause.user && !paused();
+		const running = () => enabled() && !pause.chosen && !paused();
 
 		// Detiene el temporizador y guarda cuánto le faltaba.
 		const freeze = () => {
@@ -92,20 +93,15 @@
 
 			freeze();
 
-			// Sin rotación (usuario o movimiento reducido), el próximo arranque
+			// Sin rotación (eligió o movimiento reducido), un arranque posterior
 			// empieza de cero, igual que la línea (se reinicia con .is-rotating).
-			if (!on || pause.user) {
+			if (!on || pause.chosen) {
 				remaining = interval;
 			}
 
-			root.classList.toggle('is-rotating', on && !pause.user);
+			root.classList.toggle('is-rotating', on && !pause.chosen);
 			root.classList.toggle('is-paused', paused());
 
-			if (toggle) {
-				toggle.hidden = !on;
-				toggle.dataset.state = pause.user ? 'paused' : 'playing';
-				toggle.setAttribute('aria-label', pause.user ? toggle.dataset.labelPlay : toggle.dataset.labelPause);
-			}
 
 			if (running()) {
 				startedAt = performance.now();
@@ -116,17 +112,12 @@
 		buttons.forEach((button, i) => {
 			button.addEventListener('click', () => {
 				show(i);
-				pause.user = true;
+				pause.chosen = true;
 				update();
 			});
 		});
 
 		if (canRotate) {
-			toggle.addEventListener('click', () => {
-				pause.user = !pause.user;
-				update();
-			});
-
 			// Solo el mouse pausa: en pantallas táctiles el "hover" emulado no termina nunca.
 			root.addEventListener('pointerenter', (event) => {
 				if (event.pointerType === 'mouse') {
@@ -141,8 +132,8 @@
 				}
 			});
 
-			// Solo el foco de teclado: un clic también enfoca el botón y dejaría
-			// la rotación pausada después de "Reanudar".
+			// Solo el foco de teclado: un clic también enfoca el botón del
+			// beneficio, y ese caso ya lo cubre la elección.
 			root.addEventListener('focusin', (event) => {
 				pause.focus = event.target.matches(':focus-visible');
 				update();

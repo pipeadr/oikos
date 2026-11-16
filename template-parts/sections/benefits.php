@@ -126,20 +126,6 @@ $oikos_title_id  = $oikos_id . '-titulo';
 				}
 				?>
 
-				<?php if ( $oikos_autoplay ) : ?>
-					<button
-						type="button"
-						class="oikos-benefits__toggle"
-						aria-controls="<?php echo esc_attr( $oikos_media_id ); ?>"
-						aria-label="<?php esc_attr_e( 'Pausar la rotación automática', 'oikos' ); ?>"
-						data-label-pause="<?php esc_attr_e( 'Pausar la rotación automática', 'oikos' ); ?>"
-						data-label-play="<?php esc_attr_e( 'Reanudar la rotación automática', 'oikos' ); ?>"
-						hidden
-					>
-						<?php oikos_the_icon( 'pause', 'oikos-benefits__icon-pause' ); ?>
-						<?php oikos_the_icon( 'play', 'oikos-benefits__icon-play' ); ?>
-					</button>
-				<?php endif; ?>
 			</div>
 		<?php endif; ?>
 
