@@ -219,6 +219,238 @@
             "placeholder": "",
             "prepend": "",
             "append": ""
+        },
+        {
+            "key": "field_oikos_servicios_tab_porque",
+            "label": "Por qué asistir",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_oikos_servicios_porque_titulo",
+            "label": "Título (H2)",
+            "name": "oikos_servicios_porque_titulo",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Se ve pequeño, como antetítulo, pero es el título de la sección. Si se deja vacío, la sección no se muestra.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "¿Por qué asistir a terapia?",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_oikos_servicios_porque_beneficios",
+            "label": "Beneficios",
+            "name": "oikos_servicios_porque_beneficios",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "Entre 2 y 6. Uno queda activo (título en verde) y la foto de la derecha muestra el suyo. Si un beneficio no tiene foto, se mantiene la del anterior.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "pagination": 0,
+            "min": 2,
+            "max": 6,
+            "collapsed": "field_oikos_servicios_porque_beneficios_titulo",
+            "button_label": "Agregar beneficio",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_oikos_servicios_porque_beneficios_titulo",
+                    "label": "Título",
+                    "name": "titulo",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 0,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_oikos_servicios_porque_beneficios"
+                },
+                {
+                    "key": "field_oikos_servicios_porque_beneficios_descripcion",
+                    "label": "Descripción",
+                    "name": "descripcion",
+                    "aria-label": "",
+                    "type": "textarea",
+                    "instructions": "Una frase corta (unos 120 caracteres).",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 0,
+                    "rows": 2,
+                    "placeholder": "",
+                    "new_lines": "",
+                    "parent_repeater": "field_oikos_servicios_porque_beneficios"
+                },
+                {
+                    "key": "field_oikos_servicios_porque_beneficios_imagen",
+                    "label": "Foto",
+                    "name": "imagen",
+                    "aria-label": "",
+                    "type": "image",
+                    "instructions": "Foto vertical en blanco y negro, de al menos 1046 × 1360 px. Se recorta a ese formato (4:5 en móvil) conservando el punto focal.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "id",
+                    "library": "all",
+                    "min_width": "",
+                    "min_height": "",
+                    "min_size": "",
+                    "max_width": "",
+                    "max_height": "",
+                    "max_size": "",
+                    "mime_types": "jpg,jpeg,png,webp,avif",
+                    "allow_in_bindings": 0,
+                    "preview_size": "medium",
+                    "parent_repeater": "field_oikos_servicios_porque_beneficios"
+                },
+                {
+                    "key": "field_oikos_servicios_porque_beneficios_foco_x",
+                    "label": "Punto focal horizontal",
+                    "name": "foco_x",
+                    "aria-label": "",
+                    "type": "range",
+                    "instructions": "Qué parte de la foto se conserva al recortar: 0 % = izquierda, 100 % = derecha.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": 50,
+                    "min": 0,
+                    "max": 100,
+                    "step": 5,
+                    "prepend": "",
+                    "append": "%",
+                    "allow_in_bindings": 0,
+                    "parent_repeater": "field_oikos_servicios_porque_beneficios"
+                },
+                {
+                    "key": "field_oikos_servicios_porque_beneficios_foco_y",
+                    "label": "Punto focal vertical",
+                    "name": "foco_y",
+                    "aria-label": "",
+                    "type": "range",
+                    "instructions": "0 % = arriba, 100 % = abajo.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": 50,
+                    "min": 0,
+                    "max": 100,
+                    "step": 5,
+                    "prepend": "",
+                    "append": "%",
+                    "allow_in_bindings": 0,
+                    "parent_repeater": "field_oikos_servicios_porque_beneficios"
+                }
+            ]
+        },
+        {
+            "key": "field_oikos_servicios_porque_rotacion",
+            "label": "Rotación automática",
+            "name": "oikos_servicios_porque_rotacion",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "Pasa solo al siguiente beneficio. Se pausa con el mouse encima o el foco dentro, se detiene cuando el visitante elige uno y nunca corre si el visitante pidió reducir el movimiento.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 1,
+            "allow_in_bindings": 0,
+            "ui": 1,
+            "ui_on_text": "Sí",
+            "ui_off_text": "No"
+        },
+        {
+            "key": "field_oikos_servicios_porque_intervalo",
+            "label": "Segundos por beneficio",
+            "name": "oikos_servicios_porque_intervalo",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_oikos_servicios_porque_rotacion",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": 7,
+            "min": 4,
+            "max": 20,
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "step": 1,
+            "prepend": "",
+            "append": "s"
         }
     ],
     "location": [
@@ -241,5 +473,5 @@
     "active": true,
     "description": "Contenido de la página general de servicios.",
     "show_in_rest": 0,
-    "modified": 1794900000
+    "modified": 1794853509
 }

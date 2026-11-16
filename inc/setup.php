@@ -46,6 +46,11 @@ function oikos_setup() {
 	add_image_size( 'oikos-square', 1100, 1100, true );    // 2× de la columna desktop (~523).
 	add_image_size( 'oikos-square-sm', 640, 640, true );   // tablet y móvil.
 
+	// Fotos verticales ("¿Por qué asistir a terapia?", 523 × 680 en desktop).
+	// Mismo recorte en ambos: el srcset solo mezcla archivos de igual proporción.
+	add_image_size( 'oikos-portrait', 1046, 1360, true );  // 2× de la columna desktop.
+	add_image_size( 'oikos-portrait-sm', 640, 832, true ); // tablet y móvil.
+
 	register_nav_menus(
 		array(
 			'primary'                => __( 'Menú principal', 'oikos' ),
