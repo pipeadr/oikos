@@ -250,6 +250,7 @@ Contraste AA, foco visible, navegación por teclado (menú móvil, acordeones, c
 - En GTM, las etiquetas de GA4 se disparan solo con el hostname de producción; en pre-producción se valida con el modo Vista previa.
 
 ## Forma de trabajo con Claude
+- **Responde siempre en español.**
 - **Primero plan, después código.** Para cada componente o página, proponer el plan (archivos, campos ACF, markup) y esperar aprobación.
 - **Un componente o sección por tarea.** Base del tema → tokens y tipografía → header/footer → componentes → páginas.
 - Al crear campos ACF, crearlos de forma que queden en `acf-json` y nombrarlos `oikos_<seccion>_<campo>`.
