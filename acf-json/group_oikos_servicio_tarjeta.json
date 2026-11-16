@@ -1,0 +1,116 @@
+{
+    "key": "group_oikos_servicio_tarjeta",
+    "title": "Tarjeta de servicio",
+    "fields": [
+        {
+            "key": "field_oikos_servicio_tarjeta_imagen",
+            "label": "Imagen de la tarjeta",
+            "name": "oikos_servicio_tarjeta_imagen",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "Foto horizontal de al menos 1200 × 700 px. En reposo la tarjeta muestra un acercamiento al punto focal; al pasar el mouse se ve la foto completa. Si se deja vacía, se usa la imagen destacada de la página.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "id",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "jpg,jpeg,png,webp,avif",
+            "allow_in_bindings": 0,
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_oikos_servicio_tarjeta_foco_x",
+            "label": "Punto focal horizontal",
+            "name": "oikos_servicio_tarjeta_foco_x",
+            "aria-label": "",
+            "type": "range",
+            "instructions": "Hacia dónde apunta el acercamiento y qué parte se conserva al recortar: 0 % = izquierda, 100 % = derecha.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": 50,
+            "min": 0,
+            "max": 100,
+            "step": 5,
+            "prepend": "",
+            "append": "%",
+            "allow_in_bindings": 0
+        },
+        {
+            "key": "field_oikos_servicio_tarjeta_foco_y",
+            "label": "Punto focal vertical",
+            "name": "oikos_servicio_tarjeta_foco_y",
+            "aria-label": "",
+            "type": "range",
+            "instructions": "0 % = arriba, 100 % = abajo.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": 50,
+            "min": 0,
+            "max": 100,
+            "step": 5,
+            "prepend": "",
+            "append": "%",
+            "allow_in_bindings": 0
+        },
+        {
+            "key": "field_oikos_servicio_tarjeta_descripcion",
+            "label": "Descripción",
+            "name": "oikos_servicio_tarjeta_descripcion",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "2 a 3 frases (unos 200 caracteres). En reposo se ve solo la primera línea; al pasar el mouse o enfocar la tarjeta, completa.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "rows": 3,
+            "placeholder": "",
+            "new_lines": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "oikos_service_page",
+                "operator": "==",
+                "value": "1"
+            }
+        ]
+    ],
+    "menu_order": 5,
+    "position": "side",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Tarjeta de la página en el carrusel de servicios (Servicios, Nosotros, Contacto).",
+    "show_in_rest": 0,
+    "modified": 1794900000
+}

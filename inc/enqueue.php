@@ -115,9 +115,14 @@ function oikos_template_assets() {
 			'condition' => static fn() => is_front_page() && is_page(),
 			'css'       => 'css/about.css',
 		),
-		// Slider: se agregan aquí Servicios, Nosotros, Contacto y testimonios al construirlos.
+		// Carrusel de servicios: se agregan aquí Nosotros y Contacto al construirlos.
+		'oikos-services-carousel' => array(
+			'condition' => static fn() => is_page_template( 'templates/servicios.php' ),
+			'css'       => 'css/services-carousel.css',
+		),
+		// Slider: se agregan aquí Nosotros, Contacto y testimonios al construirlos.
 		'oikos-slider'        => array(
-			'condition' => static fn() => is_front_page() && is_page(),
+			'condition' => static fn() => ( is_front_page() && is_page() ) || is_page_template( 'templates/servicios.php' ),
 			'css'       => 'css/slider.css',
 			'js'        => 'js/slider.js',
 		),

@@ -104,6 +104,121 @@
             },
             "return_format": "array",
             "allow_in_bindings": 0
+        },
+        {
+            "key": "field_oikos_servicios_tab_acompanamientos",
+            "label": "Acompañamientos",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_oikos_servicios_acompanamientos_titulo",
+            "label": "Título",
+            "name": "oikos_servicios_acompanamientos_titulo",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Sin título no se muestra la sección.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_oikos_servicios_acompanamientos_texto",
+            "label": "Texto",
+            "name": "oikos_servicios_acompanamientos_texto",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "rows": 3,
+            "placeholder": "",
+            "new_lines": "br"
+        },
+        {
+            "key": "field_oikos_servicios_acompanamientos_servicios",
+            "label": "Servicios del carrusel",
+            "name": "oikos_servicios_acompanamientos_servicios",
+            "aria-label": "",
+            "type": "relationship",
+            "instructions": "Elige y ordena las terapias (páginas hijas de Servicios). Si se deja vacío, se muestran todas en el orden de páginas. Este orden se usa en todos los carruseles de servicios (Servicios, Nosotros, Contacto). La foto y la descripción de cada tarjeta se editan en la página de cada terapia → \"Tarjeta de servicio\".",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "page"
+            ],
+            "post_status": [
+                "publish"
+            ],
+            "taxonomy": "",
+            "filters": [
+                "search"
+            ],
+            "return_format": "id",
+            "min": "",
+            "max": "",
+            "allow_in_bindings": 0,
+            "elements": [
+                "featured_image"
+            ],
+            "bidirectional": 0,
+            "bidirectional_target": []
+        },
+        {
+            "key": "field_oikos_servicios_acompanamientos_boton_texto",
+            "label": "Texto del botón de las tarjetas",
+            "name": "oikos_servicios_acompanamientos_boton_texto",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Lleva al enlace del CTA global \"Agenda tu cita\" (Oikos — Global). Vale para todos los carruseles de servicios.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Pide tu cita",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
         }
     ],
     "location": [
@@ -126,5 +241,5 @@
     "active": true,
     "description": "Contenido de la página general de servicios.",
     "show_in_rest": 0,
-    "modified": 1794800000
+    "modified": 1794900000
 }

@@ -30,7 +30,18 @@ get_template_part(
 	)
 );
 
-// Aquí irán las demás secciones (acompañamientos, por qué asistir a terapia…).
+// Acompañamientos: carrusel de servicios. Las tarjetas salen de oikos_get_service_cards().
+get_template_part(
+	'template-parts/sections/services-carousel',
+	null,
+	array(
+		'title'          => (string) oikos_field( 'oikos_servicios_acompanamientos_titulo', $oikos_page_id ),
+		'text'           => (string) oikos_field( 'oikos_servicios_acompanamientos_texto', $oikos_page_id ),
+		'track_location' => 'carrusel-servicios',
+	)
+);
+
+// Aquí irán las demás secciones (por qué asistir a terapia…).
 
 // Preguntas frecuentes (grupo ACF "Preguntas frecuentes" de la página) + bloque WhatsApp.
 oikos_the_faq_section( 'faq-servicios', $oikos_page_id );
