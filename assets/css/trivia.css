@@ -1,0 +1,404 @@
+/**
+ * Oikos — Trivia "Mitos y verdades" (template-parts/sections/trivia.php).
+ *
+ * .oikos-trivia                         sección (.is-ready cuando el JS armó el mazo)
+ *   __inner                             intro | juego (apilado < 1024)
+ *     __intro > __eyebrow + __heading
+ *     __game
+ *       __deck                          sin JS: lista · con JS: todas las cartas en una celda
+ *         __card                        estados: .is-active · .is-queued (--depth 1…4) ·
+ *                                       .is-waiting · .is-gone (ya jugada)
+ *                                       respuesta: .is-answered + .is-correct | .is-incorrect
+ *           __face--question            __meta (__count + __timer) · __statement · __choices
+ *           __face--answer              __timeout · __verdict · __explanation · __next
+ *         __card--final                 azul: __final-title · __explanation · __actions
+ *
+ * Mazo (deducido, sin medida en el diseño): cada carta en espera se corre
+ * --trivia-deck-step a la derecha y se encoge 4 % de alto; se ven máximo 4.
+ * El cambio de --depth anima solo: al avanzar, la siguiente "sube" a su lugar.
+ *
+ * Pregunta → respuesta: fundido con cambio de color (no flip en Y). El giro
+ * mostraría el texto en espejo a mitad de camino, necesita perspectiva (que
+ * deforma la carta en 375 px) y movería el foco dentro de un elemento que
+ * rota. El fundido deja la carta quieta en el mazo y degrada a instantáneo.
+ *
+ * Las caras y las cartas comparten celda de grilla: el mazo mide lo que la
+ * carta más alta y nada salta al cambiar de estado.
+ */
+
+.oikos-trivia {
+	--trivia-deck-step: clamp(0.375rem, 0.2331rem + 0.6054vw, 0.75rem); /* 6 → 12 (deducido) */
+	--trivia-deck-visible: 4;
+	--trivia-card-max: 32.5rem; /* 520 (deducido) */
+	--trivia-bg: var(--color-surface-base); /* fondo de la carta: lo usa el anillo de foco */
+
+	padding-block: var(--space-section);
+	overflow-x: clip; /* la carta que sale se desliza fuera del contenedor */
+	color: var(--color-text-primary);
+}
+
+.oikos-trivia [hidden] {
+	display: none;
+}
+
+/* ==========================================================================
+   Disposición: texto | juego desde 1024; apilado y centrado por debajo
+   ========================================================================== */
+
+.oikos-trivia__inner {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	justify-items: center;
+	row-gap: var(--spacing-5); /* 40 */
+}
+
+.oikos-trivia__intro {
+	max-inline-size: 36rem;
+	text-align: center;
+}
+
+.oikos-trivia__eyebrow {
+	margin-bottom: var(--spacing-1);
+	color: var(--color-interactive-secondary);
+}
+
+.oikos-trivia__game {
+	width: 100%;
+	max-width: calc(var(--trivia-card-max) + var(--trivia-deck-visible) * var(--trivia-deck-step));
+}
+
+@media (min-width: 64rem) {
+	.oikos-trivia__inner {
+		/* Texto a 345 px (como el carrusel de servicios) y el juego en el resto. */
+		grid-template-columns: minmax(0, 21.5625rem) minmax(0, 1fr);
+		column-gap: var(--spacing-8); /* 64 */
+		align-items: start; /* sin JS la lista es larga: el título queda arriba */
+		justify-items: start;
+	}
+
+	.oikos-trivia.is-ready .oikos-trivia__inner {
+		align-items: center;
+	}
+
+	.oikos-trivia__intro {
+		text-align: start;
+	}
+
+	.oikos-trivia__game {
+		justify-self: end;
+	}
+}
+
+/* ==========================================================================
+   Sin JS: lista de afirmaciones con su respuesta y explicación
+   ========================================================================== */
+
+.oikos-trivia__deck {
+	display: grid;
+	gap: var(--spacing-2);
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.oikos-trivia__card {
+	padding: var(--card-padding);
+	border-radius: var(--radius-lg);
+	background-color: var(--trivia-bg);
+	box-shadow: inset 0 0 0 1px var(--color-border-default);
+}
+
+.oikos-trivia__face {
+	display: flex;
+	flex-direction: column;
+	gap: var(--spacing-1);
+}
+
+.oikos-trivia__statement {
+	font-family: var(--font-body);
+	font-size: var(--text-card-size);
+	font-weight: 500;
+	line-height: 1.4;
+	letter-spacing: 0;
+}
+
+.oikos-trivia__face--answer {
+	margin-top: var(--spacing-1);
+}
+
+.oikos-trivia__verdict {
+	font-family: var(--font-body);
+	font-size: var(--text-small-size);
+	font-weight: 600;
+	line-height: 1.4;
+	color: var(--color-interactive-secondary);
+}
+
+.oikos-trivia__explanation {
+	font-size: var(--text-body-size);
+	line-height: 1.5;
+	color: var(--color-text-secondary);
+}
+
+/* Títulos que reciben foco por script: no son interactivos, sin anillo. */
+.oikos-trivia__statement:focus,
+.oikos-trivia__verdict:focus {
+	outline: 0;
+}
+
+/* ==========================================================================
+   Con JS: mazo
+
+   Visibilidad: aparecer es inmediato (visibility 0s) y desaparecer espera al
+   fundido (los estados ocultos ponen --trivia-hide-delay = --duration-deck;
+   solo cambian la variable, así la regla de movimiento reducido gana). Así el JS puede mover el foco a la cara o carta nueva en el mismo
+   instante en que cambia el estado.
+   ========================================================================== */
+
+.oikos-trivia.is-ready .oikos-trivia__deck {
+	grid-template-areas: "card";
+	gap: 0;
+	padding-inline-end: calc(var(--trivia-deck-visible) * var(--trivia-deck-step));
+}
+
+.oikos-trivia.is-ready .oikos-trivia__card {
+	--depth: 0;
+	--trivia-card-transition:
+		transform var(--transition-deck),
+		opacity var(--transition-deck),
+		background-color var(--transition-deck),
+		color var(--transition-deck);
+
+	container-type: inline-size;
+	position: relative;
+	z-index: calc(10 - var(--depth));
+	display: grid;
+	grid-area: card;
+	grid-template-areas: "face";
+	min-height: 20rem;
+	padding: var(--spacing-3); /* 24 */
+	box-shadow: var(--shadow-float);
+	transform:
+		translateX(calc(var(--depth) * var(--trivia-deck-step)))
+		scaleY(calc(1 - var(--depth) * 0.04));
+	transition: var(--trivia-card-transition), visibility 0s var(--trivia-hide-delay, 0s);
+}
+
+@media (min-width: 48rem) {
+	.oikos-trivia.is-ready .oikos-trivia__card {
+		min-height: 22rem;
+		padding: var(--spacing-4); /* 32 */
+	}
+}
+
+/* Cartas en espera: arena y sin sombra. */
+.oikos-trivia.is-ready .oikos-trivia__card.is-queued {
+	--trivia-bg: var(--color-brand-sand);
+
+	box-shadow: none;
+}
+
+/* Fuera del mazo visible (más de 4 detrás, carta final antes de tiempo). */
+.oikos-trivia.is-ready .oikos-trivia__card.is-waiting {
+	--depth: var(--trivia-deck-visible);
+}
+
+/* Ya jugada: sale hacia la izquierda con fundido, por encima de la que sube. */
+.oikos-trivia.is-ready .oikos-trivia__card.is-gone {
+	z-index: 11;
+	transform: translateX(-40%);
+}
+
+.oikos-trivia.is-ready .oikos-trivia__card:is(.is-waiting, .is-gone) {
+	--trivia-hide-delay: var(--duration-deck);
+
+	visibility: hidden;
+	opacity: 0;
+}
+
+/* Caras: comparten celda; solo cambian opacidad y visibilidad. */
+.oikos-trivia.is-ready .oikos-trivia__face {
+	grid-area: face;
+	min-width: 0;
+	transition: opacity var(--transition-deck), visibility 0s var(--trivia-hide-delay, 0s);
+}
+
+/* Contenido oculto (fuera del árbol de accesibilidad): cartas en espera y
+   la cara que no corresponde al estado de la carta. */
+.oikos-trivia.is-ready .oikos-trivia__card:is(.is-queued, .is-waiting) > .oikos-trivia__face,
+.oikos-trivia.is-ready .oikos-trivia__card:not(.is-answered) > .oikos-trivia__face--answer,
+.oikos-trivia.is-ready .oikos-trivia__card.is-answered > .oikos-trivia__face--question {
+	--trivia-hide-delay: var(--duration-deck);
+
+	visibility: hidden;
+	opacity: 0;
+}
+
+/* Reinicio: las preguntas vuelven al mazo sin animar (la carta final sí sale). */
+.oikos-trivia.is-resetting .oikos-trivia__card:not(.oikos-trivia__card--final),
+.oikos-trivia.is-resetting .oikos-trivia__card:not(.oikos-trivia__card--final) > .oikos-trivia__face {
+	transition: none;
+}
+
+/* ---------- Cara de pregunta ---------- */
+
+.oikos-trivia.is-ready .oikos-trivia__face--question {
+	gap: var(--spacing-3);
+}
+
+.oikos-trivia__meta {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--spacing-2);
+	font-family: var(--font-body);
+	font-size: var(--text-small-size);
+	font-weight: 500;
+	line-height: 1.4;
+}
+
+.oikos-trivia__count {
+	color: var(--color-text-secondary);
+}
+
+.oikos-trivia__timer {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.25rem;
+	color: var(--color-interactive-secondary); /* acento del reloj (deducido) */
+	font-variant-numeric: tabular-nums;
+	transition: color var(--transition-color);
+}
+
+.oikos-trivia__clock {
+	width: 1.25rem;
+	height: 1.25rem;
+}
+
+/* Últimos 5 segundos: cambio de color y peso, sin parpadeo. */
+.oikos-trivia__timer.is-ending {
+	color: var(--color-trivia-incorrect);
+	font-weight: 700;
+}
+
+.oikos-trivia.is-ready .oikos-trivia__statement {
+	flex: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding-block: var(--spacing-2);
+	text-align: center;
+}
+
+.oikos-trivia__choices {
+	display: flex;
+	justify-content: center;
+	gap: var(--spacing-2);
+}
+
+.oikos-trivia__choice {
+	flex: 1 1 0;
+	min-width: 0;
+	max-width: 10rem;
+}
+
+/* Tarjeta muy angosta: Verdad y Mito apilados a ancho completo. */
+@container (max-width: 16rem) {
+	.oikos-trivia__choices {
+		flex-direction: column;
+	}
+
+	.oikos-trivia__choice {
+		max-width: none;
+	}
+}
+
+/* ---------- Cara de respuesta y carta final ---------- */
+
+.oikos-trivia.is-ready .oikos-trivia__face--answer,
+.oikos-trivia.is-ready .oikos-trivia__card--final > .oikos-trivia__face {
+	align-items: center;
+	justify-content: center;
+	gap: var(--spacing-2);
+	margin-top: 0;
+	text-align: center;
+}
+
+.oikos-trivia.is-ready .oikos-trivia__card:is(.is-answered, .oikos-trivia__card--final) {
+	color: var(--color-content-inverse);
+}
+
+.oikos-trivia.is-ready .oikos-trivia__card.is-correct {
+	--trivia-bg: var(--color-trivia-correct);
+}
+
+.oikos-trivia.is-ready .oikos-trivia__card.is-incorrect {
+	--trivia-bg: var(--color-trivia-incorrect);
+}
+
+.oikos-trivia.is-ready .oikos-trivia__card--final {
+	--trivia-bg: var(--color-trivia-final);
+}
+
+.oikos-trivia__timeout {
+	font-family: var(--font-body);
+	font-size: var(--text-small-size);
+	font-weight: 500;
+	line-height: 1.4;
+}
+
+.oikos-trivia.is-ready .oikos-trivia__verdict {
+	font-family: var(--font-heading);
+	font-size: var(--text-heading-size);
+	font-weight: 500;
+	line-height: 1.25;
+	letter-spacing: -0.015em;
+	color: inherit;
+}
+
+.oikos-trivia.is-ready :is(.oikos-trivia__face--answer, .oikos-trivia__card--final) .oikos-trivia__explanation {
+	max-inline-size: 26rem;
+	color: inherit;
+}
+
+.oikos-trivia__next,
+.oikos-trivia__actions {
+	margin-top: var(--spacing-1);
+}
+
+.oikos-trivia__actions {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: var(--spacing-2);
+}
+
+/* Anillo de foco sobre fondos de color: crema por fuera, fondo de la carta en medio. */
+.oikos-trivia.is-ready .oikos-trivia__card:is(.is-answered, .oikos-trivia__card--final) .oikos-btn:focus-visible {
+	box-shadow:
+		0 0 0 2px var(--trivia-bg),
+		0 0 0 4px var(--color-content-inverse);
+}
+
+@media (max-width: 47.9375rem) { /* < 768 */
+	.oikos-trivia__actions {
+		flex-direction: column;
+		align-self: stretch;
+	}
+
+	.oikos-trivia__actions .oikos-btn {
+		width: 100%;
+	}
+}
+
+/* ==========================================================================
+   Movimiento reducido: cambios instantáneos
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+	.oikos-trivia.is-ready .oikos-trivia__card,
+	.oikos-trivia.is-ready .oikos-trivia__face,
+	.oikos-trivia__timer {
+		transition: none;
+	}
+}

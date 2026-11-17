@@ -103,6 +103,12 @@
 		var(--color-surface-base) 100%
 	);
 
+	/* Trivia "Mitos y verdades" (medidos en la captura de estados). Texto
+	   content/inverse encima: rojo 11.7:1, verde 6.3:1, azul 8.4:1. */
+	--color-trivia-incorrect: #67110a; /* respuesta fallada o tiempo agotado */
+	--color-trivia-correct: #2d671c;   /* respuesta acertada */
+	--color-trivia-final: #1b478a;     /* tarjeta final */
+
 	/* Retroalimentación de formularios (deducidos; sin token en Figma).
 	   Error: 6.5:1 sobre surface/page y 6:1 sobre surface/base. */
 	--color-feedback-error: #b3261e;
@@ -200,6 +206,8 @@
 	--transition-color: 300ms ease;                          /* cambio de color de texto (beneficio activo) */
 	--transition-crossfade: 500ms ease;                      /* fundido cruzado de fotos */
 	--transition-expand: 350ms cubic-bezier(0, 0, 0.2, 1);   /* ease-out: tarjeta de tema que se abre a doble ancho */
+	--duration-deck: 400ms;                                  /* cartas de la trivia: también retrasa el visibility al ocultar */
+	--transition-deck: var(--duration-deck) cubic-bezier(0, 0, 0.2, 1); /* ease-out: cartas de la trivia (respuesta y mazo) */
 }
 
 /* Pantallas bajas (teléfono horizontal): menos aire sobre el header fijo. */
