@@ -10,12 +10,16 @@
  *         __title                    estilo Step (.oikos-text-step)
  *         __text                     Body
  *
- * Disposiciones: --layout-split (intro a la izquierda, pasos a la derecha).
- * Las nuevas se agregan como --layout-<nombre> sin tocar la base.
- * Fondos: --bg-none (hereda el del contenedor), --bg-cream, --bg-white.
+ * Disposiciones: --layout-split (intro a la izquierda, pasos a la derecha) y
+ * --layout-rows (título centrado; cada paso es una fila: __head con número +
+ * título | descripción). Las nuevas se agregan como --layout-<nombre> sin
+ * tocar la base.
+ * Fondos: --bg-none (hereda el del contenedor), --bg-cream, --bg-white,
+ * --bg-muted (gris, color/feedback/surface/base).
  *
- * Todo el texto va en text/primary: sobre fondos sage (degradado del inicio)
- * text/secondary no llega a AA.
+ * En split todo el texto va en text/primary: sobre fondos sage (degradado del
+ * inicio) text/secondary no llega a AA. En rows (fondo gris claro) la
+ * descripción va en text/secondary (≈ 9:1).
  */
 
 /* ==========================================================================
@@ -32,6 +36,10 @@
 
 .oikos-steps--bg-white {
 	background-color: var(--color-surface-page);
+}
+
+.oikos-steps--bg-muted {
+	background-color: var(--color-surface-muted);
 }
 
 .oikos-steps__intro {
@@ -159,5 +167,84 @@
 
 	.oikos-steps--layout-split .oikos-steps__cta {
 		margin-left: 0;
+	}
+}
+
+/* ==========================================================================
+   Disposición: rows (Servicios, "Cómo iniciar tu proceso paso a paso")
+   Título centrado; cada paso es una fila con dos columnas iguales:
+   número + título (__head) | descripción. Columnas por container query
+   sobre la lista: si la columna del título es angosta, el paso se apila.
+   ========================================================================== */
+
+.oikos-steps.oikos-steps--layout-rows {
+	/* Medido en la captura del Figma (el panel dice 32/48, pero los marcos
+	   internos suman ~16 más): 48 arriba y 64 abajo → 510 de alto en 1366. */
+	padding-block: var(--spacing-6) var(--spacing-8);
+}
+
+.oikos-steps--layout-rows .oikos-steps__inner {
+	display: flex;
+	flex-direction: column;
+	gap: var(--spacing-6); /* 48, medido en la captura */
+}
+
+.oikos-steps--layout-rows .oikos-steps__intro {
+	align-items: center;
+	text-align: center;
+}
+
+.oikos-steps--layout-rows .oikos-steps__body {
+	align-items: center; /* botón opcional centrado bajo la lista */
+}
+
+.oikos-steps--layout-rows .oikos-steps__list {
+	container-type: inline-size;
+	gap: var(--spacing-4); /* 32 */
+	width: 100%;
+}
+
+.oikos-steps--layout-rows .oikos-steps__item {
+	grid-template-columns: minmax(0, 1fr);
+	grid-template-areas:
+		"head"
+		"text";
+	gap: var(--spacing-2); /* 16 */
+}
+
+.oikos-steps__head {
+	grid-area: head;
+	display: flex;
+	align-items: center; /* el número queda centrado con el título (1 o 2 líneas) */
+	gap: var(--spacing-2); /* 16: título en x ≈ 162 en 1366, como el Figma */
+	min-width: 0;
+}
+
+.oikos-steps--layout-rows .oikos-steps__number {
+	flex: none;
+	padding-top: 0;
+}
+
+.oikos-steps--layout-rows .oikos-steps__title {
+	min-width: 0;
+	max-width: none;
+	line-height: 1.25; /* medido en la captura; Step (Inicio) sigue en 110 % */
+	text-wrap: wrap; /* corta como el Figma: "Creamos las bases de / nuestro encuentro" */
+}
+
+.oikos-steps--layout-rows .oikos-steps__text {
+	max-width: 36rem; /* apilado en tablet: líneas de lectura razonables */
+	margin-top: 0;
+	color: var(--color-text-secondary);
+}
+
+/* Dos columnas solo si el título más largo ("Creamos las bases de nuestro
+   encuentro") cabe en 2 líneas en su mitad: medido, desde ~58rem de lista
+   (viewport ≈ 1050). A 1024 quedaba en 3 líneas, así que ahí se apila. */
+@container (min-width: 60rem) {
+	.oikos-steps--layout-rows .oikos-steps__item {
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+		grid-template-areas: "head text";
+		column-gap: var(--spacing-9); /* 72: la descripción arranca a mitad (x ≈ 719 en 1366) */
 	}
 }

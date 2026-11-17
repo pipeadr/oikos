@@ -123,6 +123,31 @@ get_template_part(
 	)
 );
 
+// Cómo iniciar tu proceso paso a paso: componente de pasos en filas. Título vacío → sin sección.
+$oikos_steps = array();
+foreach ( (array) oikos_field( 'oikos_servicios_pasos_lista', $oikos_page_id, array() ) as $oikos_row ) {
+	$oikos_steps[] = array(
+		'title' => $oikos_row['titulo'] ?? '',
+		'text'  => $oikos_row['texto'] ?? '',
+	);
+}
+
+get_template_part(
+	'template-parts/sections/steps',
+	null,
+	array(
+		'layout'         => 'rows',
+		'background'     => 'muted',
+		'title'          => (string) oikos_field( 'oikos_servicios_pasos_titulo', $oikos_page_id ),
+		'heading_level'  => 2,
+		'steps'          => $oikos_steps,
+		// Botón opcional: vacío → sin botón (no cae al CTA global).
+		'link'           => oikos_field( 'oikos_servicios_pasos_boton', $oikos_page_id, array() ),
+		'track'          => 'agenda-cita',
+		'track_location' => 'servicios-pasos',
+	)
+);
+
 // Preguntas frecuentes (grupo ACF "Preguntas frecuentes" de la página) + bloque WhatsApp.
 oikos_the_faq_section( 'faq-servicios', $oikos_page_id );
 
