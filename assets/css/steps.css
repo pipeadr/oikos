@@ -178,14 +178,15 @@
    ========================================================================== */
 
 .oikos-steps.oikos-steps--layout-rows {
-	/* Figma: spacing/4 arriba y spacing/6 abajo (banda más compacta). */
-	padding-block: var(--spacing-4) var(--spacing-6);
+	/* Medido en la captura del Figma (el panel dice 32/48, pero los marcos
+	   internos suman ~16 más): 48 arriba y 64 abajo → 510 de alto en 1366. */
+	padding-block: var(--spacing-6) var(--spacing-8);
 }
 
 .oikos-steps--layout-rows .oikos-steps__inner {
 	display: flex;
 	flex-direction: column;
-	gap: var(--spacing-4); /* 32 */
+	gap: var(--spacing-6); /* 48, medido en la captura */
 }
 
 .oikos-steps--layout-rows .oikos-steps__intro {
@@ -227,6 +228,7 @@
 .oikos-steps--layout-rows .oikos-steps__title {
 	min-width: 0;
 	max-width: none;
+	line-height: 1.25; /* medido en la captura; Step (Inicio) sigue en 110 % */
 	text-wrap: wrap; /* corta como el Figma: "Creamos las bases de / nuestro encuentro" */
 }
 
