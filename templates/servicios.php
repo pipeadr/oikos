@@ -69,7 +69,29 @@ get_template_part(
 	)
 );
 
-// Aquí irán las demás secciones (temas de trabajo, trivia…).
+// Todo lo que puedes trabajar en un proceso terapéutico. Título vacío → sin sección.
+$oikos_topics = array();
+foreach ( (array) oikos_field( 'oikos_servicios_temas_lista', $oikos_page_id, array() ) as $oikos_row ) {
+	$oikos_topics[] = array(
+		'title' => $oikos_row['titulo'] ?? '',
+		'text'  => $oikos_row['descripcion'] ?? '',
+		'link'  => $oikos_row['enlace'] ?? array(),
+	);
+}
+
+get_template_part(
+	'template-parts/sections/topics',
+	null,
+	array(
+		'id'             => 'temas',
+		'title'          => (string) oikos_field( 'oikos_servicios_temas_titulo', $oikos_page_id ),
+		'text'           => (string) oikos_field( 'oikos_servicios_temas_texto', $oikos_page_id ),
+		'items'          => $oikos_topics,
+		'track_location' => 'temas-servicios',
+	)
+);
+
+// Aquí irá la trivia "Mitos y verdades".
 
 // Preguntas frecuentes (grupo ACF "Preguntas frecuentes" de la página) + bloque WhatsApp.
 oikos_the_faq_section( 'faq-servicios', $oikos_page_id );

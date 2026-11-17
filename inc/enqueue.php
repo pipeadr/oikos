@@ -126,6 +126,12 @@ function oikos_template_assets() {
 			'css'       => 'css/benefits.css',
 			'js'        => 'js/benefits.js',
 		),
+		// "Todo lo que puedes trabajar…" (grilla de temas que se abren).
+		'oikos-topics'        => array(
+			'condition' => static fn() => is_page_template( 'templates/servicios.php' ),
+			'css'       => 'css/topics.css',
+			'js'        => 'js/topics.js',
+		),
 		// Slider: se agregan aquí Nosotros, Contacto y testimonios al construirlos.
 		'oikos-slider'        => array(
 			'condition' => static fn() => ( is_front_page() && is_page() ) || is_page_template( 'templates/servicios.php' ),
