@@ -836,6 +836,130 @@
             "placeholder": "",
             "prepend": "",
             "append": ""
+        },
+        {
+            "key": "field_oikos_servicios_tab_pasos",
+            "label": "Pasos",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_oikos_servicios_pasos_titulo",
+            "label": "Título (H2)",
+            "name": "oikos_servicios_pasos_titulo",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Si se deja vacío, la sección no se muestra.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Cómo iniciar tu proceso paso a paso",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_oikos_servicios_pasos_lista",
+            "label": "Pasos",
+            "name": "oikos_servicios_pasos_lista",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "Entre 2 y 6, en orden. El número (01, 02…) lo pone el tema.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "pagination": 0,
+            "min": 2,
+            "max": 6,
+            "collapsed": "field_oikos_servicios_pasos_lista_titulo",
+            "button_label": "Agregar paso",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_oikos_servicios_pasos_lista_titulo",
+                    "label": "Título del paso",
+                    "name": "titulo",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 0,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_oikos_servicios_pasos_lista"
+                },
+                {
+                    "key": "field_oikos_servicios_pasos_lista_texto",
+                    "label": "Descripción",
+                    "name": "texto",
+                    "aria-label": "",
+                    "type": "textarea",
+                    "instructions": "Una o dos frases cortas.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 0,
+                    "rows": 3,
+                    "placeholder": "",
+                    "new_lines": "",
+                    "parent_repeater": "field_oikos_servicios_pasos_lista"
+                }
+            ]
+        },
+        {
+            "key": "field_oikos_servicios_pasos_boton",
+            "label": "Botón (opcional)",
+            "name": "oikos_servicios_pasos_boton",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "Si se deja vacío, la sección no lleva botón.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "allow_in_bindings": 0
         }
     ],
     "location": [
@@ -858,5 +982,5 @@
     "active": true,
     "description": "Contenido de la página general de servicios.",
     "show_in_rest": 0,
-    "modified": 1794874042
+    "modified": 1794875620
 }

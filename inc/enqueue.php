@@ -102,9 +102,9 @@ function oikos_template_assets() {
 			'condition' => static fn() => is_front_page() && is_page(),
 			'css'       => 'css/media-text.css',
 		),
-		// Pasos: se agregan aquí Servicios y la plantilla Servicio al construirlas.
+		// Pasos: Inicio (split) y Servicios general (rows). La plantilla Servicio se agrega al construirla.
 		'oikos-steps'         => array(
-			'condition' => static fn() => is_front_page() && is_page(),
+			'condition' => static fn() => ( is_front_page() && is_page() ) || is_page_template( 'templates/servicios.php' ),
 			'css'       => 'css/steps.css',
 		),
 		'oikos-service-cards' => array(
