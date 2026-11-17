@@ -6,11 +6,13 @@
  * No lee ACF: la plantilla le pasa los datos por $args.
  *
  * Args:
- * - layout         (string) Disposición. Hoy: 'split' (intro a la izquierda,
- *                           pasos a la derecha). Para agregar otra: sumarla a
+ * - layout         (string) Disposición. 'split' (intro a la izquierda, pasos
+ *                           a la derecha; Inicio) | 'rows' (título centrado y
+ *                           una fila por paso: número + título | descripción;
+ *                           Servicios). Para agregar otra: sumarla a
  *                           $oikos_layouts y estilar .oikos-steps--layout-<nombre>.
  * - background     (string) 'none' (transparente, hereda el fondo del
- *                           contenedor) | 'cream' | 'white'.
+ *                           contenedor) | 'cream' | 'white' | 'muted' (gris).
  * - eyebrow        (string) Antetítulo opcional.
  * - title          (string) Título (obligatorio junto con al menos un paso).
  * - heading_level  (int)    2–4. Los títulos de paso van un nivel más abajo.
@@ -60,14 +62,17 @@ if ( '' === $oikos_title || ! $oikos_steps ) {
 }
 
 // Disposiciones disponibles (la primera es la de respaldo).
-$oikos_layouts = array( 'split' );
+$oikos_layouts = array( 'split', 'rows' );
 $oikos_layout  = in_array( $oikos_args['layout'], $oikos_layouts, true ) ? $oikos_args['layout'] : $oikos_layouts[0];
 
-$oikos_bg       = in_array( $oikos_args['background'], array( 'none', 'cream', 'white' ), true ) ? $oikos_args['background'] : 'none';
+$oikos_bg       = in_array( $oikos_args['background'], array( 'none', 'cream', 'white', 'muted' ), true ) ? $oikos_args['background'] : 'none';
 $oikos_variant  = 'secondary' === $oikos_args['button_variant'] ? 'secondary' : 'primary';
 $oikos_level    = min( 4, max( 2, (int) $oikos_args['heading_level'] ) );
 $oikos_link     = is_array( $oikos_args['link'] ) ? $oikos_args['link'] : array();
 $oikos_title_id = wp_unique_id( 'oikos-steps-' );
+
+// En 'rows' número y título van juntos en una celda (el número se centra con el título).
+$oikos_group_head = 'rows' === $oikos_layout;
 
 $oikos_classes = sprintf(
 	'oikos-section oikos-steps oikos-steps--layout-%1$s oikos-steps--bg-%2$s',
@@ -96,6 +101,9 @@ $oikos_classes = sprintf(
 			<ol class="oikos-steps__list">
 				<?php foreach ( $oikos_steps as $oikos_index => $oikos_step ) : ?>
 					<li class="oikos-steps__item">
+						<?php if ( $oikos_group_head ) : ?>
+							<div class="oikos-steps__head">
+						<?php endif; ?>
 						<span class="oikos-steps__number oikos-text-eyebrow" aria-hidden="true"><?php echo esc_html( sprintf( '%02d', $oikos_index + 1 ) ); ?></span>
 
 						<?php
@@ -105,6 +113,9 @@ $oikos_classes = sprintf(
 							esc_html( $oikos_step['title'] )
 						);
 						?>
+						<?php if ( $oikos_group_head ) : ?>
+							</div>
+						<?php endif; ?>
 
 						<?php if ( '' !== $oikos_step['text'] ) : ?>
 							<p class="oikos-steps__text oikos-text-body"><?php echo nl2br( esc_html( $oikos_step['text'] ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escapado con esc_html(). ?></p>

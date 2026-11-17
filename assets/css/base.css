@@ -47,6 +47,7 @@
 	--color-content-inverse: #fbf5e9;
 	--color-surface-base: #fbf5e9;
 	--color-surface-page: #ffffff; /* Por confirmar como token en Figma. */
+	--color-surface-muted: #eaeaea; /* color/feedback/surface/base — banda "Cómo iniciar" de Servicios */
 	--color-border-default: rgb(33 33 33 / 0.16);
 
 	/* Color — marca, sin rol confirmado */
