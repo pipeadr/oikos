@@ -91,7 +91,37 @@ get_template_part(
 	)
 );
 
-// Aquí irá la trivia "Mitos y verdades".
+// Trivia "Mitos y verdades". Título vacío o menos de 2 preguntas → sin sección.
+$oikos_trivia_items = array();
+foreach ( (array) oikos_field( 'oikos_servicios_trivia_preguntas', $oikos_page_id, array() ) as $oikos_row ) {
+	$oikos_trivia_items[] = array(
+		'statement'   => $oikos_row['afirmacion'] ?? '',
+		'answer'      => $oikos_row['respuesta'] ?? '',
+		'explanation' => $oikos_row['explicacion'] ?? '',
+	);
+}
+
+// Segundos: oikos_field() trata 0 como vacío; aquí 0 = sin temporizador.
+// null = la página nunca se guardó con el campo → 20 (valor por defecto).
+$oikos_trivia_seconds = function_exists( 'get_field' ) ? get_field( 'oikos_servicios_trivia_segundos', $oikos_page_id ) : null;
+
+get_template_part(
+	'template-parts/sections/trivia',
+	null,
+	array(
+		'id'             => 'trivia',
+		'eyebrow'        => (string) oikos_field( 'oikos_servicios_trivia_eyebrow', $oikos_page_id ),
+		'title'          => (string) oikos_field( 'oikos_servicios_trivia_titulo', $oikos_page_id ),
+		'seconds'        => null === $oikos_trivia_seconds || '' === $oikos_trivia_seconds ? 20 : (int) $oikos_trivia_seconds,
+		'items'          => $oikos_trivia_items,
+		'final'          => array(
+			'title'        => (string) oikos_field( 'oikos_servicios_trivia_final_titulo', $oikos_page_id ),
+			'text'         => (string) oikos_field( 'oikos_servicios_trivia_final_texto', $oikos_page_id ),
+			'restart_text' => (string) oikos_field( 'oikos_servicios_trivia_final_repetir', $oikos_page_id ),
+		),
+		'track_location' => 'trivia',
+	)
+);
 
 // Preguntas frecuentes (grupo ACF "Preguntas frecuentes" de la página) + bloque WhatsApp.
 oikos_the_faq_section( 'faq-servicios', $oikos_page_id );

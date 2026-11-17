@@ -132,6 +132,12 @@ function oikos_template_assets() {
 			'css'       => 'css/topics.css',
 			'js'        => 'js/topics.js',
 		),
+		// Trivia "Mitos y verdades".
+		'oikos-trivia'        => array(
+			'condition' => static fn() => is_page_template( 'templates/servicios.php' ),
+			'css'       => 'css/trivia.css',
+			'js'        => 'js/trivia.js',
+		),
 		// Slider: se agregan aquí Nosotros, Contacto y testimonios al construirlos.
 		'oikos-slider'        => array(
 			'condition' => static fn() => ( is_front_page() && is_page() ) || is_page_template( 'templates/servicios.php' ),
