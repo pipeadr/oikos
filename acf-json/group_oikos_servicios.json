@@ -597,6 +597,245 @@
                     "parent_repeater": "field_oikos_servicios_temas_lista"
                 }
             ]
+        },
+        {
+            "key": "field_oikos_servicios_tab_trivia",
+            "label": "Trivia",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_oikos_servicios_trivia_eyebrow",
+            "label": "Eyebrow",
+            "name": "oikos_servicios_trivia_eyebrow",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Texto pequeño sobre el título.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Trivia",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_oikos_servicios_trivia_titulo",
+            "label": "Título (H2)",
+            "name": "oikos_servicios_trivia_titulo",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Si se deja vacío, la sección no se muestra.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Mitos y verdades de la terapia psicológica",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_oikos_servicios_trivia_segundos",
+            "label": "Segundos por pregunta",
+            "name": "oikos_servicios_trivia_segundos",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "0 = sin temporizador (se oculta el reloj). El tiempo empieza a correr cuando la trivia aparece en pantalla; si se acaba, la respuesta cuenta como incorrecta.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": 20,
+            "min": 0,
+            "max": 60,
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "step": 1,
+            "prepend": "",
+            "append": "s"
+        },
+        {
+            "key": "field_oikos_servicios_trivia_preguntas",
+            "label": "Preguntas",
+            "name": "oikos_servicios_trivia_preguntas",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "Entre 2 y 12, en el orden en que se juegan. Todas se publican en la página (también para buscadores).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "pagination": 0,
+            "min": 2,
+            "max": 12,
+            "collapsed": "field_oikos_servicios_trivia_preguntas_afirmacion",
+            "button_label": "Agregar pregunta",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_oikos_servicios_trivia_preguntas_afirmacion",
+                    "label": "Afirmación",
+                    "name": "afirmacion",
+                    "aria-label": "",
+                    "type": "textarea",
+                    "instructions": "Sin comillas: el tema las agrega.",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 0,
+                    "rows": 2,
+                    "placeholder": "",
+                    "new_lines": "",
+                    "parent_repeater": "field_oikos_servicios_trivia_preguntas"
+                },
+                {
+                    "key": "field_oikos_servicios_trivia_preguntas_respuesta",
+                    "label": "Respuesta correcta",
+                    "name": "respuesta",
+                    "aria-label": "",
+                    "type": "button_group",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "verdad": "Verdad",
+                        "mito": "Mito"
+                    },
+                    "default_value": "mito",
+                    "return_format": "value",
+                    "allow_null": 0,
+                    "allow_in_bindings": 0,
+                    "layout": "horizontal",
+                    "parent_repeater": "field_oikos_servicios_trivia_preguntas"
+                },
+                {
+                    "key": "field_oikos_servicios_trivia_preguntas_explicacion",
+                    "label": "Explicación",
+                    "name": "explicacion",
+                    "aria-label": "",
+                    "type": "textarea",
+                    "instructions": "Se muestra al responder. Hasta unos 220 caracteres para que quepa en la tarjeta.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 0,
+                    "rows": 3,
+                    "placeholder": "",
+                    "new_lines": "",
+                    "parent_repeater": "field_oikos_servicios_trivia_preguntas"
+                }
+            ]
+        },
+        {
+            "key": "field_oikos_servicios_trivia_final_titulo",
+            "label": "Tarjeta final: título",
+            "name": "oikos_servicios_trivia_final_titulo",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Vacío → \"¡Has finalizado!\".",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "¡Has finalizado!",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_oikos_servicios_trivia_final_texto",
+            "label": "Tarjeta final: texto",
+            "name": "oikos_servicios_trivia_final_texto",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Completaste las preguntas de la trivia; mientras tanto nosotros nos estaremos preparando para cuando sientas que todo está claro para ti.",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "rows": 3,
+            "placeholder": "",
+            "new_lines": ""
+        },
+        {
+            "key": "field_oikos_servicios_trivia_final_repetir",
+            "label": "Tarjeta final: texto del botón de repetir",
+            "name": "oikos_servicios_trivia_final_repetir",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Vacío → \"Repite la trivia\". El otro botón es el CTA global \"Agenda tu cita\".",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Repite la trivia",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
         }
     ],
     "location": [
@@ -619,5 +858,5 @@
     "active": true,
     "description": "Contenido de la página general de servicios.",
     "show_in_rest": 0,
-    "modified": 1794859778
+    "modified": 1794874042
 }
