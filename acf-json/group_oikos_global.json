@@ -322,7 +322,7 @@
                     },
                     "default_value": "",
                     "allow_in_bindings": 0,
-                    "placeholder": "https://",
+                    "placeholder": "https:\/\/",
                     "parent_repeater": "field_oikos_global_redes"
                 }
             ]
@@ -619,6 +619,70 @@
             "ui_off_text": "No"
         },
         {
+            "key": "field_oikos_global_tab_badges",
+            "label": "Badges",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_oikos_global_badges",
+            "label": "Badges",
+            "name": "oikos_global_badges",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "Hasta 3 frases cortas en tarjetas arena (por ejemplo, \"Un espacio 100% confidencial, seguro y sin juicios.\"). Se usan en todas las páginas que muestran badges, salvo las que tengan los suyos.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "pagination": 0,
+            "min": 0,
+            "max": 3,
+            "collapsed": "field_oikos_global_badges_texto",
+            "button_label": "Agregar badge",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_oikos_global_badges_texto",
+                    "label": "Texto",
+                    "name": "texto",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "Frase corta (≈ 60 caracteres): cabe en dos líneas de la tarjeta.",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": 90,
+                    "allow_in_bindings": 0,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_oikos_global_badges"
+                }
+            ]
+        },
+        {
             "key": "field_oikos_global_tab_analitica",
             "label": "Analítica",
             "name": "",
@@ -676,5 +740,5 @@
     "active": true,
     "description": "Ajustes globales del sitio Oikos.",
     "show_in_rest": 0,
-    "modified": 1794787200
+    "modified": 1795388464
 }

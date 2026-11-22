@@ -294,6 +294,345 @@
                     "parent_repeater": "field_oikos_servicio_temas_lista"
                 }
             ]
+        },
+        {
+            "key": "field_oikos_servicio_tab_sesion",
+            "label": "Así funciona",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_oikos_servicio_sesion_titulo",
+            "label": "Título (H2)",
+            "name": "oikos_servicio_sesion_titulo",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Encierra entre asteriscos la parte que va en negrita, por ejemplo: Así funciona una sesión de *terapia de pareja* en Oikos. Si se deja vacío, la sección no se muestra.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_oikos_servicio_sesion_pasos",
+            "label": "Pasos",
+            "name": "oikos_servicio_sesion_pasos",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "Entre 2 y 6 (el diseño usa 3). Se numeran solos (01, 02, 03) y se muestran en columnas de 3; en móvil, uno debajo del otro.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "pagination": 0,
+            "min": 2,
+            "max": 6,
+            "collapsed": "field_oikos_servicio_sesion_pasos_titulo",
+            "button_label": "Agregar paso",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_oikos_servicio_sesion_pasos_titulo",
+                    "label": "Título",
+                    "name": "titulo",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 0,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_oikos_servicio_sesion_pasos"
+                },
+                {
+                    "key": "field_oikos_servicio_sesion_pasos_texto",
+                    "label": "Descripción",
+                    "name": "texto",
+                    "aria-label": "",
+                    "type": "textarea",
+                    "instructions": "Una o dos frases.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 0,
+                    "rows": 3,
+                    "placeholder": "",
+                    "new_lines": "",
+                    "parent_repeater": "field_oikos_servicio_sesion_pasos"
+                }
+            ]
+        },
+        {
+            "key": "field_oikos_servicio_tab_badges",
+            "label": "Badges",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_oikos_servicio_badges_lista",
+            "label": "Badges propios",
+            "name": "oikos_servicio_badges_lista",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "Hasta 3. Se muestran debajo de los pasos. Si se deja vacío, se usan los badges de Oikos — Global (pestaña Badges).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "pagination": 0,
+            "min": 0,
+            "max": 3,
+            "collapsed": "field_oikos_servicio_badges_lista_texto",
+            "button_label": "Agregar badge",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_oikos_servicio_badges_lista_texto",
+                    "label": "Texto",
+                    "name": "texto",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "Frase corta (≈ 60 caracteres): cabe en dos líneas de la tarjeta.",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": 90,
+                    "allow_in_bindings": 0,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_oikos_servicio_badges_lista"
+                }
+            ]
+        },
+        {
+            "key": "field_oikos_servicio_tab_psicologos",
+            "label": "Psicólogos",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_oikos_servicio_psicologos_imagen",
+            "label": "Foto",
+            "name": "oikos_servicio_psicologos_imagen",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "Foto vertical de al menos 1046 × 1360 px. Se muestra en blanco y negro aunque se suba a color, a la derecha del texto (arriba en móvil). El texto alternativo se edita en la biblioteca de medios.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "id",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "jpg,jpeg,png,webp,avif",
+            "allow_in_bindings": 0,
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_oikos_servicio_psicologos_titulo",
+            "label": "Título (H2)",
+            "name": "oikos_servicio_psicologos_titulo",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Cada salto de línea se respeta desde tablet (en móvil el título se reparte solo). Si se deja vacío, la sección no se muestra.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "rows": 2,
+            "placeholder": "",
+            "new_lines": ""
+        },
+        {
+            "key": "field_oikos_servicio_psicologos_texto",
+            "label": "Texto",
+            "name": "oikos_servicio_psicologos_texto",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Una línea en blanco separa párrafos.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "rows": 5,
+            "placeholder": "",
+            "new_lines": ""
+        },
+        {
+            "key": "field_oikos_servicio_tab_blog",
+            "label": "Blog",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_oikos_servicio_blog_titulo",
+            "label": "Título (H2)",
+            "name": "oikos_servicio_blog_titulo",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Si se deja vacío, la sección no se muestra.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_oikos_servicio_blog_categoria",
+            "label": "Categoría a priorizar",
+            "name": "oikos_servicio_blog_categoria",
+            "aria-label": "",
+            "type": "taxonomy",
+            "instructions": "Se muestran primero las entradas de esta categoría y se completa con las más recientes. Si se deja vacía, se usa la categoría con el mismo nombre que la página (por ejemplo, \"Terapia de pareja\").",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "category",
+            "add_term": 0,
+            "save_terms": 0,
+            "load_terms": 0,
+            "return_format": "id",
+            "field_type": "select",
+            "allow_null": 1,
+            "allow_in_bindings": 0,
+            "bidirectional": 0,
+            "multiple": 0,
+            "bidirectional_target": []
+        },
+        {
+            "key": "field_oikos_servicio_blog_boton",
+            "label": "Botón",
+            "name": "oikos_servicio_blog_boton",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "Si se deja vacío, el botón dice \"Explora el blog\" y lleva a la página del blog.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "allow_in_bindings": 0
         }
     ],
     "location": [
@@ -301,7 +640,7 @@
             {
                 "param": "page_template",
                 "operator": "==",
-                "value": "templates/servicio.php"
+                "value": "templates\/servicio.php"
             }
         ]
     ],
@@ -316,5 +655,5 @@
     "active": true,
     "description": "Contenido de las páginas de terapia (plantilla Servicio). La tarjeta del carrusel está en el grupo \"Tarjeta de servicio\".",
     "show_in_rest": 0,
-    "modified": 1795387004
+    "modified": 1795388464
 }
