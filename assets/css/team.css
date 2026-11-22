@@ -27,6 +27,7 @@
 }
 
 .oikos-team__inner {
+	container: oikos-team / inline-size; /* la grilla consulta este ancho */
 	display: flex;
 	flex-direction: column;
 	gap: var(--team-gap);
@@ -49,7 +50,6 @@
    ========================================================================== */
 
 .oikos-team__list {
-	container-type: inline-size;
 	display: grid;
 	grid-template-columns: minmax(0, 1fr);
 	gap: var(--team-gap);
@@ -59,14 +59,14 @@
 }
 
 /* 2 columnas si cada tarjeta mide al menos 20rem (2 × 320 + 32). */
-@container (min-width: 42rem) {
+@container oikos-team (min-width: 42rem) {
 	.oikos-team__list {
 		grid-template-columns: repeat(2, minmax(0, 1fr));
 	}
 }
 
 .oikos-team__item {
-	container-type: inline-size;
+	container: oikos-team-card / inline-size; /* la tarjeta consulta este ancho */
 	display: flex;
 	min-width: 0;
 }
@@ -90,7 +90,7 @@
 	isolation: isolate;
 }
 
-@container (max-width: 25rem) {
+@container oikos-team-card (max-width: 25rem) {
 	.oikos-team-card {
 		--team-inset: var(--spacing-2); /* 16 */
 		--team-ratio: 2 / 3;
