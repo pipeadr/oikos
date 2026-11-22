@@ -15,6 +15,10 @@ defined( 'ABSPATH' ) || exit;
 
 $oikos_page_id = get_queried_object_id();
 
+// Preguntas frecuentes + bloque WhatsApp: se renderizan antes del <head> para
+// que el schema FAQPage dependa de la sección real. Se imprimen al final.
+oikos_prepare_faq_section( 'faq-servicios', $oikos_page_id );
+
 get_header();
 
 // Hero foto + texto. Título vacío → título de la página; botón vacío → CTA global.
@@ -162,7 +166,7 @@ get_template_part(
 	)
 );
 
-// Preguntas frecuentes (grupo ACF "Preguntas frecuentes" de la página) + bloque WhatsApp.
-oikos_the_faq_section( 'faq-servicios', $oikos_page_id );
+// Preguntas frecuentes + bloque WhatsApp (preparadas antes de get_header()).
+oikos_the_faq_section();
 
 get_footer();
