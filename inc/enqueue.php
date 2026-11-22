@@ -97,6 +97,11 @@ function oikos_template_assets() {
 			'condition' => static fn() => is_page_template( 'templates/servicios.php' ),
 			'css'       => 'css/hero-split.css',
 		),
+		// Hero foto B/N de fondo con texto a la derecha: plantilla Servicio.
+		'oikos-hero-backdrop' => array(
+			'condition' => static fn() => is_page_template( 'templates/servicio.php' ),
+			'css'       => 'css/hero-backdrop.css',
+		),
 		// Foto + texto: se agregan aquí Nosotros, Servicios y El método al construirlas.
 		'oikos-media-text'    => array(
 			'condition' => static fn() => is_front_page() && is_page(),
@@ -131,9 +136,9 @@ function oikos_template_assets() {
 			'css'       => 'css/benefits.css',
 			'js'        => 'js/benefits.js',
 		),
-		// "Todo lo que puedes trabajar…" (grilla de temas que se abren).
+		// Grilla de temas que se abren: Servicios general (4 columnas) y Servicio (3).
 		'oikos-topics'        => array(
-			'condition' => static fn() => is_page_template( 'templates/servicios.php' ),
+			'condition' => static fn() => is_page_template( array( 'templates/servicios.php', 'templates/servicio.php' ) ),
 			'css'       => 'css/topics.css',
 			'js'        => 'js/topics.js',
 		),
