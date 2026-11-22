@@ -1,0 +1,142 @@
+/**
+ * Oikos — Tarjetas de equipo ("Los profesionales que te acompañan…").
+ *
+ * .oikos-team                        sección (con .oikos-section)
+ *   __heading                        Heading; __break = salto manual (≥ 768)
+ *   __list > __item                  grilla (container query): 1 → 2 columnas
+ *     .oikos-team-card               foto que cubre + recuadro abajo
+ *       __media > __img              foto absoluta, object-fit: cover
+ *       __panel                      recuadro café translúcido
+ *         __name                     Card hero en arena (texto grande, ≥ 3:1)
+ *         __bio                      Body en content/inverse
+ *   __action                         botón centrado
+ *
+ * Medidas del Figma (1366): tarjetas 538 × 673 (4:5), gap 32; recuadro a 32
+ * de los bordes con padding 32. La tarjeta no lleva overflow: así el
+ * aspect-ratio es un alto mínimo y crece si el texto no cabe.
+ * Tarjeta angosta (< 25rem: móvil y las 2 columnas de 768) → 2:3 y márgenes
+ * de 16, para que el recuadro no tape la cara.
+ */
+
+.oikos-team {
+	--team-gap: var(--spacing-4); /* 32 */
+
+	padding-block: min(var(--space-section), var(--spacing-8)); /* 48 → 64 */
+	background-color: var(--color-surface-page);
+	color: var(--color-text-primary);
+}
+
+.oikos-team__inner {
+	display: flex;
+	flex-direction: column;
+	gap: var(--team-gap);
+}
+
+.oikos-team__heading {
+	margin: 0;
+}
+
+/* El corte manual del título solo desde tablet: en móvil el texto se
+   reparte solo (balance global). */
+@media (max-width: 47.9375rem) {
+	.oikos-team__break {
+		display: none;
+	}
+}
+
+/* ==========================================================================
+   Grilla
+   ========================================================================== */
+
+.oikos-team__list {
+	container-type: inline-size;
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: var(--team-gap);
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+/* 2 columnas si cada tarjeta mide al menos 20rem (2 × 320 + 32). */
+@container (min-width: 42rem) {
+	.oikos-team__list {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+.oikos-team__item {
+	container-type: inline-size;
+	display: flex;
+	min-width: 0;
+}
+
+/* ==========================================================================
+   Tarjeta
+   ========================================================================== */
+
+.oikos-team-card {
+	--team-inset: var(--spacing-4); /* 32 */
+	--team-ratio: 4 / 5;
+
+	position: relative;
+	display: grid;
+	align-content: end;
+	inline-size: 100%;
+	aspect-ratio: var(--team-ratio);
+	padding: var(--team-inset);
+	border-radius: var(--radius-lg);
+	background-color: var(--color-brand-sand);
+	isolation: isolate;
+}
+
+@container (max-width: 25rem) {
+	.oikos-team-card {
+		--team-inset: var(--spacing-2); /* 16 */
+		--team-ratio: 2 / 3;
+	}
+}
+
+.oikos-team-card__media {
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	overflow: hidden;
+	border-radius: inherit;
+}
+
+.oikos-team-card__img {
+	inline-size: 100%;
+	block-size: 100%;
+	object-fit: cover;
+	object-position: 50% 30%;
+}
+
+.oikos-team-card__panel {
+	display: grid;
+	gap: var(--spacing-1); /* 8 */
+	padding: var(--team-inset);
+	border-radius: var(--radius-lg);
+	background-color: var(--color-surface-overlay);
+	-webkit-backdrop-filter: blur(16px);
+	backdrop-filter: blur(16px);
+}
+
+.oikos-team-card__name {
+	margin: 0;
+	color: var(--color-brand-sand);
+}
+
+.oikos-team-card__bio {
+	margin: 0;
+	color: var(--color-content-inverse);
+}
+
+/* ==========================================================================
+   Botón
+   ========================================================================== */
+
+.oikos-team__action {
+	display: flex;
+	justify-content: center;
+}

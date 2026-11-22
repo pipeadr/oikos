@@ -120,6 +120,11 @@ function oikos_template_assets() {
 			'condition' => static fn() => is_page_template( 'templates/servicios.php' ),
 			'css'       => 'css/services-carousel.css',
 		),
+		// Tarjetas de equipo: se agregan aquí Nosotros y la plantilla Servicio al construirlas.
+		'oikos-team'          => array(
+			'condition' => static fn() => is_page_template( 'templates/servicios.php' ),
+			'css'       => 'css/team.css',
+		),
 		// "¿Por qué asistir a terapia?" (beneficios con foto que rota).
 		'oikos-benefits'      => array(
 			'condition' => static fn() => is_page_template( 'templates/servicios.php' ),
