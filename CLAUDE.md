@@ -257,8 +257,16 @@ Las 3 páginas de terapia (pareja, individual, familiar) usan **la misma plantil
   - Servicios: `Service`.
   - **No imprimir JSON-LD suelto que duplique a Yoast.** Yoast ya genera `WebSite`, `WebPage`, `Organization`, `Article`/`BlogPosting`, `BreadcrumbList` y `Person` para autores. El tema agrega o ajusta piezas (`Psychologist`/`LocalBusiness`, `FAQPage`, `Service`, coautores del CPT `equipo`) usando los filtros de la API de schema de Yoast, para que todo quede en un solo grafo conectado.
   - Autores del equipo (`inc/schema.php`): con `oikos_entrada_autores` lleno, `Article.author` y `WebPage.author` apuntan a un `Person` por miembro (`@id` `/#/schema/person/equipo-{ID}`, con `jobTitle`, `description`, `image` y `worksFor` si el sitio es organización) y Yoast deja de generar el `Person` del usuario de WP. Filtro `oikos_schema_team_person` para agregar `sameAs`.
-  - Secciones de equipo (`oikos_schema_graph_page_team`, prioridad 15): en páginas que muestran tarjetas de equipo, un `Person` por miembro con el **mismo `@id`** que como autor del blog (misma entidad, sin duplicar) y `WebPage.mentions` → esos `Person`. Los miembros salen de `oikos_page_team_members()`. En local Yoast no imprime el JSON-LD en la página (hay otro plugin de schema activo); se prueba generando el grafo con `YoastSEO()->meta->for_current_page()->schema` desde un script PHP.
+  - Secciones de equipo (`oikos_schema_graph_page_team`, prioridad 15): en páginas que muestran tarjetas de equipo, un `Person` por miembro con el **mismo `@id`** que como autor del blog (misma entidad, sin duplicar) y `WebPage.mentions` → esos `Person`. Los miembros salen de `oikos_page_team_members()`.
   - Breadcrumbs: usar `yoast_breadcrumb()` con el markup del diseño.
+- **Schema por página** (campo ACF "Datos estructurados" `oikos_schema_modo`, grupo `group_oikos_schema`, barra lateral de páginas y entradas; helpers en `inc/schema.php`: `oikos_schema_mode()`, `oikos_schema_context_id()`):
+  - `auto` **Automático** (por defecto; vacío o inválido también cuenta como automático, así que las páginas anteriores al campo no necesitan migración): tema + Yoast, como siempre.
+  - `auto_plugin` **Automático + plugin**: igual en el código. El plugin "Schema & Structured Data for WP & AMP" solo agrega tipos que nadie más genera (Course, Event, VideoObject, HowTo…), con la ubicación limitada a esa página; va en un `<script>` aparte, fuera del grafo de Yoast.
+  - `plugin` **Solo plugin**: `oikos_schema_disable_yoast_output()` devuelve `false` en el filtro oficial `wpseo_json_ld_output` solo en esa vista (nunca en el admin, donde Yoast también lo evalúa). Como el tema no imprime JSON-LD propio, desaparece todo: FAQPage, Person, Service, coautores. Título, descripción, canónica y Open Graph de Yoast siguen funcionando. Sin schema asignado en el plugin, la página queda sin datos estructurados.
+  - La página del blog (`home.php`) usa el campo de la página de entradas; archivos, búsquedas y 404 siempre son automáticos.
+  - **En el plugin nunca crear** Article/BlogPosting, FAQ, Organization/LocalBusiness/MedicalBusiness, Person, WebPage/WebSite ni BreadcrumbList, ni usar sus bloques FAQ/How-to en páginas con FAQ del tema.
+  - **Configuración obligatoria del plugin en cada entorno** (vive en la base de datos, no viaja por git): Compatibility → "Yoast SEO Plugin" **desmarcado** (marcado apaga el JSON-LD de Yoast en todo el sitio vía `wpseo_json_ld_output`); Global → Knowledge Graph → "Data Type" = "Select an item" (si no, imprime su propia Organization en el Inicio); Global → General Settings → "Author", "Website Schema (HomePage)", "BreadCrumbs" y "Archive" desmarcados; Advanced → "Defragment Schema Markup" desmarcado (recomendado también "Default VideoObject Schema").
+  - Verificación: contar los `<script type="application/ld+json">` del código fuente por clase (`yoast-schema-graph` / `saswp-schema-markup-output`) y sus `@type`/`@id`. En local Yoast no imprime canonical porque el sitio está en noindex ("Disuadir a los motores de búsqueda"); es igual en todos los modos.
 - Imágenes: `alt` desde la biblioteca de medios, tamaños registrados + `srcset`, WebP, `loading="lazy"` excepto la imagen LCP (hero), que lleva `fetchpriority="high"`.
 - Mapa de Contacto: no cargar Google Maps en el render inicial (fachada/imagen estática que carga el iframe al interactuar).
 - Enlazado interno: servicios ↔ entradas del blog de su categoría.
@@ -302,5 +310,7 @@ Contraste AA, foco visible, navegación por teclado (menú móvil, acordeones, c
 - [ ] Desmarcar "Disuadir a los motores de búsqueda" (Ajustes → Lectura).
 - [ ] Quitar la contraseña del sitio.
 - [ ] Revisar en Yoast que ninguna página importante esté en noindex.
+- [ ] Yoast → Ajustes → Representación del sitio: nombre y logo de la organización (sin ellos Yoast no genera la `Organization` y los `Person` del equipo no llevan `worksFor`).
+- [ ] Plugin "Schema & Structured Data": configuración de convivencia (ver SEO → Schema por página).
 - [ ] Enviar el sitemap a Search Console.
 - [ ] Confirmar en GTM que la condición de hostname apunta al dominio final y publicar.
