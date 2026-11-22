@@ -5,6 +5,13 @@
  * El tema nunca imprime JSON-LD suelto: modifica el grafo de Yoast con sus
  * filtros para que todo quede en un solo @graph conectado.
  *
+ * Modo por página (campo ACF "Datos estructurados", oikos_schema_modo):
+ * - auto (por defecto) y auto_plugin: tema + Yoast. En auto_plugin el plugin
+ *   "Schema & Structured Data" solo agrega tipos extra (Course, Event…).
+ * - plugin: sin JSON-LD de Yoast ni del tema en esa página (todo lo del tema
+ *   va dentro del grafo de Yoast). El resto de Yoast (título, descripción,
+ *   canónica, Open Graph) sigue igual.
+ *
  * Autores del blog (CPT equipo):
  * - Si la entrada tiene autores en el campo ACF "Autores", el Article apunta
  *   a un Person por cada miembro del equipo (@id estable por ID del CPT).
@@ -23,6 +30,83 @@
  */
 
 defined( 'ABSPATH' ) || exit;
+
+/* ==========================================================================
+   Modo de datos estructurados por página
+   ========================================================================== */
+
+/**
+ * Modos permitidos del campo "Datos estructurados" (el primero es el de respaldo).
+ *
+ * @return string[]
+ */
+function oikos_schema_modes() {
+	return array( 'auto', 'auto_plugin', 'plugin' );
+}
+
+/**
+ * Página o entrada cuyo modo rige la vista actual.
+ *
+ * La página del blog (home.php) usa el campo de la página de entradas.
+ * Archivos, búsquedas y 404 no tienen campo: siempre automático.
+ *
+ * @return int 0 si la vista no tiene campo.
+ */
+function oikos_schema_context_id() {
+	if ( is_singular( array( 'page', 'post' ) ) ) {
+		return (int) get_queried_object_id();
+	}
+
+	if ( is_home() ) {
+		return (int) get_option( 'page_for_posts' );
+	}
+
+	return 0;
+}
+
+/**
+ * Modo de datos estructurados de una página o entrada.
+ *
+ * Vacío (páginas anteriores al campo) o inválido → 'auto'.
+ *
+ * @param int|null $post_id ID; null = la vista actual.
+ * @return string Uno de oikos_schema_modes().
+ */
+function oikos_schema_mode( $post_id = null ) {
+	$post_id = null === $post_id ? oikos_schema_context_id() : absint( $post_id );
+	$modes   = oikos_schema_modes();
+
+	if ( ! $post_id ) {
+		return $modes[0];
+	}
+
+	$mode = (string) oikos_field( 'oikos_schema_modo', $post_id, $modes[0] );
+
+	return in_array( $mode, $modes, true ) ? $mode : $modes[0];
+}
+
+/**
+ * Modo "Solo plugin": apaga la salida de schema de Yoast (y con ella todo lo
+ * que el tema le agrega) en esa página. Filtro oficial de Yoast: solo afecta
+ * al JSON-LD, no al resto de metas.
+ *
+ * Yoast también evalúa este filtro en su página de ajustes: en el admin no se toca.
+ *
+ * @param mixed $data Valor del filtro (false o [] = sin salida).
+ * @return mixed
+ */
+function oikos_schema_disable_yoast_output( $data ) {
+	if ( is_admin() || 'plugin' !== oikos_schema_mode() ) {
+		return $data;
+	}
+
+	return false;
+}
+add_filter( 'wpseo_json_ld_output', 'oikos_schema_disable_yoast_output', 20 );
+
+/* ==========================================================================
+   Autores del blog (CPT equipo)
+   ========================================================================== */
 
 /**
  * Miembros del equipo autores de la entrada del contexto de Yoast.
