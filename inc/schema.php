@@ -11,6 +11,10 @@
  * - El Person del usuario de WordPress deja de generarse en esas entradas
  *   (no es el autor real). La representación del sitio no se toca.
  *
+ * Secciones de equipo (inc/team.php):
+ * - En páginas que muestran tarjetas de equipo, un Person por miembro (mismo
+ *   @id que como autor del blog) y WebPage.mentions → esos Person.
+ *
  * Preguntas frecuentes (inc/faq.php):
  * - Si la página tiene preguntas, el WebPage pasa a ['WebPage', 'FAQPage']
  *   con mainEntity → piezas Question (+ Answer). Sin preguntas, nada.
@@ -150,9 +154,7 @@ function oikos_schema_graph_team_authors( $graph, $context ) {
 		return $graph;
 	}
 
-	$org_id = ( isset( $context->site_represents ) && 'company' === $context->site_represents && ! empty( $context->site_url ) )
-		? $context->site_url . '#organization'
-		: '';
+	$org_id = oikos_schema_org_id( $context );
 
 	foreach ( $members as $member_id ) {
 		$graph[] = oikos_schema_team_person( $member_id, $org_id );
@@ -161,6 +163,74 @@ function oikos_schema_graph_team_authors( $graph, $context ) {
 	return $graph;
 }
 add_filter( 'wpseo_schema_graph', 'oikos_schema_graph_team_authors', 10, 2 );
+
+/**
+ * @id de la Organization de Yoast, o '' si el sitio representa a una persona.
+ *
+ * @param object $context Meta_Tags_Context.
+ * @return string
+ */
+function oikos_schema_org_id( $context ) {
+	return ( is_object( $context ) && isset( $context->site_represents ) && 'company' === $context->site_represents && ! empty( $context->site_url ) )
+		? $context->site_url . '#organization'
+		: '';
+}
+
+/**
+ * Páginas con sección de equipo: un Person por miembro mostrado (el mismo
+ * @id que usan los autores del blog: es la misma entidad) y el WebPage los
+ * referencia con mentions. Los miembros salen de oikos_page_team_members().
+ *
+ * @param array  $graph   Grafo de Yoast.
+ * @param object $context Meta_Tags_Context.
+ * @return array
+ */
+function oikos_schema_graph_page_team( $graph, $context ) {
+	if ( ! is_array( $graph ) || ! is_page() ) {
+		return $graph;
+	}
+
+	$members = oikos_page_team_members( get_queried_object_id() );
+
+	if ( ! $members ) {
+		return $graph;
+	}
+
+	$existing = array();
+	foreach ( $graph as $piece ) {
+		if ( isset( $piece['@id'] ) ) {
+			$existing[ $piece['@id'] ] = true;
+		}
+	}
+
+	$org_id = oikos_schema_org_id( $context );
+	$refs   = array();
+
+	foreach ( $members as $member_id ) {
+		$person_id = oikos_schema_person_id( $member_id );
+		$refs[]    = array( '@id' => $person_id );
+
+		if ( ! isset( $existing[ $person_id ] ) ) {
+			$graph[]                = oikos_schema_team_person( $member_id, $org_id );
+			$existing[ $person_id ] = true;
+		}
+	}
+
+	foreach ( $graph as $index => $piece ) {
+		$types = isset( $piece['@type'] ) ? (array) $piece['@type'] : array();
+
+		if ( in_array( 'WebPage', $types, true ) ) {
+			$mentions = isset( $piece['mentions'] ) ? $piece['mentions'] : array();
+			$mentions = isset( $mentions['@id'] ) ? array( $mentions ) : (array) $mentions;
+
+			$graph[ $index ]['mentions'] = array_merge( $mentions, $refs );
+			break;
+		}
+	}
+
+	return $graph;
+}
+add_filter( 'wpseo_schema_graph', 'oikos_schema_graph_page_team', 15, 2 );
 
 /**
  * Pieza Person de un miembro del equipo.

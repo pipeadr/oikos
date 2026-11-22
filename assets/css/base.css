@@ -126,6 +126,12 @@
 	--color-border-glass: rgb(255 255 255 / 0.2);
 	--overlay-photo: rgb(45 85 69 / 0.3);
 
+	/* Recuadro café sobre foto (tarjetas de equipo). text/secondary al 88 %
+	   (medido en captura: el café casi no cambia sobre fondos de blanco a
+	   negro) + backdrop-filter. Encima: nombre en arena (texto grande, ≥ 3:1)
+	   y bio en content/inverse (≥ 4.5:1). */
+	--color-surface-overlay: color-mix(in srgb, var(--color-text-secondary) 88%, transparent);
+
 	/* Sombras */
 	--shadow-float: 0 0.5rem 1.5rem rgb(33 33 33 / 0.12), 0 0.0625rem 0.125rem rgb(33 33 33 / 0.08);
 	/* Elevación de tarjetas al hover/foco (más difusa que la de las barras). */
