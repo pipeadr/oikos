@@ -148,6 +148,20 @@ get_template_part(
 	)
 );
 
+// Los profesionales que te acompañan: tarjetas del CPT equipo. Título vacío → sin sección.
+// Relación vacía → todo el equipo. Botón vacío → sin botón.
+get_template_part(
+	'template-parts/sections/team',
+	null,
+	array(
+		'id'             => 'equipo',
+		'title'          => (string) oikos_field( 'oikos_servicios_equipo_titulo', $oikos_page_id ),
+		'members'        => oikos_servicios_team_members( $oikos_page_id ),
+		'link'           => oikos_field( 'oikos_servicios_equipo_boton', $oikos_page_id, array() ),
+		'track_location' => 'servicios-equipo',
+	)
+);
+
 // Preguntas frecuentes (grupo ACF "Preguntas frecuentes" de la página) + bloque WhatsApp.
 oikos_the_faq_section( 'faq-servicios', $oikos_page_id );
 

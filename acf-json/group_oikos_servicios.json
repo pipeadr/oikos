@@ -960,6 +960,96 @@
             },
             "return_format": "array",
             "allow_in_bindings": 0
+        },
+        {
+            "key": "field_oikos_servicios_tab_equipo",
+            "label": "Equipo",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_oikos_servicios_equipo_titulo",
+            "label": "Título (H2)",
+            "name": "oikos_servicios_equipo_titulo",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Si se deja vacío, la sección no se muestra. Enter = salto de línea (solo se ve desde tablet; en móvil el título se reparte solo).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Los profesionales que\nte acompañan en este proceso",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "rows": 2,
+            "placeholder": "",
+            "new_lines": ""
+        },
+        {
+            "key": "field_oikos_servicios_equipo_miembros",
+            "label": "Miembros del equipo",
+            "name": "oikos_servicios_equipo_miembros",
+            "aria-label": "",
+            "type": "relationship",
+            "instructions": "Elige y ordena quiénes aparecen. Si se deja vacío, se muestra todo el equipo (por orden y fecha). La foto, el nombre y la bio se editan en Equipo → cada miembro.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "equipo"
+            ],
+            "post_status": [
+                "publish"
+            ],
+            "taxonomy": "",
+            "filters": [
+                "search"
+            ],
+            "return_format": "id",
+            "min": "",
+            "max": "",
+            "allow_in_bindings": 0,
+            "elements": [
+                "featured_image"
+            ],
+            "bidirectional": 0,
+            "bidirectional_target": []
+        },
+        {
+            "key": "field_oikos_servicios_equipo_boton",
+            "label": "Botón (opcional)",
+            "name": "oikos_servicios_equipo_boton",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "Ej.: \"Conoce sobre nosotros\" → página Nosotros. Si se deja vacío, la sección no lleva botón.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "allow_in_bindings": 0
         }
     ],
     "location": [
@@ -982,5 +1072,5 @@
     "active": true,
     "description": "Contenido de la página general de servicios.",
     "show_in_rest": 0,
-    "modified": 1794875620
+    "modified": 1795392000
 }
