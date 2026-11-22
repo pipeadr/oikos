@@ -47,6 +47,10 @@ if ( $oikos_hero['image_id'] && wp_attachment_is_image( $oikos_hero['image_id'] 
 	add_filter( 'oikos_has_hero', '__return_true' );
 }
 
+// Preguntas frecuentes: se renderizan antes del <head> para que el schema
+// FAQPage dependa de la sección real. Se imprimen al final con oikos_the_faq_section().
+oikos_prepare_faq_section( 'faq-home', $oikos_front_id );
+
 get_header();
 
 get_template_part( 'template-parts/sections/hero-cover', null, $oikos_hero );
@@ -170,7 +174,7 @@ get_template_part(
 	)
 );
 
-// Preguntas frecuentes (grupo ACF "Preguntas frecuentes" de la página).
-oikos_the_faq_section( 'faq-home', $oikos_front_id );
+// Preguntas frecuentes (preparadas antes de get_header()).
+oikos_the_faq_section();
 
 get_footer();

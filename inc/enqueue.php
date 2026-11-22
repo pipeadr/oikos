@@ -163,7 +163,7 @@ function oikos_template_assets() {
 			'condition' => static fn() => is_front_page() && is_page(),
 			'css'       => 'css/posts-block.css',
 		),
-		// Preguntas frecuentes: en cualquier vista cuya página tenga preguntas.
+		// Preguntas frecuentes: solo si la plantilla preparó la sección (oikos_prepare_faq_section()).
 		'oikos-faq'           => array(
 			'condition' => 'oikos_page_has_faq',
 			'css'       => 'css/faq.css',

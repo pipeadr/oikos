@@ -394,7 +394,7 @@ function oikos_schema_faq_allowed_html() {
  *
  * Igual que el bloque FAQ de Yoast: el WebPage pasa a ['WebPage', 'FAQPage']
  * con mainEntity → una pieza Question por pregunta (con su Answer). Las
- * preguntas son las mismas que imprime la sección (oikos_get_faq_items()).
+ * preguntas son las de la sección ya renderizada (oikos_faq_rendered_items()).
  *
  * @param array  $graph   Grafo de Yoast.
  * @param object $context Meta_Tags_Context.
@@ -405,7 +405,9 @@ function oikos_schema_graph_faq( $graph, $context ) {
 		return $graph;
 	}
 
-	$items = oikos_get_faq_items( oikos_faq_post_id() );
+	// Solo las preguntas de la sección que la plantilla renderizó (inc/faq.php):
+	// sin sección visible no hay FAQPage, aunque el campo tenga datos.
+	$items = oikos_faq_rendered_items();
 
 	if ( ! $items ) {
 		return $graph;

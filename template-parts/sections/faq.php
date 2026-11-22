@@ -3,9 +3,10 @@
  * Sección: preguntas frecuentes (todas las páginas, preguntas distintas en cada una).
  *
  * Título + botón a la izquierda, preguntas a la derecha y, debajo, el bloque
- * "¿Tienes dudas?" con WhatsApp. No lee ACF: las plantillas la llaman con
- * oikos_the_faq_section( 'faq-<pagina>' ) (inc/faq.php), que le pasa los datos.
- * El schema FAQPage lo agrega inc/schema.php con las mismas preguntas.
+ * "¿Tienes dudas?" con WhatsApp. No lee ACF: las plantillas la preparan con
+ * oikos_prepare_faq_section( 'faq-<pagina>' ) antes de get_header() y la
+ * imprimen con oikos_the_faq_section() (inc/faq.php). El schema FAQPage
+ * (inc/schema.php) solo sale si esta plantilla produjo HTML.
  *
  * Cada pregunta es <details>/<summary> nativo con el encabezado (h3) dentro
  * del <summary>: funciona sin JS, todas empiezan cerradas, se pueden abrir
