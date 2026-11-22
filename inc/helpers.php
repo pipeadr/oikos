@@ -278,3 +278,50 @@ function oikos_title_lines_html( $title, $break_class ) {
 		array_map( 'esc_html', $lines )
 	);
 }
+
+/**
+ * Título con una parte resaltada en negrita.
+ *
+ * El editor encierra entre asteriscos lo que va en negrita:
+ * "Así funciona una sesión de *terapia de pareja* en Oikos". Todo se escapa;
+ * cada par de asteriscos se vuelve <strong class="oikos-highlight">. Un
+ * asterisco sin pareja se deja tal cual. Sin asteriscos, sale igual que
+ * esc_html().
+ *
+ * @param string $text Texto plano con *resaltados*.
+ * @return string HTML escapado.
+ */
+function oikos_highlight_html( $text ) {
+	return preg_replace(
+		'/\*([^*\r\n]*\S[^*\r\n]*)\*/u',
+		'<strong class="oikos-highlight">$1</strong>',
+		esc_html( (string) $text )
+	);
+}
+
+/**
+ * Textos de los badges de una página.
+ *
+ * Los de la página (repetidor `<prefijo>_badges_lista`, máx. 3) y, si está
+ * vacío, los globales de "Oikos — Global" (`oikos_global_badges`).
+ *
+ * @param int    $page_id ID de la página (0 = solo globales).
+ * @param string $field   Nombre del repetidor propio de la página.
+ * @return string[] Hasta 3 textos.
+ */
+function oikos_get_badges( $page_id = 0, $field = 'oikos_servicio_badges_lista' ) {
+	$collect = static function ( $rows ) {
+		$texts = array();
+		foreach ( (array) $rows as $row ) {
+			$text = isset( $row['texto'] ) ? trim( (string) $row['texto'] ) : '';
+			if ( '' !== $text ) {
+				$texts[] = $text;
+			}
+		}
+		return array_slice( $texts, 0, 3 );
+	};
+
+	$badges = $page_id ? $collect( oikos_field( $field, $page_id, array() ) ) : array();
+
+	return $badges ? $badges : $collect( oikos_option( 'oikos_global_badges', array() ) );
+}

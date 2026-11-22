@@ -9,12 +9,16 @@
  * - layout         (string) Disposición. 'split' (intro a la izquierda, pasos
  *                           a la derecha; Inicio) | 'rows' (título centrado y
  *                           una fila por paso: número + título | descripción;
- *                           Servicios). Para agregar otra: sumarla a
+ *                           Servicios) | 'columns' (título centrado y
+ *                           3 columnas: número | título + descripción;
+ *                           plantilla Servicio). Para agregar otra: sumarla a
  *                           $oikos_layouts y estilar .oikos-steps--layout-<nombre>.
  * - background     (string) 'none' (transparente, hereda el fondo del
  *                           contenedor) | 'cream' | 'white' | 'muted' (gris).
  * - eyebrow        (string) Antetítulo opcional.
  * - title          (string) Título (obligatorio junto con al menos un paso).
+ *                           Lo que va entre *asteriscos* sale en negrita
+ *                           (oikos_highlight_html()).
  * - heading_level  (int)    2–4. Los títulos de paso van un nivel más abajo.
  * - steps          (array)  Lista de array{title:string,text:string}.
  * - link           (array)  url, title, target. Opcional.
@@ -62,7 +66,7 @@ if ( '' === $oikos_title || ! $oikos_steps ) {
 }
 
 // Disposiciones disponibles (la primera es la de respaldo).
-$oikos_layouts = array( 'split', 'rows' );
+$oikos_layouts = array( 'split', 'rows', 'columns' );
 $oikos_layout  = in_array( $oikos_args['layout'], $oikos_layouts, true ) ? $oikos_args['layout'] : $oikos_layouts[0];
 
 $oikos_bg       = in_array( $oikos_args['background'], array( 'none', 'cream', 'white', 'muted' ), true ) ? $oikos_args['background'] : 'none';
@@ -92,7 +96,7 @@ $oikos_classes = sprintf(
 				'<h%1$d id="%2$s" class="oikos-steps__heading oikos-text-heading">%3$s</h%1$d>',
 				(int) $oikos_level,
 				esc_attr( $oikos_title_id ),
-				esc_html( $oikos_title )
+				oikos_highlight_html( $oikos_title ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escapa dentro del helper.
 			);
 			?>
 		</div>
