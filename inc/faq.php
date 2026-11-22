@@ -143,24 +143,33 @@ function &oikos_faq_state() {
  *
  * @param string $track_location data-track-location de los botones ("faq-<pagina>").
  * @param int    $post_id        Página de la que se leen las preguntas (0 = la de la vista).
+ * @param array  $args {
+ *     @type bool $cta_fallback Botón vacío → CTA global (true, por defecto). false = sin
+ *                              botón si el campo está vacío (plantilla Servicio).
+ * }
  * @return bool true si la sección produjo HTML.
  */
-function oikos_prepare_faq_section( $track_location, $post_id = 0 ) {
+function oikos_prepare_faq_section( $track_location, $post_id = 0, $args = array() ) {
+	$args    = wp_parse_args( $args, array( 'cta_fallback' => true ) );
 	$state   = &oikos_faq_state();
 	$post_id = $post_id ? absint( $post_id ) : oikos_faq_post_id();
 	$items   = oikos_get_faq_items( $post_id );
 	$html    = '';
 
 	if ( $items ) {
+		$link = oikos_field( 'oikos_faq_boton', $post_id, array() );
+		$link = $args['cta_fallback'] ? oikos_link_or_cta( $link ) : ( is_array( $link ) ? $link : array() );
+
 		ob_start();
 		get_template_part(
 			'template-parts/sections/faq',
 			null,
 			array(
 				'title'          => (string) oikos_field( 'oikos_faq_titulo', $post_id, __( 'Preguntas frecuentes', 'oikos' ) ),
+				'subtitle'       => (string) oikos_field( 'oikos_faq_subtitulo', $post_id ),
 				'heading_level'  => 2,
 				'items'          => $items,
-				'link'           => oikos_link_or_cta( oikos_field( 'oikos_faq_boton', $post_id, array() ) ),
+				'link'           => $link,
 				'track_location' => (string) $track_location,
 			)
 		);

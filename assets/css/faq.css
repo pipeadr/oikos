@@ -3,7 +3,7 @@
  *
  * .oikos-faq                    sección (con .oikos-section)
  *   __inner                     grid: intro | acordeón (295 | 751 en el frame de 1366)
- *     __intro                   título (Heading) + botón
+ *     __intro                   título (Heading, saltos manuales desde 768) + subtítulo + botón (ambos opcionales)
  *     __list                    preguntas (gap entre ítems)
  *       __item                  <details> tarjeta crema con borde (Closed / Open)
  *         __question            <summary> a todo el ancho, mín. 48 de alto
@@ -46,6 +46,11 @@
    natural en 295). En < 1024 vuelve el balance (no hay diseño). */
 .oikos-faq__heading {
 	text-wrap: wrap;
+}
+
+/* Subtítulo opcional: 16 bajo el título (el gap del bloque es 32). */
+.oikos-faq__heading + .oikos-faq__subtitle {
+	margin-top: calc(var(--spacing-2) - var(--spacing-4));
 }
 
 /* --------------------------------------------------------------------------
@@ -175,4 +180,12 @@
 		gap: var(--spacing-3); /* 24 */
 	}
 
+	.oikos-faq__heading + .oikos-faq__subtitle {
+		margin-top: calc(var(--spacing-2) - var(--spacing-3));
+	}
+
+	/* Saltos manuales del título: solo desde 768. */
+	.oikos-faq__break {
+		display: none;
+	}
 }

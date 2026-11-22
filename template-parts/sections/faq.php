@@ -14,10 +14,13 @@
  * la animación de alto (mejora progresiva).
  *
  * Args:
- * - title          (string) Título (estilo Heading).
+ * - title          (string) Título (estilo Heading). Admite saltos de línea
+ *                           (visibles desde 768).
+ * - subtitle       (string) Texto opcional bajo el título (Body text/secondary).
  * - heading_level  (int)    2–4. Las preguntas van un nivel más abajo.
  * - items          (array)  array{question:string, answer:string}.
- * - link           (array)  url, title, target (ya resuelto con oikos_link_or_cta()).
+ * - link           (array)  url, title, target. Vacío → sin botón (el respaldo
+ *                           al CTA global lo decide oikos_prepare_faq_section()).
  * - track_location (string) "faq-<pagina>" para el botón y WhatsApp.
  *
  * @package oikos
@@ -29,6 +32,7 @@ $oikos_args = wp_parse_args(
 	isset( $args ) && is_array( $args ) ? $args : array(),
 	array(
 		'title'          => '',
+		'subtitle'       => '',
 		'heading_level'  => 2,
 		'items'          => array(),
 		'link'           => array(),
@@ -55,9 +59,13 @@ $oikos_title_id = wp_unique_id( 'oikos-faq-' );
 					'<h%1$d id="%2$s" class="oikos-faq__heading oikos-text-heading">%3$s</h%1$d>',
 					(int) $oikos_level,
 					esc_attr( $oikos_title_id ),
-					esc_html( $oikos_title )
+					oikos_title_lines_html( $oikos_title, 'oikos-faq__break' ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escapa línea por línea.
 				);
 				?>
+
+				<?php if ( '' !== trim( (string) $oikos_args['subtitle'] ) ) : ?>
+					<p class="oikos-faq__subtitle oikos-text-body oikos-text-secondary"><?php echo esc_html( trim( (string) $oikos_args['subtitle'] ) ); ?></p>
+				<?php endif; ?>
 
 				<?php if ( ! empty( $oikos_link['url'] ) && ! empty( $oikos_link['title'] ) ) : ?>
 					<a
