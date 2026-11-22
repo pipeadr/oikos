@@ -29,7 +29,7 @@
             "name": "oikos_equipo_bio_corta",
             "aria-label": "",
             "type": "textarea",
-            "instructions": "Dos o tres líneas. Se usa en las tarjetas de equipo y como descripción de la persona para buscadores.",
+            "instructions": "≈ 200 caracteres (máx. 220). Es el texto de la tarjeta de equipo y la descripción de la persona para buscadores.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -38,7 +38,7 @@
                 "id": ""
             },
             "default_value": "",
-            "maxlength": 300,
+            "maxlength": 220,
             "allow_in_bindings": 0,
             "rows": 3,
             "placeholder": "",
@@ -84,5 +84,5 @@
     "active": true,
     "description": "Datos de cada psicólogo. El nombre es el título y la foto es la imagen destacada.",
     "show_in_rest": 0,
-    "modified": 1794800000
+    "modified": 1795392000
 }
