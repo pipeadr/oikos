@@ -1,0 +1,114 @@
+{
+    "key": "group_oikos_schema",
+    "title": "Datos estructurados",
+    "fields": [
+        {
+            "key": "field_oikos_schema_modo",
+            "label": "Datos estructurados",
+            "name": "oikos_schema_modo",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "Automático: el schema (JSON-LD) lo generan el tema y Yoast. Cámbialo solo si esta página necesita el plugin \"Schema & Structured Data\".",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "auto": "Automático",
+                "auto_plugin": "Automático + plugin",
+                "plugin": "Solo plugin"
+            },
+            "default_value": "auto",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "allow_in_bindings": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "create_options": 0,
+            "save_options": 0
+        },
+        {
+            "key": "field_oikos_schema_nota_auto_plugin",
+            "label": "",
+            "name": "",
+            "aria-label": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_oikos_schema_modo",
+                        "operator": "==",
+                        "value": "auto_plugin"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "El tema y Yoast siguen generando el schema. Usa el plugin solo para tipos que no sean Article, FAQ, Organization, LocalBusiness, Person, WebPage, WebSite ni BreadcrumbList (por ejemplo Course o Event), asignado solo a esta página.",
+            "new_lines": "",
+            "esc_html": 0
+        },
+        {
+            "key": "field_oikos_schema_nota_plugin",
+            "label": "",
+            "name": "",
+            "aria-label": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_oikos_schema_modo",
+                        "operator": "==",
+                        "value": "plugin"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "En esta página no se imprime el JSON-LD de Yoast ni del tema (preguntas frecuentes, profesionales, servicios, autores…). Todo el schema debe venir del plugin: si no le asignas ninguno, la página queda sin datos estructurados. El título, la descripción, la URL canónica y Open Graph de Yoast siguen funcionando.",
+            "new_lines": "",
+            "esc_html": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "page"
+            }
+        ],
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "post"
+            }
+        ]
+    ],
+    "menu_order": 90,
+    "position": "side",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Quién genera el schema de la página: tema + Yoast (automático), con el plugin para tipos extra, o solo el plugin.",
+    "show_in_rest": 0,
+    "modified": 1795400000
+}
