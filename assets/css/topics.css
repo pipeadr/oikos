@@ -3,9 +3,10 @@
  * ("Todo lo que puedes trabajar en un proceso terapéutico").
  *
  * .oikos-topics                        sección (fondo radial propio)
+ *   --cols-3                           3 columnas en desktop (páginas de servicio)
  *   __inner                            intro | tarjetas
  *     __intro > __heading + __lead
- *     __cards                          contenedor (container query: 2 o 4 columnas)
+ *     __cards                          contenedor (container query: 2 o 4 columnas; 2 o 3 con --cols-3)
  *       __grid > __item(.is-open)      celda fija; la tarjeta flota dentro
  *         __card                       absoluta, 2 celdas de ancho, recortada con clip-path
  *           __content                  título + descripción, anclados abajo
@@ -144,6 +145,63 @@
 
 	.oikos-topics__item:nth-child(4n) .oikos-topics__card {
 		inset-inline: auto 0;
+	}
+}
+
+/* --------------------------------------------------------------------------
+   3 columnas (--cols-3, páginas de servicio): 3 × 2 en desktop.
+   Figma (1366): grilla de 534 = 3 × 162 + 2 × 24, a 64 de la intro, que
+   toma el resto del contenedor (el texto va en una línea).
+   Columnas: 2 por debajo; 3 desde 3 × 150 + 2 × 24 = 498. La última
+   columna (3n) se abre hacia la izquierda.
+   -------------------------------------------------------------------------- */
+
+@container (min-width: 31.25rem) {
+	.oikos-topics--cols-3 .oikos-topics__grid {
+		--topics-gap: var(--spacing-3); /* 24 */
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+
+	.oikos-topics--cols-3 .oikos-topics__item:nth-child(n) {
+		--topics-clip: inset(0 50% 0 0 round var(--topics-radius));
+		--topics-shift: 0px;
+	}
+
+	.oikos-topics--cols-3 .oikos-topics__item:nth-child(3n) {
+		--topics-clip: inset(0 0 0 50% round var(--topics-radius));
+		--topics-shift: calc(50% + var(--topics-pad));
+	}
+
+	.oikos-topics--cols-3 .oikos-topics__item:nth-child(n) .oikos-topics__card {
+		inset-inline: 0 auto;
+	}
+
+	.oikos-topics--cols-3 .oikos-topics__item:nth-child(3n) .oikos-topics__card {
+		inset-inline: auto 0;
+	}
+}
+
+.oikos-topics--cols-3 .oikos-topics__intro {
+	max-inline-size: 36rem;
+}
+
+/* Lado a lado desde 1024: intro ≥ 16rem + 64 + 534 caben en el contenedor. */
+@media (min-width: 64rem) {
+	.oikos-topics--cols-3 .oikos-topics__inner {
+		grid-template-columns: minmax(16rem, 1fr) minmax(0, 33.375rem);
+		column-gap: var(--spacing-8); /* 64 */
+		align-items: center;
+	}
+
+	.oikos-topics--cols-3 .oikos-topics__intro {
+		max-inline-size: none;
+	}
+}
+
+/* El corte manual del título solo desde tablet: en móvil se reparte solo. */
+@media (max-width: 47.9375rem) {
+	.oikos-topics__break {
+		display: none;
 	}
 }
 
@@ -350,6 +408,10 @@
    ========================================================================== */
 
 @media (scripting: none) {
+	.oikos-topics--cols-3 .oikos-topics__grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
 	.oikos-topics__item {
 		aspect-ratio: auto;
 		min-height: 10.8125rem; /* 173 */
@@ -393,7 +455,8 @@
 
 /* Móvil: la grilla de 2 columnas sin JS sería muy estrecha para leer. */
 @media (scripting: none) and (max-width: 47.9375rem) {
-	.oikos-topics__grid {
+	.oikos-topics__grid,
+	.oikos-topics--cols-3 .oikos-topics__grid {
 		grid-template-columns: minmax(0, 1fr);
 	}
 }

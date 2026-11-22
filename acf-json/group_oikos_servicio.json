@@ -1,0 +1,320 @@
+{
+    "key": "group_oikos_servicio",
+    "title": "Servicio",
+    "fields": [
+        {
+            "key": "field_oikos_servicio_tab_hero",
+            "label": "Hero",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_oikos_servicio_hero_imagen",
+            "label": "Imagen",
+            "name": "oikos_servicio_hero_imagen",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "Foto horizontal de al menos 2400 × 1500 px, con las personas a la izquierda y el lado derecho claro (ahí va el texto). Se muestra en blanco y negro aunque se suba a color. Es la imagen principal de la página (la primera que se carga). El texto alternativo se edita en la biblioteca de medios.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "id",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "jpg,jpeg,png,webp,avif",
+            "allow_in_bindings": 0,
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_oikos_servicio_hero_foco_x",
+            "label": "Punto focal horizontal",
+            "name": "oikos_servicio_hero_foco_x",
+            "aria-label": "",
+            "type": "range",
+            "instructions": "Qué parte de la foto se conserva al recortarla (en pantallas angostas y en móvil): 0 % = izquierda, 100 % = derecha. Apúntalo a las personas.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": 50,
+            "min": 0,
+            "max": 100,
+            "step": 5,
+            "prepend": "",
+            "append": "%",
+            "allow_in_bindings": 0
+        },
+        {
+            "key": "field_oikos_servicio_hero_foco_y",
+            "label": "Punto focal vertical",
+            "name": "oikos_servicio_hero_foco_y",
+            "aria-label": "",
+            "type": "range",
+            "instructions": "0 % = arriba, 100 % = abajo.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": 50,
+            "min": 0,
+            "max": 100,
+            "step": 5,
+            "prepend": "",
+            "append": "%",
+            "allow_in_bindings": 0
+        },
+        {
+            "key": "field_oikos_servicio_hero_titulo",
+            "label": "Título (H1)",
+            "name": "oikos_servicio_hero_titulo",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Si se deja vacío, se usa el título de la página.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_oikos_servicio_hero_texto",
+            "label": "Texto",
+            "name": "oikos_servicio_hero_texto",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "rows": 4,
+            "placeholder": "",
+            "new_lines": "br"
+        },
+        {
+            "key": "field_oikos_servicio_hero_boton",
+            "label": "Botón",
+            "name": "oikos_servicio_hero_boton",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "Si se deja vacío, se usa el CTA global \"Agenda tu cita\" de Oikos — Global.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "allow_in_bindings": 0
+        },
+        {
+            "key": "field_oikos_servicio_tab_temas",
+            "label": "Temas",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_oikos_servicio_temas_titulo",
+            "label": "Título (H2)",
+            "name": "oikos_servicio_temas_titulo",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Cada salto de línea se respeta desde tablet (en móvil el título se reparte solo). Si se deja vacío, la sección no se muestra.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "rows": 2,
+            "new_lines": ""
+        },
+        {
+            "key": "field_oikos_servicio_temas_texto",
+            "label": "Texto",
+            "name": "oikos_servicio_temas_texto",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "rows": 2,
+            "placeholder": "",
+            "new_lines": ""
+        },
+        {
+            "key": "field_oikos_servicio_temas_lista",
+            "label": "Temas",
+            "name": "oikos_servicio_temas_lista",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "Entre 2 y 12. Se muestran en filas de 3 (2 en móvil). Al presionar un tema, la tarjeta se abre y muestra su descripción.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "pagination": 0,
+            "min": 2,
+            "max": 12,
+            "collapsed": "field_oikos_servicio_temas_lista_titulo",
+            "button_label": "Agregar tema",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "required": 1,
+                    "key": "field_oikos_servicio_temas_lista_titulo",
+                    "label": "Título",
+                    "name": "titulo",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "Corto: una o dos palabras por línea (la tarjeta es angosta).",
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 0,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_oikos_servicio_temas_lista"
+                },
+                {
+                    "key": "field_oikos_servicio_temas_lista_descripcion",
+                    "label": "Descripción",
+                    "name": "descripcion",
+                    "aria-label": "",
+                    "type": "textarea",
+                    "instructions": "Una frase de hasta unos 110 caracteres para que quepa en la tarjeta abierta.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 0,
+                    "rows": 3,
+                    "placeholder": "",
+                    "new_lines": "",
+                    "parent_repeater": "field_oikos_servicio_temas_lista"
+                },
+                {
+                    "key": "field_oikos_servicio_temas_lista_enlace",
+                    "label": "Enlace (opcional)",
+                    "name": "enlace",
+                    "aria-label": "",
+                    "type": "link",
+                    "instructions": "Por ejemplo, una entrada del blog. Aparece al final de la descripción; si el texto del enlace se deja vacío, dice \"Leer más\".",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "array",
+                    "allow_in_bindings": 0,
+                    "parent_repeater": "field_oikos_servicio_temas_lista"
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "templates/servicio.php"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "acf_after_title",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": [
+        "the_content"
+    ],
+    "active": true,
+    "description": "Contenido de las páginas de terapia (plantilla Servicio). La tarjeta del carrusel está en el grupo \"Tarjeta de servicio\".",
+    "show_in_rest": 0,
+    "modified": 1795387004
+}

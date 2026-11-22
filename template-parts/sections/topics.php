@@ -14,9 +14,11 @@
  * Args:
  * - id             (string) Prefijo único para los id del HTML.
  * - title          (string) Título de la sección (estilo Heading). Vacío → no se imprime.
+ *                           Los saltos de línea se respetan solo desde 768 px.
  * - text           (string) Texto de apoyo (Body, text/secondary). Opcional.
  * - heading_level  (int)    Nivel del título (2 por defecto); los temas van un nivel debajo.
  * - items          (array)  Cada uno: title, text, link (arreglo de link de ACF: url, title, target).
+ * - columns        (int)    Columnas en desktop: 4 (Servicios, por defecto) o 3 (páginas de servicio).
  * - track_location (string) data-track-location de los enlaces "Leer más".
  *
  * Sin JS: los botones llegan con aria-expanded="true" y todas las
@@ -36,6 +38,7 @@ $oikos_args = wp_parse_args(
 		'text'           => '',
 		'heading_level'  => 2,
 		'items'          => array(),
+		'columns'        => 4,
 		'track_location' => 'temas',
 	)
 );
@@ -69,11 +72,13 @@ $oikos_level    = min( 5, max( 2, (int) $oikos_args['heading_level'] ) );
 $oikos_sublevel = $oikos_level + 1;
 $oikos_title_id = $oikos_id . '-titulo';
 $oikos_text     = trim( (string) $oikos_args['text'] );
+$oikos_columns  = 3 === (int) $oikos_args['columns'] ? 3 : 4;
+$oikos_classes  = 'oikos-topics' . ( 3 === $oikos_columns ? ' oikos-topics--cols-3' : '' );
 ?>
-<section class="oikos-topics" aria-labelledby="<?php echo esc_attr( $oikos_title_id ); ?>" data-topics>
+<section class="<?php echo esc_attr( $oikos_classes ); ?>" aria-labelledby="<?php echo esc_attr( $oikos_title_id ); ?>" data-topics>
 	<div class="oikos-container oikos-topics__inner">
 		<div class="oikos-topics__intro">
-			<h<?php echo (int) $oikos_level; ?> id="<?php echo esc_attr( $oikos_title_id ); ?>" class="oikos-topics__heading oikos-text-heading"><?php echo esc_html( $oikos_args['title'] ); ?></h<?php echo (int) $oikos_level; ?>>
+			<h<?php echo (int) $oikos_level; ?> id="<?php echo esc_attr( $oikos_title_id ); ?>" class="oikos-topics__heading oikos-text-heading"><?php echo oikos_title_lines_html( $oikos_args['title'], 'oikos-topics__break' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- líneas escapadas con esc_html(). ?></h<?php echo (int) $oikos_level; ?>>
 
 			<?php if ( '' !== $oikos_text ) : ?>
 				<p class="oikos-topics__lead oikos-text-body oikos-text-secondary"><?php echo esc_html( $oikos_text ); ?></p>

@@ -1,0 +1,189 @@
+/**
+ * Oikos — Hero con foto de fondo y texto a la derecha (variante "backdrop",
+ * páginas de servicio).
+ *
+ * .oikos-hero-backdrop                sección (foto a sangre detrás)
+ *   __inner                           contenedor (grid)
+ *     __title                         H1 arriba a la izquierda
+ *     __media > img                   foto LCP (absoluta en ≥ 768; en flujo en móvil)
+ *     __content                       párrafo + CTA, a la derecha y centrados
+ *
+ * Modificadores: --has-media (hay foto), --grayscale (filtro B/N).
+ * --hero-focus (inline): punto focal editable → object-position.
+ *
+ * Medidas del diseño (1366): foto de ≈ 850 de alto desde el borde superior
+ * (el header flota encima); H1 Display S en x 128 justo bajo el header;
+ * texto de ≈ 400 de ancho pegado al borde derecho del contenedor y centrado
+ * en los primeros 768 px (no en toda la foto: la foto sigue ≈ 80 más abajo).
+ *
+ * < 1024: H1 → foto 4:3 a ancho completo → texto y botón (a ancho completo < 768).
+ */
+
+.oikos-hero-backdrop {
+	--hero-focus: 50% 50%;
+	--hero-backdrop-text: 25rem; /* 400 */
+	--hero-backdrop-veil-end: 50%; /* hasta dónde llega el degradado lateral */
+
+	position: relative;
+	isolation: isolate;
+	overflow: hidden;
+	padding-bottom: var(--spacing-10); /* la foto sigue 80 bajo el texto */
+	background-color: var(--color-surface-base);
+}
+
+/* ==========================================================================
+   Foto
+   ========================================================================== */
+
+.oikos-hero-backdrop__media,
+.oikos-hero-backdrop__media img {
+	position: absolute;
+	inset: 0;
+	z-index: -2;
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+.oikos-hero-backdrop__media img {
+	object-fit: cover;
+	object-position: var(--hero-focus);
+}
+
+.oikos-hero-backdrop--grayscale .oikos-hero-backdrop__media img {
+	filter: grayscale(1);
+}
+
+/* Degradados claros detrás del texto (nunca un bloque sólido): sobre el
+   lado claro de la foto del diseño casi no se notan, pero mantienen AA si la
+   foto tiene zonas oscuras bajo el texto. Medido con una foto de oficina con
+   monitores negros detrás del párrafo: p5 del fondo ≥ 4.5:1 para el
+   párrafo y ≥ 3:1 para el H1 (texto grande).
+   - Lateral, desde la derecha: cubre la columna de texto y se desvanece
+     antes de las personas (--hero-backdrop-veil-end).
+   - Superior: arranca blanco tras el H1 y se va antes de la mitad. */
+.oikos-hero-backdrop--has-media::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	pointer-events: none;
+	background-image:
+		linear-gradient(
+			to left,
+			color-mix(in srgb, var(--color-surface-page) 72%, transparent) 0%,
+			color-mix(in srgb, var(--color-surface-page) 62%, transparent) calc(var(--hero-backdrop-veil-end) - 12%),
+			color-mix(in srgb, var(--color-surface-page) 0%, transparent) var(--hero-backdrop-veil-end)
+		),
+		linear-gradient(
+			to bottom,
+			color-mix(in srgb, var(--color-surface-page) 55%, transparent) 0%,
+			color-mix(in srgb, var(--color-surface-page) 40%, transparent) 20%,
+			color-mix(in srgb, var(--color-surface-page) 0%, transparent) 36%
+		);
+}
+
+/* ==========================================================================
+   Contenido
+   ========================================================================== */
+
+.oikos-hero-backdrop__inner {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) var(--hero-backdrop-text);
+	grid-template-areas: "title content";
+	column-gap: var(--spacing-5);
+	min-height: min(100svh, 48rem); /* 768: el texto se centra aquí */
+}
+
+.oikos-hero-backdrop__title {
+	grid-area: title;
+	align-self: start;
+	padding-top: calc(var(--header-offset) + var(--spacing-1));
+	color: var(--color-text-primary);
+}
+
+/* Barra de administración de WordPress: el header baja con ella. */
+.admin-bar .oikos-hero-backdrop__title {
+	padding-top: calc(var(--header-offset) + var(--spacing-1) + 2rem);
+}
+
+@media (max-width: 48.875rem) { /* 782 */
+	.admin-bar .oikos-hero-backdrop__title {
+		padding-top: calc(var(--header-offset) + var(--spacing-1) + 2.875rem);
+	}
+}
+
+.oikos-hero-backdrop__content {
+	grid-area: content;
+	align-self: center;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: var(--spacing-3); /* 24 */
+	/* Centrado en el alto completo (incluido el del header), como el Figma.
+	   Márgenes simétricos: no mueven el centro y en pantallas bajas evitan
+	   que el texto quede bajo el header. */
+	margin-block: var(--header-offset);
+	min-width: 0;
+}
+
+.oikos-hero-backdrop__cta {
+	margin-top: var(--spacing-1); /* 24 + 8 = 32 sobre el botón */
+}
+
+/* ==========================================================================
+   Tablet y móvil (< 1024): título, foto y texto apilados
+   Con la foto del diseño las personas ocupan ≈ 58 % del ancho; por debajo
+   de 1024 la foto se recorta a lo alto y la columna de texto quedaría
+   sobre ellas, así que se pasa a la versión apilada.
+   ========================================================================== */
+
+@media (max-width: 63.9375rem) {
+	.oikos-hero-backdrop {
+		padding-bottom: var(--space-section);
+	}
+
+	.oikos-hero-backdrop--has-media::before {
+		content: none;
+	}
+
+	.oikos-hero-backdrop__inner {
+		grid-template-columns: minmax(0, 1fr);
+		grid-template-areas:
+			"title"
+			"media"
+			"content";
+		row-gap: var(--spacing-3);
+		min-height: 0;
+	}
+
+	.oikos-hero-backdrop__media {
+		grid-area: media;
+		position: relative;
+		inset: auto;
+		z-index: auto;
+		/* A ancho completo de pantalla, fuera del margen del contenedor. */
+		width: 100vw;
+		max-width: none; /* base.css limita picture al 100 % */
+		height: auto;
+		margin-inline: calc(50% - 50vw);
+	}
+
+	.oikos-hero-backdrop__media img {
+		position: static;
+		height: auto;
+		aspect-ratio: 4 / 3;
+	}
+
+	.oikos-hero-backdrop__content {
+		max-inline-size: 36rem;
+		margin-block: 0;
+	}
+}
+
+@media (max-width: 47.9375rem) {
+	.oikos-hero-backdrop__content {
+		max-inline-size: none;
+		align-items: stretch; /* el botón --block-mobile ocupa el ancho */
+	}
+}

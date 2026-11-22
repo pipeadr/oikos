@@ -47,8 +47,7 @@ $oikos_link     = is_array( $oikos_args['link'] ) ? $oikos_args['link'] : array(
 $oikos_title_id = wp_unique_id( 'oikos-team-' );
 
 // Cada línea escapada; los saltos se vuelven <br> que el CSS oculta en móvil.
-$oikos_lines = array_filter( array_map( 'trim', preg_split( '/\R/', $oikos_title ) ), 'strlen' );
-$oikos_title_html = implode( '<br class="oikos-team__break"> ', array_map( 'esc_html', $oikos_lines ) );
+$oikos_title_html = oikos_title_lines_html( $oikos_title, 'oikos-team__break' );
 ?>
 <section id="<?php echo esc_attr( $oikos_args['id'] ); ?>" class="oikos-section oikos-team" aria-labelledby="<?php echo esc_attr( $oikos_title_id ); ?>">
 	<div class="oikos-container oikos-team__inner">
