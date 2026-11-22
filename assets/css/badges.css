@@ -1,0 +1,74 @@
+/**
+ * Oikos — Badges (sellos de confianza).
+ *
+ * .oikos-badges            contenedor de consulta (container query)
+ *   __list                 <ul>
+ *     __item               tarjeta arena con texto centrado en negrita
+ *
+ * Fila centrada desde 36rem de contenedor (tablet incluida); por debajo,
+ * apilados a ancho completo: son frases cortas y así se leen todas sin
+ * gestos (con scroll horizontal la 2.ª y la 3.ª quedarían escondidas).
+ *
+ * Arena (--color-brand-sand) con text/primary: ≈ 8.9:1.
+ * Medidas provisionales hasta medir la captura.
+ */
+
+.oikos-badges {
+	container-type: inline-size;
+}
+
+.oikos-badges__list {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: var(--spacing-2); /* 16 */
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.oikos-badges__item {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: var(--spacing-3); /* 24 */
+	border-radius: var(--radius-lg);
+	background-color: var(--color-brand-sand);
+	color: var(--color-text-primary);
+	font-family: var(--font-body);
+	font-size: var(--text-body-size);
+	font-weight: 600;
+	line-height: 1.4;
+	text-align: center;
+	text-wrap: balance;
+}
+
+.oikos-badges--count-1 { --badges-count: 1; }
+.oikos-badges--count-2 { --badges-count: 2; }
+
+@container (min-width: 36rem) {
+	.oikos-badges__list {
+		/* Centradas: con menos de 3 no se estiran a todo el ancho. */
+		grid-template-columns: repeat(var(--badges-count, 3), minmax(0, 22.5rem));
+		justify-content: center;
+		gap: var(--spacing-3); /* 24 */
+	}
+}
+
+/* ==========================================================================
+   Plantilla Servicio: debajo de los pasos, mismo fondo blanco
+   (una sola sección visual: los pasos ceden parte de su padding inferior)
+   ========================================================================== */
+
+/* Solos (página sin pasos): padding de sección completo. */
+.oikos-service-badges {
+	padding-block: var(--space-section);
+	background-color: var(--color-surface-page);
+}
+
+.oikos-steps + .oikos-service-badges {
+	padding-top: 0;
+}
+
+.oikos-steps:has(+ .oikos-service-badges) {
+	padding-bottom: var(--spacing-6); /* 48 entre pasos y badges (provisional) */
+}
