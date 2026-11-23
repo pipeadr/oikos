@@ -102,15 +102,20 @@ function oikos_template_assets() {
 			'condition' => static fn() => is_page_template( 'templates/servicio.php' ),
 			'css'       => 'css/hero-backdrop.css',
 		),
-		// Foto + texto: se agregan aquí Nosotros, Servicios y El método al construirlas.
+		// Foto + texto: Inicio y Servicio. Se agregan aquí Nosotros y El método al construirlas.
 		'oikos-media-text'    => array(
-			'condition' => static fn() => is_front_page() && is_page(),
+			'condition' => static fn() => ( is_front_page() && is_page() ) || is_page_template( 'templates/servicio.php' ),
 			'css'       => 'css/media-text.css',
 		),
-		// Pasos: Inicio (split) y Servicios general (rows). La plantilla Servicio se agrega al construirla.
+		// Pasos: Inicio (split), Servicios general (rows) y Servicio (columns).
 		'oikos-steps'         => array(
-			'condition' => static fn() => ( is_front_page() && is_page() ) || is_page_template( 'templates/servicios.php' ),
+			'condition' => static fn() => ( is_front_page() && is_page() ) || is_page_template( array( 'templates/servicios.php', 'templates/servicio.php' ) ),
 			'css'       => 'css/steps.css',
+		),
+		// Badges (sellos de confianza): Servicio. Se agregan aquí otras vistas que los usen.
+		'oikos-badges'        => array(
+			'condition' => static fn() => is_page_template( 'templates/servicio.php' ),
+			'css'       => 'css/badges.css',
 		),
 		'oikos-service-cards' => array(
 			'condition' => static fn() => is_front_page() && is_page(),
@@ -154,18 +159,17 @@ function oikos_template_assets() {
 			'css'       => 'css/slider.css',
 			'js'        => 'js/slider.js',
 		),
-		// Blog: se agregan aquí el archivo (is_home), la entrada (is_singular post)
-		// y la plantilla Servicio al construirlos.
+		// Blog: se agregan aquí el archivo (is_home) y la entrada (is_singular post) al construirlos.
 		'oikos-tag'           => array(
-			'condition' => static fn() => ( is_front_page() && is_page() ) || is_page_template( 'templates/style-guide.php' ),
+			'condition' => static fn() => ( is_front_page() && is_page() ) || is_page_template( array( 'templates/style-guide.php', 'templates/servicio.php' ) ),
 			'css'       => 'css/tag.css',
 		),
 		'oikos-post-card'     => array(
-			'condition' => static fn() => is_front_page() && is_page(),
+			'condition' => static fn() => ( is_front_page() && is_page() ) || is_page_template( 'templates/servicio.php' ),
 			'css'       => 'css/post-card.css',
 		),
 		'oikos-posts-block'   => array(
-			'condition' => static fn() => is_front_page() && is_page(),
+			'condition' => static fn() => ( is_front_page() && is_page() ) || is_page_template( 'templates/servicio.php' ),
 			'css'       => 'css/posts-block.css',
 		),
 		// Preguntas frecuentes: solo si la plantilla preparó la sección (oikos_prepare_faq_section()).

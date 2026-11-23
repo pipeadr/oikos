@@ -16,6 +16,7 @@
  * - focus_x/focus_y (int)    Punto focal 0–100 (object-position).
  * - grayscale       (bool)   Pasa la foto a blanco y negro (true por defecto).
  * - title           (string) Texto del H1 (la plantilla aplica el respaldo al título de la página).
+ *                            Lo que va entre *asteriscos* sale en negrita.
  * - text            (string) Párrafo (admite <br>).
  * - link            (array)  url, title, target.
  * - track_location  (string) data-track-location del botón.
@@ -63,7 +64,7 @@ if ( $oikos_picture ) {
 	style="<?php echo esc_attr( sprintf( '--hero-focus: %d%% %d%%;', $oikos_focus_x, $oikos_focus_y ) ); ?>"
 >
 	<div class="oikos-container oikos-hero-backdrop__inner">
-		<h1 id="oikos-hero-title" class="oikos-hero-backdrop__title oikos-text-display-sm"><?php echo esc_html( $oikos_args['title'] ); ?></h1>
+		<h1 id="oikos-hero-title" class="oikos-hero-backdrop__title oikos-text-display-sm"><?php echo oikos_highlight_html( $oikos_args['title'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escapa dentro del helper. ?></h1>
 
 		<?php echo $oikos_picture; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escapado en oikos_hero_picture() / wp_get_attachment_image(). ?>
 

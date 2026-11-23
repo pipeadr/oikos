@@ -248,3 +248,71 @@
 		column-gap: var(--spacing-9); /* 72: la descripción arranca a mitad (x ≈ 719 en 1366) */
 	}
 }
+
+/* ==========================================================================
+   Disposición: columns (plantilla Servicio, "Así funciona una sesión…")
+   Título centrado sin ancho máximo (en el Figma va en una línea a 1366),
+   con parte resaltada en negrita, y 3 columnas: número pequeño a la
+   izquierda | título del paso + descripción debajo. Medido (1366):
+   columnas de ≈ 327 con 64 entre ellas, título 24/32. 3 columnas desde
+   1024; por debajo, apilado (en tablet la descripción quedaba en ~170 px).
+   Sin botón.
+   ========================================================================== */
+
+.oikos-steps--layout-columns .oikos-steps__inner {
+	display: flex;
+	flex-direction: column;
+	gap: var(--spacing-6); /* 48 (provisional: medir en la captura) */
+}
+
+.oikos-steps--layout-columns .oikos-steps__intro {
+	align-items: center;
+	text-align: center;
+}
+
+.oikos-steps--layout-columns .oikos-steps__body {
+	container-type: inline-size; /* la consulta de columnas mira aquí (no a la lista) */
+	align-items: stretch;
+}
+
+.oikos-steps--layout-columns .oikos-steps__item {
+	grid-template-columns: auto minmax(0, 1fr);
+	grid-template-areas:
+		"number title"
+		".      text";
+	column-gap: var(--spacing-2); /* 16 */
+	row-gap: var(--spacing-1);    /* 8 */
+}
+
+.oikos-steps--layout-columns .oikos-steps__number {
+	/* Centrado con la primera línea del título (line-height 1.33). */
+	padding-top: calc((var(--text-step-sm-size) * 1.33 - var(--text-small-size) * 1.4) / 2);
+}
+
+.oikos-steps--layout-columns .oikos-steps__title {
+	max-width: none;
+	font-size: var(--text-step-sm-size);
+	line-height: 1.33; /* 24/32, medido */
+	letter-spacing: -0.01em;
+}
+
+.oikos-steps--layout-columns .oikos-steps__text {
+	max-width: 36rem;
+	margin-top: 0;
+	color: var(--color-text-secondary);
+}
+
+/* 56rem de contenedor ≈ viewport 1016: a 1024 ya van en 3 (columnas de ~275). */
+@container (min-width: 56rem) {
+	.oikos-steps--layout-columns .oikos-steps__list {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: var(--spacing-6) var(--spacing-5); /* filas 48 · columnas 40 */
+	}
+}
+
+@container (min-width: 68rem) {
+	.oikos-steps--layout-columns .oikos-steps__list {
+		column-gap: var(--spacing-8); /* 64, medido: columnas de ≈ 327 en 1366 */
+	}
+}

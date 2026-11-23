@@ -5,11 +5,15 @@
  * No lee ACF: la plantilla le pasa los datos por $args.
  *
  * Args:
- * - image_id       (int)    Foto (tamaño oikos-square, recorte cuadrado). No es LCP: va con lazy.
+ * - image_id       (int)    Foto. No es LCP: va con lazy.
+ * - image_shape    (string) 'square' (oikos-square, 1:1) | 'portrait' (oikos-portrait,
+ *                           vertical; Servicio, "Los psicólogos…").
+ * - grayscale      (bool)   Foto en blanco y negro (filter: grayscale).
  * - image_position (string) 'left' | 'right'. En móvil la foto siempre va arriba.
  * - background     (string) 'white' | 'cream'.
  * - eyebrow        (string) Antetítulo opcional.
  * - title          (string) Título (obligatorio: sin título no se imprime nada).
+ *                           Admite saltos de línea (visibles desde 768).
  * - heading_level  (int)    2–4. El estilo siempre es Heading.
  * - text           (string) HTML simple (párrafos, br, strong, em, enlaces).
  * - link           (array)  url, title, target. Opcional.
@@ -27,6 +31,8 @@ $oikos_args = wp_parse_args(
 	array(
 		'image_id'       => 0,
 		'image_position' => 'left',
+		'image_shape'    => 'square',
+		'grayscale'      => false,
 		'background'     => 'white',
 		'eyebrow'        => '',
 		'title'          => '',
@@ -46,6 +52,7 @@ if ( '' === $oikos_title ) {
 }
 
 $oikos_position = 'right' === $oikos_args['image_position'] ? 'right' : 'left';
+$oikos_shape    = 'portrait' === $oikos_args['image_shape'] ? 'portrait' : 'square';
 $oikos_bg       = 'cream' === $oikos_args['background'] ? 'cream' : 'white';
 $oikos_variant  = 'primary' === $oikos_args['button_variant'] ? 'primary' : 'secondary';
 $oikos_level    = min( 4, max( 2, (int) $oikos_args['heading_level'] ) );
@@ -54,14 +61,14 @@ $oikos_title_id = wp_unique_id( 'oikos-media-text-' );
 
 $oikos_image = absint( $oikos_args['image_id'] ) ? wp_get_attachment_image(
 	absint( $oikos_args['image_id'] ),
-	'oikos-square',
+	'portrait' === $oikos_shape ? 'oikos-portrait' : 'oikos-square',
 	false,
 	array(
 		'class'    => 'oikos-media-text__img',
 		'loading'  => 'lazy',
 		'decoding' => 'async',
-		// Columna: ancho del contenedor − márgenes (móvil) · ~38 % (tablet) · 523 px (desktop).
-		'sizes'    => '(max-width: 47.9375rem) calc(100vw - 2.5rem), (max-width: 64rem) 38vw, 33rem',
+		// Columna: ancho del contenedor − márgenes (móvil) · ~38 % (tablet) · 523 px (desktop; 628 la vertical).
+		'sizes'    => '(max-width: 47.9375rem) calc(100vw - 2.5rem), (max-width: 64rem) 38vw, ' . ( 'portrait' === $oikos_shape ? '40rem' : '33rem' ),
 	)
 ) : '';
 
@@ -69,7 +76,9 @@ $oikos_classes = sprintf(
 	'oikos-section oikos-media-text oikos-media-text--image-%1$s oikos-media-text--bg-%2$s%3$s',
 	$oikos_position,
 	$oikos_bg,
-	$oikos_image ? '' : ' oikos-media-text--no-image'
+	( $oikos_image ? '' : ' oikos-media-text--no-image' )
+		. ( 'portrait' === $oikos_shape ? ' oikos-media-text--image-portrait' : '' )
+		. ( $oikos_args['grayscale'] ? ' oikos-media-text--grayscale' : '' )
 );
 ?>
 <section class="<?php echo esc_attr( $oikos_classes ); ?>" aria-labelledby="<?php echo esc_attr( $oikos_title_id ); ?>">
@@ -91,7 +100,7 @@ $oikos_classes = sprintf(
 					'<h%1$d id="%2$s" class="oikos-media-text__title oikos-text-heading">%3$s</h%1$d>',
 					(int) $oikos_level,
 					esc_attr( $oikos_title_id ),
-					esc_html( $oikos_title )
+					oikos_title_lines_html( $oikos_title, 'oikos-media-text__break' ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escapa línea por línea.
 				);
 				?>
 			</div>

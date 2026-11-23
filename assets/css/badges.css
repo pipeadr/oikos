@@ -1,0 +1,88 @@
+/**
+ * Oikos — Badges (sellos de confianza).
+ *
+ * .oikos-badges            contenedor de consulta (container query)
+ *   __list                 <ul>
+ *     __item               tarjeta arena con texto centrado en negrita
+ *
+ * Medido en el Figma (1366): tarjetas de ≈ 246 de ancho (15.375rem), 32 entre
+ * ellas, fila centrada; Figtree 700 24/36 (texto en ~4 líneas), padding
+ * 16 × 24, radius/lg.
+ *
+ * Fila desde 36rem de contenedor (tablet incluida, con gap y padding más
+ * chicos por debajo de 50rem para que "especializados" quepa a 768); por
+ * debajo, apilados a ancho completo: son frases cortas y así se leen todas
+ * sin gestos (con scroll horizontal la 2.ª y la 3.ª quedarían escondidas).
+ *
+ * Arena (--color-brand-sand) con text/primary: ≈ 8.9:1.
+ */
+
+.oikos-badges {
+	container-type: inline-size;
+}
+
+.oikos-badges__list {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: var(--spacing-2); /* 16 */
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.oikos-badges__item {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: var(--spacing-2) var(--spacing-3); /* 16 × 24 */
+	border-radius: var(--radius-lg);
+	background-color: var(--color-brand-sand);
+	color: var(--color-text-primary);
+	font-family: var(--font-body);
+	font-size: var(--text-card-hero-size); /* 20 → 24 */
+	font-weight: 700;
+	line-height: 1.5;
+	text-align: center;
+	text-wrap: balance;
+}
+
+.oikos-badges--count-1 { --badges-count: 1; }
+.oikos-badges--count-2 { --badges-count: 2; }
+
+@container (min-width: 36rem) {
+	.oikos-badges__list {
+		/* Ancho fijo del Figma; con menos de 3 no se estiran. */
+		grid-template-columns: repeat(var(--badges-count, 3), minmax(0, 15.375rem));
+		justify-content: center;
+	}
+
+	.oikos-badges__item {
+		padding-inline: var(--spacing-2); /* tablet: 16 para que quepan las palabras largas */
+	}
+}
+
+@container (min-width: 50rem) {
+	.oikos-badges__list {
+		gap: var(--spacing-4); /* 32, medido */
+	}
+
+	.oikos-badges__item {
+		padding-inline: var(--spacing-3); /* 24 */
+	}
+}
+
+/* ==========================================================================
+   Plantilla Servicio: debajo de los pasos, mismo fondo blanco
+   ========================================================================== */
+
+/* Solos (página sin pasos): padding de sección completo. */
+.oikos-service-badges {
+	padding-block: var(--space-section);
+	background-color: var(--color-surface-page);
+}
+
+/* Tras los pasos (que conservan su padding inferior): 80 + 32 ≈ 112 entre
+   las descripciones y los badges, medido en el Figma (104–136). */
+.oikos-steps + .oikos-service-badges {
+	padding-top: var(--spacing-4);
+}

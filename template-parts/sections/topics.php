@@ -78,7 +78,7 @@ $oikos_classes  = 'oikos-topics' . ( 3 === $oikos_columns ? ' oikos-topics--cols
 <section class="<?php echo esc_attr( $oikos_classes ); ?>" aria-labelledby="<?php echo esc_attr( $oikos_title_id ); ?>" data-topics>
 	<div class="oikos-container oikos-topics__inner">
 		<div class="oikos-topics__intro">
-			<h<?php echo (int) $oikos_level; ?> id="<?php echo esc_attr( $oikos_title_id ); ?>" class="oikos-topics__heading oikos-text-heading"><?php echo oikos_title_lines_html( $oikos_args['title'], 'oikos-topics__break' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- líneas escapadas con esc_html(). ?></h<?php echo (int) $oikos_level; ?>>
+			<h<?php echo (int) $oikos_level; ?> id="<?php echo esc_attr( $oikos_title_id ); ?>" class="oikos-topics__heading oikos-text-heading"><?php echo oikos_title_lines_html( $oikos_args['title'], 'oikos-topics__break' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- líneas escapadas (oikos_highlight_html()). ?></h<?php echo (int) $oikos_level; ?>>
 
 			<?php if ( '' !== $oikos_text ) : ?>
 				<p class="oikos-topics__lead oikos-text-body oikos-text-secondary"><?php echo esc_html( $oikos_text ); ?></p>

@@ -7,7 +7,11 @@
  *     __content                      eyebrow + título, texto y botón
  *
  * Modificadores: --image-left | --image-right, --bg-white | --bg-cream,
- * --no-image (solo texto).
+ * --no-image (solo texto), --image-portrait (foto vertical; plantilla
+ * Servicio), --grayscale (foto en B/N).
+ *
+ * Título con saltos manuales: los <br class="oikos-media-text__break"> solo
+ * se ven desde 768 (en móvil el título se reparte solo).
  *
  * En el HTML la foto siempre va primero; "derecha" se resuelve con el grid,
  * así en móvil la foto queda arriba en ambos casos.
@@ -53,6 +57,25 @@
 	aspect-ratio: 1;
 	object-fit: cover;
 	border-radius: var(--radius-lg);
+}
+
+/* Foto vertical (Servicio, medido en 1366): texto ≈ 418 | foto 628 × 660. */
+.oikos-media-text--image-portrait .oikos-media-text__img {
+	aspect-ratio: 628 / 660;
+}
+
+@media (min-width: 64rem) {
+	.oikos-media-text--image-portrait.oikos-media-text--image-right .oikos-media-text__inner {
+		grid-template-columns: minmax(0, 418fr) minmax(0, 628fr);
+	}
+
+	.oikos-media-text--image-portrait.oikos-media-text--image-left .oikos-media-text__inner {
+		grid-template-columns: minmax(0, 628fr) minmax(0, 418fr);
+	}
+}
+
+.oikos-media-text--grayscale .oikos-media-text__img {
+	filter: grayscale(1);
 }
 
 /* Texto */
@@ -108,5 +131,9 @@
 
 	.oikos-media-text__content {
 		align-items: stretch; /* botón --block-mobile a ancho completo */
+	}
+
+	.oikos-media-text__break {
+		display: none;
 	}
 }

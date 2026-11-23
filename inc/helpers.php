@@ -263,8 +263,9 @@ function oikos_hero_picture( $image_id, $image_mobile_id = 0, $class = '', $args
  *
  * Cada línea se escapa y los saltos se vuelven <br> con la clase dada, para
  * que el CSS de la sección los oculte donde no apliquen (por lo general en
- * móvil, donde el título se reparte solo). Un título de una línea sale igual
- * que con esc_html().
+ * móvil, donde el título se reparte solo). Cada línea admite *resaltado* en
+ * negrita (oikos_highlight_html()); un resaltado no cruza saltos de línea.
+ * Un título de una línea y sin asteriscos sale igual que con esc_html().
  *
  * @param string $title       Título (puede traer saltos de línea).
  * @param string $break_class Clase de los <br>.
@@ -275,6 +276,53 @@ function oikos_title_lines_html( $title, $break_class ) {
 
 	return implode(
 		sprintf( '<br class="%s"> ', esc_attr( $break_class ) ),
-		array_map( 'esc_html', $lines )
+		array_map( 'oikos_highlight_html', $lines )
 	);
+}
+
+/**
+ * Título con una parte resaltada en negrita.
+ *
+ * El editor encierra entre asteriscos lo que va en negrita:
+ * "Así funciona una sesión de *terapia de pareja* en Oikos". Todo se escapa;
+ * cada par de asteriscos se vuelve <strong class="oikos-highlight">. Un
+ * asterisco sin pareja se deja tal cual. Sin asteriscos, sale igual que
+ * esc_html().
+ *
+ * @param string $text Texto plano con *resaltados*.
+ * @return string HTML escapado.
+ */
+function oikos_highlight_html( $text ) {
+	return preg_replace(
+		'/\*([^*\r\n]*\S[^*\r\n]*)\*/u',
+		'<strong class="oikos-highlight">$1</strong>',
+		esc_html( (string) $text )
+	);
+}
+
+/**
+ * Textos de los badges de una página.
+ *
+ * Los de la página (repetidor `<prefijo>_badges_lista`, máx. 3) y, si está
+ * vacío, los globales de "Oikos — Global" (`oikos_global_badges`).
+ *
+ * @param int    $page_id ID de la página (0 = solo globales).
+ * @param string $field   Nombre del repetidor propio de la página.
+ * @return string[] Hasta 3 textos.
+ */
+function oikos_get_badges( $page_id = 0, $field = 'oikos_servicio_badges_lista' ) {
+	$collect = static function ( $rows ) {
+		$texts = array();
+		foreach ( (array) $rows as $row ) {
+			$text = isset( $row['texto'] ) ? trim( (string) $row['texto'] ) : '';
+			if ( '' !== $text ) {
+				$texts[] = $text;
+			}
+		}
+		return array_slice( $texts, 0, 3 );
+	};
+
+	$badges = $page_id ? $collect( oikos_field( $field, $page_id, array() ) ) : array();
+
+	return $badges ? $badges : $collect( oikos_option( 'oikos_global_badges', array() ) );
 }

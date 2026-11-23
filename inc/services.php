@@ -138,6 +138,28 @@ function oikos_service_card_button_text() {
 }
 
 /**
+ * Categoría del blog que prioriza el bloque de entradas de una página de servicio.
+ *
+ * El campo `oikos_servicio_blog_categoria` de la página o, si está vacío, la
+ * categoría cuyo slug coincide con el de la página (terapia-de-pareja →
+ * "Terapia de pareja").
+ *
+ * @param int $page_id ID de la página de servicio.
+ * @return int ID de la categoría (0 = ninguna: solo entradas recientes).
+ */
+function oikos_service_blog_category( $page_id ) {
+	$term_id = absint( oikos_field( 'oikos_servicio_blog_categoria', $page_id, 0 ) );
+
+	if ( $term_id && get_term( $term_id, 'category' ) instanceof WP_Term ) {
+		return $term_id;
+	}
+
+	$term = get_term_by( 'slug', (string) get_post_field( 'post_name', $page_id ), 'category' );
+
+	return $term instanceof WP_Term ? (int) $term->term_id : 0;
+}
+
+/**
  * Registra la ubicación ACF "Página de servicio" (no depende de IDs, así
  * funciona igual en cada entorno).
  *

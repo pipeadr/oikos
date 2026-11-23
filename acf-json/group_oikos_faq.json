@@ -7,8 +7,8 @@
             "label": "Título",
             "name": "oikos_faq_titulo",
             "aria-label": "",
-            "type": "text",
-            "instructions": "",
+            "type": "textarea",
+            "instructions": "Cada salto de línea se respeta desde tablet (en móvil el título se reparte solo). Si se deja vacío, dice \"Preguntas frecuentes\".",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -19,9 +19,30 @@
             "default_value": "Preguntas frecuentes sobre nuestra terapia psicológica",
             "maxlength": "",
             "allow_in_bindings": 0,
+            "rows": 2,
             "placeholder": "",
-            "prepend": "",
-            "append": ""
+            "new_lines": ""
+        },
+        {
+            "key": "field_oikos_faq_subtitulo",
+            "label": "Subtítulo",
+            "name": "oikos_faq_subtitulo",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Opcional. Una frase bajo el título.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "rows": 2,
+            "placeholder": "",
+            "new_lines": ""
         },
         {
             "key": "field_oikos_faq_preguntas",
@@ -97,7 +118,7 @@
             "name": "oikos_faq_boton",
             "aria-label": "",
             "type": "link",
-            "instructions": "Opcional. Vacío: usa el CTA \"Agenda tu cita\" de Oikos — Global.",
+            "instructions": "Opcional. Vacío: usa el CTA \"Agenda tu cita\" de Oikos — Global (en las páginas de terapia, vacío = sin botón).",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -127,5 +148,5 @@
     "active": true,
     "description": "Sección de preguntas frecuentes, reutilizable en cualquier página.",
     "show_in_rest": 0,
-    "modified": 1794787200
+    "modified": 1795388464
 }
