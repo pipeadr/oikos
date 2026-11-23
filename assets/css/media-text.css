@@ -59,9 +59,19 @@
 	border-radius: var(--radius-lg);
 }
 
-/* Foto vertical (proporción provisional: medir en la captura). */
+/* Foto vertical (Servicio, medido en 1366): texto ≈ 418 | foto 628 × 660. */
 .oikos-media-text--image-portrait .oikos-media-text__img {
-	aspect-ratio: 523 / 680;
+	aspect-ratio: 628 / 660;
+}
+
+@media (min-width: 64rem) {
+	.oikos-media-text--image-portrait.oikos-media-text--image-right .oikos-media-text__inner {
+		grid-template-columns: minmax(0, 418fr) minmax(0, 628fr);
+	}
+
+	.oikos-media-text--image-portrait.oikos-media-text--image-left .oikos-media-text__inner {
+		grid-template-columns: minmax(0, 628fr) minmax(0, 418fr);
+	}
 }
 
 .oikos-media-text--grayscale .oikos-media-text__img {
@@ -121,11 +131,6 @@
 
 	.oikos-media-text__content {
 		align-items: stretch; /* botón --block-mobile a ancho completo */
-	}
-
-	/* Vertical en móvil: 4:5 para que la foto no ocupe más de una pantalla. */
-	.oikos-media-text--image-portrait .oikos-media-text__img {
-		aspect-ratio: 4 / 5;
 	}
 
 	.oikos-media-text__break {

@@ -67,8 +67,8 @@ $oikos_image = absint( $oikos_args['image_id'] ) ? wp_get_attachment_image(
 		'class'    => 'oikos-media-text__img',
 		'loading'  => 'lazy',
 		'decoding' => 'async',
-		// Columna: ancho del contenedor − márgenes (móvil) · ~38 % (tablet) · 523 px (desktop).
-		'sizes'    => '(max-width: 47.9375rem) calc(100vw - 2.5rem), (max-width: 64rem) 38vw, 33rem',
+		// Columna: ancho del contenedor − márgenes (móvil) · ~38 % (tablet) · 523 px (desktop; 628 la vertical).
+		'sizes'    => '(max-width: 47.9375rem) calc(100vw - 2.5rem), (max-width: 64rem) 38vw, ' . ( 'portrait' === $oikos_shape ? '40rem' : '33rem' ),
 	)
 ) : '';
 
