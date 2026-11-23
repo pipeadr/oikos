@@ -263,8 +263,9 @@ function oikos_hero_picture( $image_id, $image_mobile_id = 0, $class = '', $args
  *
  * Cada línea se escapa y los saltos se vuelven <br> con la clase dada, para
  * que el CSS de la sección los oculte donde no apliquen (por lo general en
- * móvil, donde el título se reparte solo). Un título de una línea sale igual
- * que con esc_html().
+ * móvil, donde el título se reparte solo). Cada línea admite *resaltado* en
+ * negrita (oikos_highlight_html()); un resaltado no cruza saltos de línea.
+ * Un título de una línea y sin asteriscos sale igual que con esc_html().
  *
  * @param string $title       Título (puede traer saltos de línea).
  * @param string $break_class Clase de los <br>.
@@ -275,7 +276,7 @@ function oikos_title_lines_html( $title, $break_class ) {
 
 	return implode(
 		sprintf( '<br class="%s"> ', esc_attr( $break_class ) ),
-		array_map( 'esc_html', $lines )
+		array_map( 'oikos_highlight_html', $lines )
 	);
 }
 

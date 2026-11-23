@@ -96,7 +96,7 @@
             "name": "oikos_servicio_hero_titulo",
             "aria-label": "",
             "type": "text",
-            "instructions": "Si se deja vacío, se usa el título de la página.",
+            "instructions": "Si se deja vacío, se usa el título de la página. Encierra entre asteriscos la parte que va en negrita, por ejemplo: *Terapia de familia* para reconectar en grupo.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -173,7 +173,7 @@
             "name": "oikos_servicio_temas_titulo",
             "aria-label": "",
             "type": "textarea",
-            "instructions": "Cada salto de línea se respeta desde tablet (en móvil el título se reparte solo). Si se deja vacío, la sección no se muestra.",
+            "instructions": "Cada salto de línea se respeta desde tablet (en móvil el título se reparte solo). Encierra entre asteriscos la parte que va en negrita, dentro de una misma línea, por ejemplo: *acompañamiento psicológico*. Si se deja vacío, la sección no se muestra.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -655,5 +655,5 @@
     "active": true,
     "description": "Contenido de las páginas de terapia (plantilla Servicio). La tarjeta del carrusel está en el grupo \"Tarjeta de servicio\".",
     "show_in_rest": 0,
-    "modified": 1795388464
+    "modified": 1795393380
 }
